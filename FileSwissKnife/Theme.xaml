@@ -1,24 +1,89 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:FileSwissKnife"
-                    xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+                    xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+                    xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
+                    xmlns:fileSwissKnife="clr-namespace:FileSwissKnife"
+                    xmlns:localization="clr-namespace:FileSwissKnife.Localization">
 
-    <!-- DARK BACKGROUND --><!--
+
+    <localization:Localizer x:Key="Localizer"></localization:Localizer>
+    
+    <Color x:Key="ControlLightColor">White</Color>
+    <Color x:Key="BorderMediumColor">#FF888888</Color>
+    <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
+    <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+
+    <Style TargetType="TextBox" x:Key="TextBoxDragWatermark">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border Name="Border" CornerRadius="2" Padding="2" BorderThickness="1">
+                            <Border.Background>
+                                <SolidColorBrush Color="{StaticResource ControlLightColor}" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{StaticResource BorderMediumColor}" />
+                            </Border.BorderBrush>
+                            <Grid>
+                                <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                                <Grid IsHitTestVisible="False">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Hidden" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}, Path=Text}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}, Path=Text}" Value="{x:Null}">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={StaticResource Localizer}, Path=DragMeSomeFile}" FontStyle="Italic" Foreground="DarkGray" FontSize="16"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+
+    </Style>
+
+
+
+    <Style x:Key="Title" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+
+    <Style TargetType="fileSwissKnife:MainWindow">
+        <Setter Property="Background" Value="#FFA0A0A0" />
+    </Style>
+
+    <!-- DARK BACKGROUND -->
+    <!--
     <LinearGradientBrush x:Key="DarkBackground" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Offset="0" Color="#FF333344"></GradientStop>
         <GradientStop Offset="1" Color="#FF666677"></GradientStop>
     </LinearGradientBrush>
 
-    --><!-- LIGHT BACKGROUND --><!--
+    -->
+    <!-- LIGHT BACKGROUND -->
+    <!--
     <LinearGradientBrush x:Key="LightBackground" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Offset="0" Color="#FF9999AA"></GradientStop>
         <GradientStop Offset="1" Color="#FFDDDDFF"></GradientStop>
     </LinearGradientBrush>
 
-    --><!-- CONTROL BACKGROUND --><!--
+    -->
+    <!-- CONTROL BACKGROUND -->
     <SolidColorBrush x:Key="BaseColor" Color="#99000000"></SolidColorBrush>
 
-    --><!-- GLASS EFFECT --><!--
+    <!-- GLASS EFFECT -->
     <LinearGradientBrush x:Key="GlassFX" StartPoint=".5,0" EndPoint=".5,.5">
         <GradientStop Offset="1" Color="#33DDDDDD"></GradientStop>
         <GradientStop Offset="1" Color="#33000000"></GradientStop>
@@ -28,7 +93,7 @@
         <GradientStop Offset="1" Color="#11000000"></GradientStop>
     </LinearGradientBrush>
 
-    --><!-- GLOW EFFECT --><!--
+    <!-- GLOW EFFECT -->
     <RadialGradientBrush x:Key="GlowFX" GradientOrigin=".5,1" Center=".5,1">
         <GradientStop Offset="0" Color="#990000FF"></GradientStop>
         <GradientStop Offset=".5" Color="#660000DD"></GradientStop>
@@ -58,7 +123,7 @@
         <GradientStop Offset="1" Color="#332222FF"></GradientStop>
     </LinearGradientBrush>
 
-    --><!-- GLOW ANIMATION --><!--
+    <!-- GLOW ANIMATION -->
     <Storyboard x:Key="GlowOut">
         <DoubleAnimation x:Name="AnimGlowOut" BeginTime="00:00:00" Storyboard.TargetName="GlowRectangle" Duration="00:00:00.250" From="1" To="0" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
     </Storyboard>
@@ -67,7 +132,8 @@
         </DoubleAnimation>
     </Storyboard>
 
-    --><!-- GROUPBOX --><!--
+    <!-- GROUPBOX -->
+    <!--
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -78,9 +144,13 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="20"></RowDefinition>
-                            --><!-- Contenido --><!--
+                            -->
+    <!-- Contenido -->
+    <!--
                             <RowDefinition Height="*"></RowDefinition>
-                            --><!-- Titulo --><!--
+                            -->
+    <!-- Titulo -->
+    <!--
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"></ColumnDefinition>
@@ -110,7 +180,9 @@
         </Setter>
     </Style>
 
-    --><!-- TABCONTROL --><!--
+    -->
+    <!-- TABCONTROL -->
+    <!--
     <Style TargetType="{x:Type TabItem}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -186,13 +258,14 @@
         </Setter>
     </Style>
 
-    --><!-- PROGRESSBAR --><!--
-    <Style TargetType="{x:Type ProgressBar}">
+    -->
+    <!-- PROGRESSBAR -->
+    <Style TargetType="{x:Type customControls:ProgressBarExt}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                <ControlTemplate TargetType="{x:Type customControls:ProgressBarExt}">
                     <Grid MinHeight="14" MinWidth="20">
                         <Border x:Name="BaseRectangle" Background="{StaticResource BaseColor}" CornerRadius="10,0,10,0"></Border>
                         <Border x:Name="GlassRectangle" CornerRadius="10,0,10,0"  Background="{StaticResource GlassFX}"></Border>
@@ -200,7 +273,8 @@
                         <Border x:Name="PART_Indicator" CornerRadius="10,0,10,0" Background="{StaticResource GlowFXProgress}" HorizontalAlignment="Left"></Border>
                         <Border x:Name="PART_Track" BorderThickness="1" CornerRadius="10,0,10,0" BorderBrush="Black"></Border>
                         <Border x:Name="BordeCabeceraSombra" BorderThickness="2" CornerRadius="10,0,10,0" BorderBrush="DarkGray" Opacity=".2" Margin="1,1,1,0"></Border>
-                        <Label x:Name="Progress" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Foreground="White" Opacity=".7" Content="{Binding Path=Value, RelativeSource={RelativeSource TemplatedParent}}"></Label>
+                        <Label x:Name="Progress" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Foreground="White" Opacity=".7" 
+                               Content="{TemplateBinding Text}"  />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsIndeterminate" Value="True">
@@ -228,8 +302,9 @@
     </Style>
 
 
-    --><!-- DATAGRID -->
-    <!-- COLUMN HEADER --><!--
+    <!-- DATAGRID -->
+    <!-- COLUMN HEADER -->
+    <!--
     <Style TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="White" />
@@ -357,7 +432,9 @@
         </Style.Triggers>
     </Style>
 
-    --><!-- SCROLLBAR --><!--
+    -->
+    <!-- SCROLLBAR -->
+    <!--
     <Style x:Key="LineButton" TargetType="{x:Type RepeatButton}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -468,7 +545,9 @@
         </Style.Triggers>
     </Style>
 
-    --><!-- COMBOBOX --><!--
+    -->
+    <!-- COMBOBOX -->
+    <!--
     <ControlTemplate x:Key="cmbToggleButton" TargetType="ToggleButton">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -564,7 +643,9 @@
         </Setter>
     </Style>
 
-    --><!-- TEXTBOX --><!--
+    -->
+    <!-- TEXTBOX -->
+    <!--
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -602,8 +683,11 @@
         </Setter>
     </Style>
 
-    --><!-- BOTON --><!--
-    <Style TargetType="{x:Type Button}">
+    
+    
+    -->
+    <!-- BOTON -->
+    <!--<Style TargetType="{x:Type Button}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Foreground" Value="White" />

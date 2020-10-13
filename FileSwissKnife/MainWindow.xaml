@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FileSwissKnife"
+        xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" AllowDrop="True" Drop="MainWindow_OnDrop">
+        Title="File Swiss Knife" Height="450" Width="800" AllowDrop="True" Drop="MainWindow_OnDrop"
+        >
     <Window.Resources>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -27,8 +28,8 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="Input files:" />
-                        <TextBox x:Name="FilesToJoin" Grid.Row="1" AllowDrop="True" PreviewDragOver="FilesToJoin_OnPreviewDragOver" />
+                        <TextBlock Grid.Row="0" Text="Input files:" Style="{StaticResource Title}"/>
+                        <TextBox x:Name="FilesToJoin" Style="{StaticResource TextBoxDragWatermark}" Grid.Row="1" AllowDrop="True" PreviewDragOver="FilesToJoin_OnPreviewDragOver" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" />
                     </Grid>
 
                     <Grid Grid.Row="1">
@@ -37,7 +38,7 @@
                             <RowDefinition Height="*" />
 
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Output file:" />
+                        <TextBlock Grid.Row="0" Text="Output file:" Style="{StaticResource Title}"/>
                         <TextBox x:Name="JoinOutputFilePath" Grid.Row="1" />
                     </Grid>
 
@@ -73,10 +74,9 @@
                     <ColumnDefinition Width="5"  />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Click="StartCancelButton_Click" HorizontalAlignment="Center" Grid.Column="0" MinWidth="50">Go</Button>
+                <Button Click="StartCancelButton_Click" HorizontalAlignment="Center" Grid.Column="0" MinWidth="60" Height="30">Go</Button>
                 <Grid Grid.Column="2">
-                    <ProgressBar x:Name="ProgressBar"  Minimum="0" Maximum="100.0" Height="20" />
-                    <Label x:Name="ProgressLabel" HorizontalAlignment="Center">100</Label>
+                    <customControls:ProgressBarExt x:Name="ProgressBar"  Minimum="0" Maximum="100.0" Height="30" />
                 </Grid>
 
             </Grid>

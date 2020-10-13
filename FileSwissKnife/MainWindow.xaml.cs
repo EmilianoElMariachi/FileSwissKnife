@@ -12,7 +12,7 @@ namespace FileSwissKnife
     public partial class MainWindow : Window
     {
         private Task _joinTask;
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource? _cts;
 
         public MainWindow()
         {
@@ -111,26 +111,22 @@ namespace FileSwissKnife
                 });
             }, _cts.Token).ContinueWith(task =>
             {
+                _cts = null;
                 if (task.IsCanceled)
                 {
-                    ProgressLabel.Content = "Canceled!";
+                    ProgressBar.Text = "Canceled!";
                 }
                 else if (task.IsCompletedSuccessfully)
                 {
-                    ProgressLabel.Content = "Finished!";
+                    ProgressBar.Text = "Finished!";
                 }
-
-                _cts = null;
-
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void OnProgress(double percent)
         {
-            var percentStr = $"{percent:0.00}%";
-
             ProgressBar.Value = percent;
-            ProgressLabel.Content = percentStr;
+            ProgressBar.Text = $"{percent:0.00}%";
         }
 
         private void FilesToJoin_OnPreviewDragOver(object sender, DragEventArgs e)
