@@ -7,7 +7,7 @@ namespace FileSwissKnife.CustomControls
     {
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(ProgressBarExt), new PropertyMetadata(default(string)));
+            "Text", typeof(string), typeof(ProgressBarExt), new PropertyMetadata(""));
 
         public string Text
         {

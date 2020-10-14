@@ -2,6 +2,6 @@
 {
     public interface ILocalizationKeys
     {
-        string DragMeSomeFile { get; }
+        string DragMeSomeFilesToJoin { get; }
     }
 }

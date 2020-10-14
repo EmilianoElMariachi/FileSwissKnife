@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace FileSwissKnife
+namespace FileSwissKnife.Utils
 {
     public static class FileUtil
     {

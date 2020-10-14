@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using FileSwissKnife.Utils;
 
 namespace FileSwissKnife
 {
@@ -11,7 +12,7 @@ namespace FileSwissKnife
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Task _joinTask;
+        private Task? _joinTask;
         private CancellationTokenSource? _cts;
 
         public MainWindow()

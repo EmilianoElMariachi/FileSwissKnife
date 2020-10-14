@@ -4,7 +4,7 @@
     {
         public string CultureName => "fr-FR";
 
-        public string DragMeSomeFile => "Glisse moi un ou plusieurs fichiers par ici :)";
+        public string DragMeSomeFilesToJoin => "Glisse moi un ou plusieurs fichiers à joindre par ici :)";
 
     }
 }

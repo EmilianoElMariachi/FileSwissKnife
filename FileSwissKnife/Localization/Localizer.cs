@@ -6,41 +6,38 @@ namespace FileSwissKnife.Localization
 {
     public class Localizer : ILocalizationKeys
     {
+        /// <summary>
+        /// Singleton
+        /// </summary>
+        public static Localizer Instance { get; } = new Localizer();
 
-        private static List<ILocalization> _localizations = new List<ILocalization>();
 
-        static Localizer()
+        private readonly Localization_EN _defaultLocalization = new Localization_EN();
+        private readonly List<ILocalization> _localizations = new List<ILocalization>();
+        private ILocalization _currentLocalization;
+
+
+        private Localizer()
         {
-
-            var localizationInterfaceType = typeof(ILocalization);
-            var implTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(t => localizationInterfaceType.IsAssignableFrom(t) && t != localizationInterfaceType);
-
-            foreach (var implType in implTypes)
+            _localizations.AddRange(new ILocalization[]
             {
-                var localization = (ILocalization)implType.GetConstructor(new Type[0]).Invoke(null);
-                _localizations.Add(localization);
-            }
+                _defaultLocalization,
+                new Localization_FR()
+            });
 
+            var initialLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == System.Threading.Thread.CurrentThread.CurrentUICulture.Name);
 
-            foreach (var localization in _localizations)
-            {
-                if (localization.CultureName == System.Threading.Thread.CurrentThread.CurrentUICulture.Name)
-                {
-                    CurrentLocalization = localization;
-                    break;
-                }
-            }
-
+            _currentLocalization = initialLocalization ?? _defaultLocalization;
         }
 
-        public static ILocalization? CurrentLocalization { get; set; }
+        public IEnumerable<ILocalization> AvailableLocalizations => _localizations;
 
+        public ILocalization CurrentLocalization
+        {
+            get => _currentLocalization;
+            set => _currentLocalization = value ?? throw new ArgumentNullException(nameof(CurrentLocalization));
+        }
 
-
-        public string DragMeSomeFile => CurrentLocalization?.DragMeSomeFile ?? "Drag me a file here :)";
-
-
+        public string DragMeSomeFilesToJoin => CurrentLocalization.DragMeSomeFilesToJoin;
     }
 }

@@ -4,7 +4,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace FileSwissKnife
+namespace FileSwissKnife.Utils
 {
     class HashUtil
     {

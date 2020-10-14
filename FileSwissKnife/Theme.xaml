@@ -3,21 +3,18 @@
                     xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
                     xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
                     xmlns:fileSwissKnife="clr-namespace:FileSwissKnife"
-                    xmlns:localization="clr-namespace:FileSwissKnife.Localization">
+                    >
 
-
-    <localization:Localizer x:Key="Localizer"></localization:Localizer>
-    
     <Color x:Key="ControlLightColor">White</Color>
     <Color x:Key="BorderMediumColor">#FF888888</Color>
     <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
     <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
 
-    <Style TargetType="TextBox" x:Key="TextBoxDragWatermark">
+    <Style TargetType="customControls:TextBoxExt" x:Key="TextBoxDragWatermark">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <ControlTemplate TargetType="{x:Type customControls:TextBoxExt}">
                         <Border Name="Border" CornerRadius="2" Padding="2" BorderThickness="1">
                             <Border.Background>
                                 <SolidColorBrush Color="{StaticResource ControlLightColor}" />
@@ -27,21 +24,8 @@
                             </Border.BorderBrush>
                             <Grid>
                                 <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
-                                <Grid IsHitTestVisible="False">
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Setter Property="Visibility" Value="Hidden" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}, Path=Text}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TextBox}}, Path=Text}" Value="{x:Null}">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={StaticResource Localizer}, Path=DragMeSomeFile}" FontStyle="Italic" Foreground="DarkGray" FontSize="16"/>
+                                <Grid IsHitTestVisible="False" Visibility="{TemplateBinding WatermarkVisibility}">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding WatermarkText}" FontStyle="Italic" Foreground="DarkGray" FontSize="16"/>
                                 </Grid>
                             </Grid>
                         </Border>
@@ -50,7 +34,6 @@
                 </Setter.Value>
             </Setter>
         </Style.Setters>
-
     </Style>
 
 
