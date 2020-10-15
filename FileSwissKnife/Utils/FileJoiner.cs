@@ -7,15 +7,23 @@ using System.Threading;
 
 namespace FileSwissKnife.Utils
 {
-    public static class FileUtil
+    public class FileJoiner : IReportProgressAction
     {
-        public delegate void ProgressHandler(double percent);
 
-        public static void Join(string[] inputFiles, string outputFile, CancellationToken cancellationToken, ProgressHandler? progressHandler)
+        public event ProgressHandler? OnProgress;
+
+        public string[]? InputFiles { get; set; }
+
+        public string? OutputFile { get; set; }
+
+        public void Run(CancellationToken cancellationToken)
         {
 
+            var inputFiles = InputFiles ?? throw new ArgumentNullException(nameof(InputFiles));
+            var outputFile = OutputFile ?? throw new ArgumentNullException(nameof(OutputFile));
             try
             {
+
                 var totalBytes = ComputeTotalBytesSize(inputFiles);
 
                 var buffer = new byte[4096];
@@ -42,11 +50,11 @@ namespace FileSwissKnife.Utils
                         nbBytesJoined += nbBytesRead;
 
                         var percent = (double)(nbBytesJoined * 100 / (decimal)totalBytes);
-                        progressHandler?.Invoke(percent);
+                        NotifyProgressChanged(percent);
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 try
                 {
@@ -55,9 +63,10 @@ namespace FileSwissKnife.Utils
                 catch
                 {
                 }
-                throw;
-            }
 
+                if (!(ex is OperationCanceledException))
+                    throw;
+            }
         }
 
         public static string[] GuessFilesToJoin(string fileExample, out string? outputFile)
@@ -133,6 +142,15 @@ namespace FileSwissKnife.Utils
         private static long ComputeTotalBytesSize(IEnumerable<string> files)
         {
             return files.Sum(file => new FileInfo(file).Length);
+        }
+
+
+        private void NotifyProgressChanged(double percent)
+        {
+            OnProgress?.Invoke(this, new ProgressHandlerArgs
+            {
+                Percent = percent
+            });
         }
     }
 }

@@ -39,5 +39,17 @@ namespace FileSwissKnife.Localization
         }
 
         public string DragMeSomeFilesToJoin => CurrentLocalization.DragMeSomeFilesToJoin;
+
+        public string Start => CurrentLocalization.Start;
+
+        public string Cancelling => CurrentLocalization.Cancelling;
+
+        public string Cancel => CurrentLocalization.Cancel;
+
+        public string OperationCanceled => CurrentLocalization.OperationCanceled;
+
+        public string OperationFinishedIn => CurrentLocalization.OperationFinishedIn;
+
+        public string OperationError => CurrentLocalization.OperationError;
     }
 }

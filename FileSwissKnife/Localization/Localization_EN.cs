@@ -5,5 +5,17 @@
         public string CultureName => "en-US";
 
         public string DragMeSomeFilesToJoin => "Drag me one or more files to join here :)";
+
+        public string Start => "Go!";
+
+        public string Cancelling => "Cancelling...";
+
+        public string Cancel => "Cancel";
+
+        public string OperationCanceled => "Canceled";
+
+        public string OperationFinishedIn => "Finished in {0}";
+
+        public string OperationError => "Error!";
     }
 }
