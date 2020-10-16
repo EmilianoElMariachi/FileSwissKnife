@@ -15,8 +15,8 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TabControl x:Name="TabControl" SelectedIndex="{Binding Path=SelectedModeIndex}">
-            <TabItem x:Name="TabItemJoin"  Header="Join">
+        <TabControl SelectedIndex="{Binding Path=SelectedModeIndex}">
+            <TabItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameJoin}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -29,7 +29,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="Input files:" Style="{StaticResource Title}"/>
+                        <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinInputFiles}" Style="{StaticResource Title}"/>
                         <customControls:TextBoxExt x:Name="TextBoxFilesToJoin"
                                                    Style="{StaticResource TextBoxDragWatermark}" 
                                                    Text="{Binding Path=FilesToJoin, UpdateSourceTrigger=PropertyChanged}"
@@ -49,16 +49,16 @@
                             <RowDefinition Height="*" />
 
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Output file:" Style="{StaticResource Title}"/>
+                        <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinOutputFile}" Style="{StaticResource Title}"/>
                         <TextBox x:Name="JoinOutputFilePath" Grid.Row="1" Text="{Binding Path=JoinOutputFile, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
 
                 </Grid>
             </TabItem>
-            <TabItem x:Name="TabItemSplit" Header="Split">
+            <TabItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameSplit}">
 
             </TabItem>
-            <TabItem x:Name="TabItemHash" Header="Hash">
+            <TabItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameHash}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -85,9 +85,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button Command="{Binding Path=RunCommand}" HorizontalAlignment="Center" Grid.Column="0" MinWidth="60" Height="30" Content="{Binding Path=RunTaskButtonText, FallbackValue=Go!}" />
-            <Grid Grid.Column="2">
-                <customControls:ProgressBarExt  Minimum="0" Maximum="100.0" Height="30" Value="{Binding Path=ProgressBarValue}" Text="{Binding Path=ProgressBarText}" />
-            </Grid>
+            <customControls:ProgressBarExt  Grid.Column="2" Minimum="0" Maximum="100.0" Height="30" Value="{Binding Path=ProgressBarValue}" Text="{Binding Path=ProgressBarText}" />
         </Grid>
 
     </Grid>

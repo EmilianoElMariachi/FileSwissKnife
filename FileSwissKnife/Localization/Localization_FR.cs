@@ -18,5 +18,14 @@
 
         public string OperationError => "Erreur!";
 
+        public string JoinInputFiles => "Fichiers à joindre:";
+
+        public string JoinOutputFile => "Fichier de sortie:";
+
+        public string TabNameJoin => "Joindre";
+
+        public string TabNameSplit => "Séparer";
+
+        public string TabNameHash => "Hacher";
     }
 }

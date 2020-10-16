@@ -16,5 +16,15 @@
 
         string OperationError { get; }
 
+        string JoinInputFiles { get; }
+
+        string JoinOutputFile { get; }
+
+        string TabNameJoin { get; }
+
+        string TabNameSplit { get; }
+
+        string TabNameHash { get; }
+
     }
 }

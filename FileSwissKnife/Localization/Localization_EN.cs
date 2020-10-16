@@ -17,5 +17,15 @@
         public string OperationFinishedIn => "Finished in {0}";
 
         public string OperationError => "Error!";
+
+        public string JoinInputFiles => "Input files:";
+
+        public string JoinOutputFile => "Output file:";
+
+        public string TabNameJoin => "Join";
+
+        public string TabNameSplit => "Split";
+
+        public string TabNameHash => "Hash";
     }
 }

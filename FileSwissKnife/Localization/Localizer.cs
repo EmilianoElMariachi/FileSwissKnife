@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace FileSwissKnife.Localization
 {
-    public class Localizer : ILocalizationKeys
+    public class Localizer : ILocalizationKeys, INotifyPropertyChanged
     {
         /// <summary>
         /// Singleton
@@ -14,8 +15,9 @@ namespace FileSwissKnife.Localization
 
         private readonly Localization_EN _defaultLocalization = new Localization_EN();
         private readonly List<ILocalization> _localizations = new List<ILocalization>();
-        private ILocalization _currentLocalization;
+        private ILocalization _current;
 
+        public event LocalizationChangedHandler LocalizationChanged;
 
         private Localizer()
         {
@@ -27,29 +29,73 @@ namespace FileSwissKnife.Localization
 
             var initialLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == System.Threading.Thread.CurrentThread.CurrentUICulture.Name);
 
-            _currentLocalization = initialLocalization ?? _defaultLocalization;
+            _current = initialLocalization ?? _defaultLocalization;
         }
 
         public IEnumerable<ILocalization> AvailableLocalizations => _localizations;
 
-        public ILocalization CurrentLocalization
+        public ILocalization Current
         {
-            get => _currentLocalization;
-            set => _currentLocalization = value ?? throw new ArgumentNullException(nameof(CurrentLocalization));
+            get => _current;
+            set
+            {
+                _current = value ?? throw new ArgumentNullException(nameof(Current));
+                NotifyLocalizationChanged();
+            }
         }
 
-        public string DragMeSomeFilesToJoin => CurrentLocalization.DragMeSomeFilesToJoin;
+        private void NotifyLocalizationChanged()
+        {
+            foreach (var propertyInfo in typeof(ILocalizationKeys).GetProperties())
+            {
+                NotifyPropertyChanged(propertyInfo.Name);
+            }
+            LocalizationChanged?.Invoke(this, new LocalizationChangedHandlerArgs(this.Current));
+        }
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-        public string Start => CurrentLocalization.Start;
+        public string DragMeSomeFilesToJoin => Current.DragMeSomeFilesToJoin;
 
-        public string Cancelling => CurrentLocalization.Cancelling;
+        public string Start => Current.Start;
 
-        public string Cancel => CurrentLocalization.Cancel;
+        public string Cancelling => Current.Cancelling;
 
-        public string OperationCanceled => CurrentLocalization.OperationCanceled;
+        public string Cancel => Current.Cancel;
 
-        public string OperationFinishedIn => CurrentLocalization.OperationFinishedIn;
+        public string OperationCanceled => Current.OperationCanceled;
 
-        public string OperationError => CurrentLocalization.OperationError;
+        public string OperationFinishedIn => Current.OperationFinishedIn;
+
+        public string OperationError => Current.OperationError;
+
+        public string JoinInputFiles => Current.JoinInputFiles;
+
+        public string JoinOutputFile => Current.JoinOutputFile;
+
+        public string TabNameJoin => Current.TabNameJoin;
+
+        public string TabNameSplit => Current.TabNameSplit;
+
+        public string TabNameHash => Current.TabNameHash;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+
+    }
+
+    public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);
+
+    public class LocalizationChangedHandlerArgs
+    {
+        public LocalizationChangedHandlerArgs(ILocalization newLocalization)
+        {
+            NewLocalization = newLocalization;
+        }
+
+        public ILocalization NewLocalization { get; }
     }
 }
