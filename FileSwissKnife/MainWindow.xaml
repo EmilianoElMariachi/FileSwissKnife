@@ -83,9 +83,18 @@
                 <ColumnDefinition Width="Auto"  />
                 <ColumnDefinition Width="5"  />
                 <ColumnDefinition />
+                <ColumnDefinition Width="5"  />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Command="{Binding Path=RunCommand}" HorizontalAlignment="Center" Grid.Column="0" MinWidth="60" Height="30" Content="{Binding Path=RunTaskButtonText, FallbackValue=Go!}" />
+            <Button Command="{Binding Path=RunCommand}" HorizontalAlignment="Center" Grid.Column="0" MinWidth="60" Height="30" Content="{Binding Path=StartActionButtonText, FallbackValue=Go!}" />
             <customControls:ProgressBarExt  Grid.Column="2" Minimum="0" Maximum="100.0" Height="30" Value="{Binding Path=ProgressBarValue}" Text="{Binding Path=ProgressBarText}" />
+            <Image Grid.Column="4" Source="./UIResources/Error_256x256.png" Height="26" Visibility="{Binding Path=ErrorIconVisibility}" ToolTip="{Binding Path=ErrorMessage}">
+                <Image.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=HideError}" Command="{Binding HideErrorMessageCommand}" />
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
         </Grid>
 
     </Grid>

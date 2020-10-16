@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Utils;
@@ -11,24 +12,25 @@ namespace FileSwissKnife
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private bool _isTaskRunning;
-        private string? _startTaskButtonText;
         private double _progressBarValue;
         private CancellationTokenSource? _cancellationTokenSource;
         private string? _progressBarText;
         private readonly FileJoiner _fileJoiner;
-        private string _filesToJoin;
-        private string _runTaskButtonText;
+        private string _filesToJoin = "";
+        private string _startActionButtonText;
         private int _selectedModeIndex;
+        private Visibility _errorIconVisibility = Visibility.Collapsed;
+        private string _errorMessage;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindowViewModel()
         {
             RunCommand = new RelayCommand(OnRunOrCancelCommand, CanRunCommand);
-
+            HideErrorMessageCommand = new RelayCommand(OnCloseErrorMessage);
             _fileJoiner = new FileJoiner();
 
-            RunTaskButtonText = Localizer.Instance.Start;
+            StartActionButtonText = Localizer.Instance.Start;
         }
 
         public int SelectedModeIndex
@@ -41,7 +43,7 @@ namespace FileSwissKnife
             }
         }
 
-        private Mode SelectedMode => (Mode) _selectedModeIndex;
+        private Mode SelectedMode => (Mode)_selectedModeIndex;
 
         public string? JoinOutputFile
         {
@@ -83,15 +85,16 @@ namespace FileSwissKnife
             }
         }
 
-        public string? StartTaskButtonText
+        public Visibility ErrorIconVisibility
         {
-            get => _startTaskButtonText;
+            get => _errorIconVisibility;
             set
             {
-                _startTaskButtonText = value;
-                NotifyPropertyChanged(nameof(StartTaskButtonText));
+                _errorIconVisibility = value;
+                NotifyPropertyChanged(nameof(ErrorIconVisibility));
             }
         }
+
 
         public double ProgressBarValue
         {
@@ -103,17 +106,34 @@ namespace FileSwissKnife
             }
         }
 
-        public string RunTaskButtonText
+        public string StartActionButtonText
         {
-            get => _runTaskButtonText;
+            get => _startActionButtonText;
             set
             {
-                _runTaskButtonText = value;
-                NotifyPropertyChanged(nameof(RunTaskButtonText));
+                _startActionButtonText = value;
+                NotifyPropertyChanged(nameof(StartActionButtonText));
+            }
+        }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                NotifyPropertyChanged(nameof(ErrorMessage));
             }
         }
 
         public ICommand RunCommand { get; }
+
+        public ICommand HideErrorMessageCommand { get; }
+
+        private void OnCloseErrorMessage()
+        {
+            ErrorIconVisibility = Visibility.Collapsed;
+        }
 
         private bool CanRunCommand()
         {
@@ -161,7 +181,7 @@ namespace FileSwissKnife
                 var percent = args.Percent;
                 this.ProgressBarValue = percent;
                 this.ProgressBarText = percent.ToString("0.00");
-                RunTaskButtonText = Localizer.Instance.Cancel;
+                StartActionButtonText = Localizer.Instance.Cancel;
             };
 
             var startDateTime = DateTime.Now;
@@ -180,11 +200,13 @@ namespace FileSwissKnife
             catch (Exception ex)
             {
                 ProgressBarText = Localizer.Instance.OperationError;
+                ErrorIconVisibility = Visibility.Visible;
+                ErrorMessage = ex.Message;
             }
             finally
             {
                 _cancellationTokenSource = null;
-                RunTaskButtonText = Localizer.Instance.Start;
+                StartActionButtonText = Localizer.Instance.Start;
                 IsTaskRunning = false;
             }
         }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using FileSwissKnife.Utils;
 
@@ -11,9 +9,6 @@ namespace FileSwissKnife
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Task? _joinTask;
-        private CancellationTokenSource? _cts;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -36,7 +31,6 @@ namespace FileSwissKnife
                 }
             }
         }
-
 
         private void TextBoxFilesToJoin_OnDrop(object sender, DragEventArgs e)
         {

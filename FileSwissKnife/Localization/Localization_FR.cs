@@ -27,5 +27,7 @@
         public string TabNameSplit => "Séparer";
 
         public string TabNameHash => "Hacher";
+
+        public string HideError => "Masquer";
     }
 }

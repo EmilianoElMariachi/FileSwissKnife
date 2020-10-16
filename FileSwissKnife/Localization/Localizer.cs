@@ -81,6 +81,8 @@ namespace FileSwissKnife.Localization
 
         public string TabNameHash => Current.TabNameHash;
 
+        public string HideError => Current.HideError;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
 

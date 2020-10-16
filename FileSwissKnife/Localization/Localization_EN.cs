@@ -27,5 +27,7 @@
         public string TabNameSplit => "Split";
 
         public string TabNameHash => "Hash";
+
+        public string HideError => "Hide";
     }
 }

@@ -26,5 +26,6 @@
 
         string TabNameHash { get; }
 
+        string HideError { get; }
     }
 }
