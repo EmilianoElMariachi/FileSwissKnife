@@ -27,7 +27,7 @@ namespace FileSwissKnife
         public MainWindowViewModel()
         {
             RunCommand = new RelayCommand(OnRunOrCancelCommand, CanRunCommand);
-            HideErrorMessageCommand = new RelayCommand(OnCloseErrorMessage);
+            HideErrorCommand = new RelayCommand(OnHideError);
             _fileJoiner = new FileJoiner();
 
             StartActionButtonText = Localizer.Instance.Start;
@@ -128,11 +128,11 @@ namespace FileSwissKnife
 
         public ICommand RunCommand { get; }
 
-        public ICommand HideErrorMessageCommand { get; }
+        public ICommand HideErrorCommand { get; }
 
-        private void OnCloseErrorMessage()
+        private void OnHideError()
         {
-            ErrorIconVisibility = Visibility.Collapsed;
+            ClearError();
         }
 
         private bool CanRunCommand()
@@ -184,12 +184,16 @@ namespace FileSwissKnife
                 StartActionButtonText = Localizer.Instance.Cancel;
             };
 
+
             var startDateTime = DateTime.Now;
 
-            _cancellationTokenSource = new CancellationTokenSource();
             try
             {
+                reportProgressAction.CheckPrerequisites();
+
                 IsTaskRunning = true;
+                _cancellationTokenSource = new CancellationTokenSource();
+                ClearError();
                 await Task.Run(() =>
                 {
                     reportProgressAction.Run(_cancellationTokenSource.Token);
@@ -200,8 +204,7 @@ namespace FileSwissKnife
             catch (Exception ex)
             {
                 ProgressBarText = Localizer.Instance.OperationError;
-                ErrorIconVisibility = Visibility.Visible;
-                ErrorMessage = ex.Message;
+                ShowError(ex.Message);
             }
             finally
             {
@@ -209,6 +212,18 @@ namespace FileSwissKnife
                 StartActionButtonText = Localizer.Instance.Start;
                 IsTaskRunning = false;
             }
+        }
+
+        private void ShowError(string message)
+        {
+            ErrorIconVisibility = Visibility.Visible;
+            ErrorMessage = message;
+        }
+
+        private void ClearError()
+        {
+            ErrorIconVisibility = Visibility.Collapsed;
+            ErrorMessage = "";
         }
 
         private void NotifyPropertyChanged(string propertyName)

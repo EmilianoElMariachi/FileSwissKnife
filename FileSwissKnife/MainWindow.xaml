@@ -91,7 +91,7 @@
             <Image Grid.Column="4" Source="./UIResources/Error_256x256.png" Height="26" Visibility="{Binding Path=ErrorIconVisibility}" ToolTip="{Binding Path=ErrorMessage}">
                 <Image.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=HideError}" Command="{Binding HideErrorMessageCommand}" />
+                        <MenuItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=HideError}" Command="{Binding HideErrorCommand}" />
                     </ContextMenu>
                 </Image.ContextMenu>
             </Image>

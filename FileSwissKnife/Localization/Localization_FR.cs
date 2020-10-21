@@ -29,5 +29,13 @@
         public string TabNameHash => "Hacher";
 
         public string HideError => "Masquer";
+
+        public string OutputFileCantBeUndefined => "Veuillez définir le fichier de sortie!";
+
+        public string CanOverrideOutputFile => "Le fichier de sortie «{0}» existe déjà, voulez-vous le remplacer?";
+
+        public string YouChooseNotToOverride => "Vous avez finalement choisi de ne pas écraser le fichier de sortie «{0}».";
+
+        public string Override => "Ecraser?";
     }
 }

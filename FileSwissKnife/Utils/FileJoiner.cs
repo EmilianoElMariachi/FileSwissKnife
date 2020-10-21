@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows;
+using FileSwissKnife.Localization;
 
 namespace FileSwissKnife.Utils
 {
@@ -16,6 +18,26 @@ namespace FileSwissKnife.Utils
 
         public string? OutputFile { get; set; }
 
+        public void CheckPrerequisites()
+        {
+            // TODO: ajouter un contrôle sur les fichiers d'entrée
+
+
+            var outputFile = OutputFile;
+
+            if (string.IsNullOrEmpty(outputFile))
+                throw new InvalidOperationException(Localizer.Instance.OutputFileCantBeUndefined);
+
+            if (!File.Exists(outputFile))
+                return;
+
+            var currentMainWindow = Application.Current.MainWindow;
+            var messageBoxResult = MessageBox.Show(currentMainWindow, string.Format(Localizer.Instance.CanOverrideOutputFile, outputFile), Localizer.Instance.Override, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+            if (messageBoxResult != MessageBoxResult.Yes)
+                throw new InvalidOperationException(string.Format(Localizer.Instance.YouChooseNotToOverride, outputFile));
+
+        }
+
         public void Run(CancellationToken cancellationToken)
         {
 
@@ -23,7 +45,6 @@ namespace FileSwissKnife.Utils
             var outputFile = OutputFile ?? throw new ArgumentNullException(nameof(OutputFile));
             try
             {
-
                 var totalBytes = ComputeTotalBytesSize(inputFiles);
 
                 var buffer = new byte[4096];

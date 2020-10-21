@@ -29,5 +29,12 @@
         public string TabNameHash => "Hash";
 
         public string HideError => "Hide";
+        public string OutputFileCantBeUndefined => "Please, specify the output file!";
+
+        public string CanOverrideOutputFile => "Output file «{0}» already exists, do you want to replace it?";
+
+        public string YouChooseNotToOverride => "You finally decided not to override the output file «{0}»...";
+
+        public string Override => "Override?";
     }
 }

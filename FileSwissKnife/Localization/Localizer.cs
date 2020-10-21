@@ -32,6 +32,8 @@ namespace FileSwissKnife.Localization
             _current = initialLocalization ?? _defaultLocalization;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public IEnumerable<ILocalization> AvailableLocalizations => _localizations;
 
         public ILocalization Current
@@ -83,10 +85,13 @@ namespace FileSwissKnife.Localization
 
         public string HideError => Current.HideError;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public string OutputFileCantBeUndefined => Current.OutputFileCantBeUndefined;
 
+        public string CanOverrideOutputFile => Current.CanOverrideOutputFile;
 
+        public string YouChooseNotToOverride => Current.YouChooseNotToOverride;
 
+        public string Override => Current.Override;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);
