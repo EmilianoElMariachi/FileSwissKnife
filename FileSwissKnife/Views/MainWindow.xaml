@@ -1,0 +1,33 @@
+﻿<Window x:Class="FileSwissKnife.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:loc="clr-namespace:FileSwissKnife.Localization"
+        xmlns:views="clr-namespace:FileSwissKnife.Views"
+        xmlns:viewModels="clr-namespace:FileSwissKnife.ViewModels"
+        mc:Ignorable="d"
+        Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TabControl SelectedValue="{Binding Path=SelectedViewModel}" SelectedValuePath="DataContext">
+            <TabItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameJoin}"
+                     DataContext="{Binding Path=JoinViewModel}">
+                <views:JoinView/>
+            </TabItem>
+            <TabItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameSplit}"
+                     DataContext="{Binding Path=SplitViewModel}">
+                <views:SplitView/>
+            </TabItem>
+            <TabItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameHash}"
+                     DataContext="{Binding Path=HashViewModel}">
+                <views:HashView/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

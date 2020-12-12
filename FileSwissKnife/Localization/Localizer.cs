@@ -17,7 +17,7 @@ namespace FileSwissKnife.Localization
         private readonly List<ILocalization> _localizations = new List<ILocalization>();
         private ILocalization _current;
 
-        public event LocalizationChangedHandler LocalizationChanged;
+        public event LocalizationChangedHandler? LocalizationChanged;
 
         private Localizer()
         {
@@ -32,7 +32,7 @@ namespace FileSwissKnife.Localization
             _current = initialLocalization ?? _defaultLocalization;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public IEnumerable<ILocalization> AvailableLocalizations => _localizations;
 
@@ -61,11 +61,13 @@ namespace FileSwissKnife.Localization
 
         public string DragMeSomeFilesToJoin => Current.DragMeSomeFilesToJoin;
 
-        public string Start => Current.Start;
+        public string DragMeSomeFilesToHash => Current.DragMeSomeFilesToHash;
+
+        public string StartJoin => Current.StartJoin;
 
         public string Cancelling => Current.Cancelling;
 
-        public string Cancel => Current.Cancel;
+        public string CancelJoin => Current.CancelJoin;
 
         public string OperationCanceled => Current.OperationCanceled;
 
@@ -92,6 +94,9 @@ namespace FileSwissKnife.Localization
         public string YouChooseNotToOverride => Current.YouChooseNotToOverride;
 
         public string Override => Current.Override;
+
+        public string HashInputFiles => Current.HashInputFiles;
+
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

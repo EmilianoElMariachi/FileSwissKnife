@@ -4,29 +4,28 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using FileSwissKnife.Localization;
 
 namespace FileSwissKnife.Utils
 {
-    public class FileJoiner : IReportProgressAction
+    public class FileJoiner : ProgressReporterBase
     {
 
-        public event ProgressHandler? OnProgress;
-
-        public string[]? InputFiles { get; set; }
-
-        public string? OutputFile { get; set; }
-
-        public void CheckPrerequisites()
+        private void CheckPrerequisites(string[] inputFiles, string outputFile)
         {
-            // TODO: ajouter un contrôle sur les fichiers d'entrée
+            if (inputFiles == null)
+                throw new ArgumentNullException(nameof(inputFiles)); // TODO: à localiser?
 
-
-            var outputFile = OutputFile;
+            foreach (var inputFile in inputFiles)
+            {
+                if (string.IsNullOrEmpty(inputFile))
+                    throw new ArgumentException(); // TODO: à localiser
+            }
 
             if (string.IsNullOrEmpty(outputFile))
-                throw new InvalidOperationException(Localizer.Instance.OutputFileCantBeUndefined);
+                throw new ArgumentException(Localizer.Instance.OutputFileCantBeUndefined);
 
             if (!File.Exists(outputFile))
                 return;
@@ -35,59 +34,60 @@ namespace FileSwissKnife.Utils
             var messageBoxResult = MessageBox.Show(currentMainWindow, string.Format(Localizer.Instance.CanOverrideOutputFile, outputFile), Localizer.Instance.Override, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
             if (messageBoxResult != MessageBoxResult.Yes)
                 throw new InvalidOperationException(string.Format(Localizer.Instance.YouChooseNotToOverride, outputFile));
-
         }
 
-        public void Run(CancellationToken cancellationToken)
+        public Task Run(CancellationToken cancellationToken, string[] inputFiles, string outputFile)
         {
+            CheckPrerequisites(inputFiles, outputFile);
 
-            var inputFiles = InputFiles ?? throw new ArgumentNullException(nameof(InputFiles));
-            var outputFile = OutputFile ?? throw new ArgumentNullException(nameof(OutputFile));
-            try
-            {
-                var totalBytes = ComputeTotalBytesSize(inputFiles);
-
-                var buffer = new byte[4096];
-
-                using var outStream = File.Create(outputFile);
-                outStream.SetLength(totalBytes);
-
-                var nbBytesJoined = 0L;
-
-                foreach (var file in inputFiles)
-                {
-                    using var fileStream = File.OpenRead(file);
-
-                    while (true)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-
-                        var nbBytesRead = fileStream.Read(buffer, 0, buffer.Length);
-
-                        if (nbBytesRead <= 0)
-                            break;
-
-                        outStream.Write(buffer, 0, nbBytesRead);
-                        nbBytesJoined += nbBytesRead;
-
-                        var percent = (double)(nbBytesJoined * 100 / (decimal)totalBytes);
-                        NotifyProgressChanged(percent);
-                    }
-                }
-            }
-            catch (Exception ex)
+            return Task.Run(() =>
             {
                 try
                 {
-                    File.Delete(outputFile);
-                }
-                catch
-                {
-                }
+                    var totalBytes = ComputeTotalBytesSize(inputFiles);
 
-                if (!(ex is OperationCanceledException))
-                    throw;
-            }
+                    var buffer = new byte[4096];
+
+                    using var outStream = File.Create(outputFile);
+                    outStream.SetLength(totalBytes);
+
+                    var nbBytesJoined = 0L;
+
+                    foreach (var file in inputFiles)
+                    {
+                        using var fileStream = File.OpenRead(file);
+
+                        while (true)
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+
+                            var nbBytesRead = fileStream.Read(buffer, 0, buffer.Length);
+
+                            if (nbBytesRead <= 0)
+                                break;
+
+                            outStream.Write(buffer, 0, nbBytesRead);
+                            nbBytesJoined += nbBytesRead;
+
+                            var percent = (double)(nbBytesJoined * 100 / (decimal)totalBytes);
+                            NotifyProgressChanged(percent);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        File.Delete(outputFile);
+                    }
+                    catch
+                    {
+                    }
+
+                    if (!(ex is OperationCanceledException))
+                        throw;
+                }
+            }, cancellationToken);
         }
 
         public static string[] GuessFilesToJoin(string fileExample, out string? outputFile)
@@ -166,12 +166,5 @@ namespace FileSwissKnife.Utils
         }
 
 
-        private void NotifyProgressChanged(double percent)
-        {
-            OnProgress?.Invoke(this, new ProgressHandlerArgs
-            {
-                Percent = percent
-            });
-        }
     }
 }

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace FileSwissKnife
+namespace FileSwissKnife.Utils.MVVM
 {
     public class RelayCommand : ICommand
     {

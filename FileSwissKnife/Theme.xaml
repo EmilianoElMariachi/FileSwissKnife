@@ -2,13 +2,24 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
                     xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
-                    xmlns:fileSwissKnife="clr-namespace:FileSwissKnife"
-                    >
+                    xmlns:views="clr-namespace:FileSwissKnife.Views">
 
     <Color x:Key="ControlLightColor">White</Color>
     <Color x:Key="BorderMediumColor">#FF888888</Color>
     <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
     <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+
+    <Style TargetType="CheckBox" x:Key="LeftTextCheckBox">
+        <Setter Property="FlowDirection" Value="RightToLeft" />
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ContentControl FlowDirection="LeftToRight" Content="{Binding}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <Style TargetType="customControls:TextBoxExt" x:Key="TextBoxDragWatermark">
         <Style.Setters>
@@ -43,7 +54,7 @@
     </Style>
 
 
-    <Style TargetType="fileSwissKnife:MainWindow">
+    <Style TargetType="views:MainWindow">
         <Setter Property="Background" Value="#FFA0A0A0" />
     </Style>
 
@@ -115,6 +126,9 @@
         </DoubleAnimation>
     </Storyboard>
 
+
+
+
     <!-- GROUPBOX -->
     <!--
     <Style TargetType="{x:Type GroupBox}">
@@ -146,10 +160,10 @@
                         <Border Grid.Row="0" Grid.Column="1" x:Name="GlowRectangleHead" CornerRadius="20,5,0,0" Opacity="0" Background="{StaticResource GlowFX}"></Border>
                         <Border Grid.Row="0" Grid.Column="1" x:Name="ButtonBorderHead" Opacity="1" BorderBrush="Black" BorderThickness="1" CornerRadius="20,5,0,0"></Border>
 
-                        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="BaseRectangle" Background="{StaticResource BaseColor}" CornerRadius="10,0,10,0"></Border>
-                        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="GlassRectangle" CornerRadius="10,0,10,0"  Background="{StaticResource GlassFX}"></Border>
-                        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="GlowRectangle" CornerRadius="10,0,10,0" Opacity="0" Background="{StaticResource GlowFX}"></Border>
-                        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="ButtonBorder" Opacity="1" BorderBrush="Black" BorderThickness="1" CornerRadius="10,0,10,0">
+                        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="BaseRectangle" Background="{StaticResource BaseColor}" CornerRadius="{StaticResource progressBarCornerRadius}"></Border>
+                        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="GlassRectangle" CornerRadius="{StaticResource progressBarCornerRadius}"  Background="{StaticResource GlassFX}"></Border>
+                        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="GlowRectangle" CornerRadius="{StaticResource progressBarCornerRadius}" Opacity="0" Background="{StaticResource GlowFX}"></Border>
+                        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="ButtonBorder" Opacity="1" BorderBrush="Black" BorderThickness="1" CornerRadius="{StaticResource progressBarCornerRadius}">
                             <ContentPresenter RecognizesAccessKey="True"  Margin="5"></ContentPresenter>
                         </Border>
                     </Grid>
@@ -242,7 +256,12 @@
     </Style>
 
     -->
+
+
     <!-- PROGRESSBAR -->
+
+    <CornerRadius x:Key="ProgressBarCornerRadius" BottomLeft="5" BottomRight="5" TopLeft="5" TopRight="5" />
+
     <Style TargetType="{x:Type customControls:ProgressBarExt}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -250,12 +269,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type customControls:ProgressBarExt}">
                     <Grid MinHeight="14" MinWidth="20">
-                        <Border x:Name="BaseRectangle" Background="{StaticResource BaseColor}" CornerRadius="10,0,10,0"></Border>
-                        <Border x:Name="GlassRectangle" CornerRadius="10,0,10,0"  Background="{StaticResource GlassFX}"></Border>
-                        <Border x:Name="animation" CornerRadius="10,0,10,0" Opacity=".7" Background="{StaticResource GlowFXProgress}" HorizontalAlignment="Left"></Border>
-                        <Border x:Name="PART_Indicator" CornerRadius="10,0,10,0" Background="{StaticResource GlowFXProgress}" HorizontalAlignment="Left"></Border>
-                        <Border x:Name="PART_Track" BorderThickness="1" CornerRadius="10,0,10,0" BorderBrush="Black"></Border>
-                        <Border x:Name="BordeCabeceraSombra" BorderThickness="2" CornerRadius="10,0,10,0" BorderBrush="DarkGray" Opacity=".2" Margin="1,1,1,0"></Border>
+                        <Border x:Name="BaseRectangle" Background="{StaticResource BaseColor}" CornerRadius="{StaticResource ProgressBarCornerRadius}"></Border>
+                        <Border x:Name="GlassRectangle" CornerRadius="{StaticResource ProgressBarCornerRadius}"  Background="{StaticResource GlassFX}"></Border>
+                        <Border x:Name="animation" CornerRadius="{StaticResource ProgressBarCornerRadius}" Opacity=".7" Background="{StaticResource GlowFXProgress}" HorizontalAlignment="Left"></Border>
+                        <Border x:Name="PART_Indicator" CornerRadius="{StaticResource ProgressBarCornerRadius}" Background="{StaticResource GlowFXProgress}" HorizontalAlignment="Left"></Border>
+                        <Border x:Name="PART_Track" BorderThickness="1" CornerRadius="5,5,5,5" BorderBrush="Black"></Border>
+                        <Border x:Name="BordeCabeceraSombra" BorderThickness="2" CornerRadius="{StaticResource ProgressBarCornerRadius}" BorderBrush="DarkGray" Opacity=".2" Margin="1,1,1,0"></Border>
                         <Label x:Name="Progress" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Foreground="White" Opacity=".7" 
                                Content="{TemplateBinding Text}"  />
                     </Grid>
@@ -680,19 +699,19 @@
                     <Grid>
                         <Border x:Name="BaseRectangle" 
                                     Background="{StaticResource BaseColor}" 
-                                    CornerRadius="10,0,10,0">
+                                    CornerRadius="{StaticResource progressBarCornerRadius}">
                         </Border>
                         <Border x:Name="GlassRectangle" 
                                     Background="{StaticResource GlassFX}" 
-                                    CornerRadius="10,0,10,0">
+                                    CornerRadius="{StaticResource progressBarCornerRadius}">
                         </Border>
                         <Border x:Name="GlowRectangle" 
                                     Background="{StaticResource GlowFX}" 
-                                    CornerRadius="10,0,10,0" 
+                                    CornerRadius="{StaticResource progressBarCornerRadius}" 
                                     Opacity="0">
                         </Border>
                         <Border x:Name="ButtonBorder" 
-                                    CornerRadius="10,0,10,0" 
+                                    CornerRadius="{StaticResource progressBarCornerRadius}" 
                                     BorderBrush="Black" 
                                     Opacity="1"  
                                     BorderThickness="1">

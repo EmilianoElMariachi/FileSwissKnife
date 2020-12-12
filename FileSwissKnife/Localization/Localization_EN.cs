@@ -6,11 +6,13 @@
 
         public string DragMeSomeFilesToJoin => "Drag me one or more files to join here :)";
 
-        public string Start => "Go!";
+        public string DragMeSomeFilesToHash => "Drag me one or more files to hash here :)";
+
+        public string StartJoin => "Join!";
 
         public string Cancelling => "Cancelling...";
 
-        public string Cancel => "Cancel";
+        public string CancelJoin => "Cancel";
 
         public string OperationCanceled => "Canceled";
 
@@ -18,7 +20,7 @@
 
         public string OperationError => "Error!";
 
-        public string JoinInputFiles => "Input files:";
+        public string JoinInputFiles => "Files to join:";
 
         public string JoinOutputFile => "Output file:";
 
@@ -29,6 +31,7 @@
         public string TabNameHash => "Hash";
 
         public string HideError => "Hide";
+
         public string OutputFileCantBeUndefined => "Please, specify the output file!";
 
         public string CanOverrideOutputFile => "Output file «{0}» already exists, do you want to replace it?";
@@ -36,5 +39,8 @@
         public string YouChooseNotToOverride => "You finally decided not to override the output file «{0}»...";
 
         public string Override => "Override?";
+
+        public string HashInputFiles => "File(s) to hash";
+
     }
 }

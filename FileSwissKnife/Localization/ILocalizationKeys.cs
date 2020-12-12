@@ -4,11 +4,13 @@
     {
         string DragMeSomeFilesToJoin { get; }
 
-        public string Start { get; }
+        string DragMeSomeFilesToHash { get; }
+
+        public string StartJoin { get; }
 
         string Cancelling { get; }
 
-        string Cancel { get; }
+        string CancelJoin { get; }
 
         string OperationCanceled { get; }
 
@@ -35,6 +37,8 @@
         string YouChooseNotToOverride { get; }
 
         string Override { get; }
+
+        string HashInputFiles { get; }
 
     }
 }

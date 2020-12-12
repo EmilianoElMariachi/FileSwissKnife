@@ -6,11 +6,13 @@
 
         public string DragMeSomeFilesToJoin => "Glisse moi un ou plusieurs fichiers à joindre par ici :)";
 
-        public string Start => "Go!";
+        public string DragMeSomeFilesToHash => "Glisse moi un ou plusieurs fichiers à hacher par ici :)";
+
+        public string StartJoin => "Go!";
 
         public string Cancelling => "Annulation...";
 
-        public string Cancel => "Annuler";
+        public string CancelJoin => "Annuler";
 
         public string OperationCanceled => "Annulé";
 
@@ -37,5 +39,8 @@
         public string YouChooseNotToOverride => "Vous avez finalement choisi de ne pas écraser le fichier de sortie «{0}».";
 
         public string Override => "Ecraser?";
+
+        public string HashInputFiles => "Fichier(s) à hacher:";
+
     }
 }

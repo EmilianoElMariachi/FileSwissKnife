@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="FileSwissKnife.Views.HashedFileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
+             xmlns:viewModels="clr-namespace:FileSwissKnife.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:HashedFileViewModel}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0" IsReadOnly="True" MinHeight="40" Margin="5" Text="{Binding Path=TextResult, Mode=OneWay}" FontFamily="Courier New" />
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button  Margin="5,0,0,0">Cancel</Button>
+                <Button  Margin="5,0,0,0">X</Button>
+            </StackPanel>
+
+            <customControls:ProgressBarExt Grid.Row="1" Height="15" 
+                                           Text="{Binding Path=ProgressBarText}" 
+                                           Value="{Binding Path=ProgressBarValue}"/>
+        </Grid>
+
+    </Grid>
+</UserControl>
