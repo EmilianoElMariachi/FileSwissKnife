@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Input;
@@ -10,19 +11,33 @@ namespace FileSwissKnife.ViewModels
     public class HashedFileViewModel : ViewModelBase
     {
         private readonly string _fileToHash;
-        private readonly string[] _hashAlgorithmNames;
+        private readonly Hash[] _hashes;
         private string _textResult;
         private string? _progressBarText;
         private double _progressBarValue;
         private CancellationTokenSource _cancellationTokenSource;
+        private int _displayLength;
+
+        private class InternalHash : Hash
+        {
+            public InternalHash(string hashAlgorithmName) : base(hashAlgorithmName)
+            {
+            }
+
+
+        }
 
         public HashedFileViewModel(string fileToHash, string[] hashAlgorithmNames)
         {
             _fileToHash = fileToHash;
-            _hashAlgorithmNames = hashAlgorithmNames;
+
+            // Recherche le nom de hash le plus long pour ensuite aligner les mots dans la fenêtre de résultat
+            _displayLength = hashAlgorithmNames.Aggregate(0, (acc, algorithmName) => algorithmName.Length > acc ? algorithmName.Length : acc);
+
+            _hashes = hashAlgorithmNames.Select(hashAlgorithmName => new Hash(hashAlgorithmName)).ToArray();
 
             HashOrCancelCommand = new RelayCommand(OnHashOrCancel);
-            InitDisplay();
+            UpdateDisplay();
         }
 
         public string TextResult
@@ -60,49 +75,30 @@ namespace FileSwissKnife.ViewModels
 
         private async void OnHashOrCancel()
         {
-
-            //private void HashFiles()
-            //{
-            //    //TODO: a effacer
-
-            //    var hashAlgorithmNames = new[] { "SHA1", "MD5", "SHA256", "SHA384", "SHA512" };
-
-            //    foreach (var file in FilesToHash.Text.Split(Environment.NewLine))
-            //    {
-            //        var computeHashes = FileHasher.ComputeHashes(file, hashAlgorithmNames);
-            //        for (var i = 0; i < hashAlgorithmNames.Length; i++)
-            //        {
-            //            var hashName = hashAlgorithmNames[i];
-            //            FilesToHash.AppendText(Environment.NewLine + hashName + "=" + computeHashes[i]);
-            //        }
-            //    }
-            //}
-
             _cancellationTokenSource = new CancellationTokenSource();
 
             var fileHasher = new FileHasher();
-            var hashes = await fileHasher.RunAsync(_cancellationTokenSource.Token, _hashAlgorithmNames, _fileToHash);
 
-            DisplayHashResults(hashes);
+            fileHasher.OnProgress += (sender, args) =>
+            {
+                this.ProgressBarValue = args.Percent;
+            };
+
+            await fileHasher.ComputeAsync(_cancellationTokenSource.Token, _fileToHash, _hashes);
+
+            UpdateDisplay();
         }
 
-        private void InitDisplay()
-        {
-            //throw new System.NotImplementedException();
-        }
-
-        private void DisplayHashResults(string[] hashes)
+        private void UpdateDisplay()
         {
             var sb = new StringBuilder();
             sb.Append(_fileToHash + Environment.NewLine);
 
-            for (var i = 0; i < _hashAlgorithmNames.Length; i++)
+            foreach (var hash in _hashes)
             {
-                var hashAlgorithmName = _hashAlgorithmNames[i];
-                var hashResult = hashes[i];
-                sb.Append(hashAlgorithmName);
+                sb.Append(hash.AlgorithmName + new string(' ', _displayLength - hash.AlgorithmName.Length));
                 sb.Append(": ");
-                sb.Append(hashResult);
+                sb.Append(hash.ComputedValue);
                 sb.Append(Environment.NewLine);
             }
 
