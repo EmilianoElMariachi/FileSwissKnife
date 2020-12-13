@@ -90,8 +90,18 @@ namespace FileSwissKnife.Utils
             }, cancellationToken);
         }
 
-        public static string[] GuessFilesToJoin(string fileExample, out string? outputFile)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileExample"></param>
+        /// <param name="inputFiles"></param>
+        /// <param name="outputFile"></param>
+        /// <returns></returns>
+        public static bool TryGuessFilesToJoin(string fileExample, out string[]? inputFiles, out string? outputFile)
         {
+            inputFiles = null;
+            outputFile = null;
+
             var regex = new Regex("(.*?)(\\d+)([^\\d]*)");
 
             var fileName = Path.GetFileName(fileExample);
@@ -99,10 +109,7 @@ namespace FileSwissKnife.Utils
             var match = regex.Match(fileName);
 
             if (!match.Success)
-            {
-                outputFile = null;
-                return new string[0];
-            }
+                return false;
 
             var prefix = match.Groups[1].Value.Trim();
             //var digits = match.Groups[2].Value;
@@ -124,10 +131,7 @@ namespace FileSwissKnife.Utils
             }
 
             if (filesWithNumber.Count <= 0)
-            {
-                outputFile = null;
-                return new string[0];
-            }
+                return false;
 
             string outputFileName;
             if (prefix == "" && suffix == "") // Case 123 => Parent dir name
@@ -156,8 +160,8 @@ namespace FileSwissKnife.Utils
 
             filesWithNumber.Sort((t1, t2) => t1.Item2 - t2.Item2);
 
-
-            return filesWithNumber.Select(tuple => tuple.Item1).ToArray();
+            inputFiles = filesWithNumber.Select(tuple => tuple.Item1).ToArray();
+            return true;
         }
 
         private static long ComputeTotalBytesSize(IEnumerable<string> files)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -172,7 +173,30 @@ namespace FileSwissKnife.ViewModels
 
         public void OnFilesDropped(string[] files)
         {
-            InputFiles = string.Join(Environment.NewLine, files);
+            if (files.Length == 1)
+            {
+                var file = files[0];
+                if (File.Exists(file))
+                {
+                    if (FileJoiner.TryGuessFilesToJoin(file, out var inputFiles, out var outputFile))
+                    {
+                        InputFiles = string.Join(Environment.NewLine, inputFiles);
+                        OutputFile = outputFile;
+                    }
+                    else
+                    {
+                        InputFiles = string.Join(Environment.NewLine, files);
+                    }
+                }
+                else if (Directory.Exists(file))
+                {
+                    // TODO: à implémenter
+                }
+            }
+            else
+            {
+                InputFiles = string.Join(Environment.NewLine, files);
+            }
         }
 
         private void CancelTask()
