@@ -8,74 +8,36 @@
              mc:Ignorable="d" 
              d:DesignWidth="400" d:DesignHeight="100" d:DataContext="{d:DesignInstance viewModels:HashedFileViewModel}">
 
-    <UserControl.Resources>
-        <Color x:Key="DefaultBackgroundColor">LightGray</Color>
-        <Color x:Key="MainColorDark">#1575AD</Color>
-        <Color x:Key="MainColorLight">#1FACFF</Color>
-        <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="{StaticResource DefaultBackgroundColor}" />
-        <SolidColorBrush x:Key="MainColorBrushDark" Color="{StaticResource MainColorDark}" />
-        <SolidColorBrush x:Key="MainColorBrushLight" Color="{StaticResource MainColorLight}" />
-        <Style x:Key="CloseButton" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border>
-                            <Grid>
-                                <Ellipse x:Name="Ellipse"
-                                    Fill="{StaticResource DefaultBackgroundBrush}"
-                                    Stroke="{StaticResource MainColorBrushDark}"
-                                    StrokeThickness="1"
-                                    />
-                                <Separator x:Name="Sep1" Background="{StaticResource MainColorBrushDark}" Height="1">
-                                    <Separator.LayoutTransform>
-                                        <RotateTransform Angle="45"/>
-                                    </Separator.LayoutTransform>
-                                </Separator>
-                                <Separator x:Name="Sep2" Background="{StaticResource MainColorBrushDark}" Height="1">
-                                    <Separator.LayoutTransform>
-                                        <RotateTransform Angle="-45"/>
-                                    </Separator.LayoutTransform>
-                                </Separator>
-                            </Grid>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="MouseOver">
-                                        <Storyboard>
-                                            <ColorAnimation Duration="0:0:0.3" Storyboard.TargetName="Sep1" Storyboard.TargetProperty="(Separator.Background).(SolidColorBrush.Color)" To="{StaticResource MainColorLight}"/>
-                                            <ColorAnimation Duration="0:0:0.3" Storyboard.TargetName="Sep2" Storyboard.TargetProperty="(Separator.Background).(SolidColorBrush.Color)" To="{StaticResource MainColorLight}"/>
-                                            <ColorAnimation Duration="0:0:0.3" Storyboard.TargetName="Ellipse" Storyboard.TargetProperty="(Ellipse.Stroke).(SolidColorBrush.Color)" To="{StaticResource MainColorLight}"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed" />
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-
     <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+
         <TextBox Grid.Column="0" IsReadOnly="True" MinHeight="40" Text="{Binding Path=TextResult, Mode=OneWay}" FontFamily="Courier New" />
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <customControls:ProgressBarExt  Height="12" 
+                                            Text="{Binding Path=ProgressBarText}" 
+                                            Value="{Binding Path=ProgressBarValue}" Margin="5,5,0,0" />
+        </Grid>
+
+
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Button Margin="5,0,0,0">Cancel</Button>
-                <Button Margin="5,0,0,0" Style="{StaticResource CloseButton}" Width="20" Height="20">X</Button>
+            <StackPanel Grid.Row="0">
+                <Button Margin="5" Style="{StaticResource CloseButton}" Width="20" Height="20">X</Button>
+                <Button Margin="5">Cancel</Button>
             </StackPanel>
 
-            <customControls:ProgressBarExt Grid.Row="1" Height="15" 
-                                           Text="{Binding Path=ProgressBarText}" 
-                                           Value="{Binding Path=ProgressBarValue}" Margin="5,5,0,0" />
+
         </Grid>
 
     </Grid>

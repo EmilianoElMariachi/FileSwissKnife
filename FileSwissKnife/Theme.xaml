@@ -2,12 +2,63 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
                     xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
-                    xmlns:views="clr-namespace:FileSwissKnife.Views">
+                    xmlns:views="clr-namespace:FileSwissKnife.Views"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <Color x:Key="ControlLightColor">White</Color>
     <Color x:Key="BorderMediumColor">#FF888888</Color>
     <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
     <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+
+    <Color x:Key="DefaultBackgroundColor">#686868</Color>
+    <Color x:Key="MainColorDark">#1575AD</Color>
+    <Color x:Key="MainColorLight">#7AC0FE</Color>
+    <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="{StaticResource DefaultBackgroundColor}" />
+    <SolidColorBrush x:Key="MainColorBrushDark" Color="{StaticResource MainColorDark}" />
+    <SolidColorBrush x:Key="MainColorBrushLight" Color="{StaticResource MainColorLight}" />
+
+
+    <Style x:Key="CloseButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <ControlTemplate.Resources>
+                        <system:Double x:Key="LineRadius">2</system:Double>
+                        <system:Double x:Key="LineWidth">10</system:Double>
+                        <system:Double x:Key="LineHeight">70</system:Double>
+                    </ControlTemplate.Resources>
+                    <Border>
+                        <Viewbox>
+                            <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
+                                <Ellipse Width="100" Height="100">
+                                    <Ellipse.Style>
+                                        <Style TargetType="Ellipse">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=Grid, Path=IsMouseOver}" Value="True" >
+                                                    <Setter Property="Fill" Value="{StaticResource DefaultBackgroundBrush}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Ellipse.Style>
+                                </Ellipse>
+                                <Rectangle Width="{StaticResource LineWidth}" Height="{StaticResource LineHeight}" Fill="{StaticResource MainColorBrushLight}" RadiusX="{StaticResource LineRadius}" RadiusY="{StaticResource LineRadius}" >
+                                    <Rectangle.LayoutTransform>
+                                        <RotateTransform Angle="-45"/>
+                                    </Rectangle.LayoutTransform>
+                                </Rectangle>
+                                <Rectangle Width="{StaticResource LineWidth}" Height="{StaticResource LineHeight}" Fill="{StaticResource MainColorBrushLight}" RadiusX="{StaticResource LineRadius}" RadiusY="{StaticResource LineRadius}" >
+                                    <Rectangle.LayoutTransform>
+                                        <RotateTransform Angle="45"/>
+                                    </Rectangle.LayoutTransform>
+                                </Rectangle>
+                            </Grid>
+                        </Viewbox>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <Style TargetType="CheckBox" x:Key="LeftTextCheckBox">
         <Setter Property="FlowDirection" Value="RightToLeft" />
