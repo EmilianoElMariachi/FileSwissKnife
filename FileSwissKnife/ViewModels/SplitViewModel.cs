@@ -1,8 +1,11 @@
-﻿using FileSwissKnife.Utils.MVVM;
+﻿using FileSwissKnife.Localization;
 
 namespace FileSwissKnife.ViewModels
 {
-    public class SplitViewModel: ViewModelBase
+    public class SplitViewModel: TabViewModelBase
     {
+        public override string DisplayName => Localizer.Instance.TabNameSplit;
+
+        public override string TechName => "Split";
     }
 }

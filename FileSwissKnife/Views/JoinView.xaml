@@ -53,7 +53,7 @@
                 <ColumnDefinition Width="5"  />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Content="{Binding Path=JoinActionText, FallbackValue=Join!}"  Command="{Binding Path=JoinCommand}" HorizontalAlignment="Center" Grid.Column="0" MinWidth="60" Height="30"/>
+            <Button Content="{Binding Path=JoinActionText, FallbackValue=Join!}"  Command="{Binding Path=JoinOrCancelCommand}" HorizontalAlignment="Center" Grid.Column="0" MinWidth="60" Height="30"/>
             <customControls:ProgressBarExt  Grid.Column="2" Minimum="0" Maximum="100.0" Height="30" Value="{Binding Path=ProgressBarValue}" Text="{Binding Path=ProgressBarText}" />
             <Image Grid.Column="4"  Height="26" Visibility="{Binding Path=ErrorIconVisibility}" ToolTip="{Binding Path=ErrorMessage}" Source="/UIResources/Error_256x256.png">
                 <Image.ContextMenu>

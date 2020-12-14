@@ -1,25 +1,47 @@
-﻿using FileSwissKnife.Utils.MVVM;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using FileSwissKnife.Properties;
+using FileSwissKnife.Utils.MVVM;
 
 namespace FileSwissKnife.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ViewModelBase? _selectedViewModel;
+        private TabViewModelBase? _selectedTab;
 
-        public ViewModelBase? SelectedViewModel
+
+        public MainWindowViewModel()
         {
-            get => _selectedViewModel;
+            Application.Current.Exit += OnAppExit;
+            Tabs = new TabViewModelBase[] { new JoinViewModel(), new SplitViewModel(), new HashViewModel() };
+
+
+            var tabToSelect = Tabs.FirstOrDefault(tab => string.Equals(tab.TechName, Settings.Default.LastActiveTabTechName, StringComparison.OrdinalIgnoreCase));
+
+            SelectedTab = tabToSelect ?? Tabs[0];
+        }
+
+        private void OnAppExit(object sender, ExitEventArgs e)
+        {
+            var selectedTab = SelectedTab;
+            if (selectedTab != null)
+            {
+                Settings.Default.LastActiveTabTechName = selectedTab.TechName;
+                Settings.Default.Save();
+            }
+        }
+
+        public TabViewModelBase? SelectedTab
+        {
+            get => _selectedTab;
             set
             {
-                _selectedViewModel = value;
+                _selectedTab = value;
                 NotifyPropertyChanged();
             }
         }
 
-        public JoinViewModel JoinViewModel { get; } = new JoinViewModel();
-
-        public SplitViewModel SplitViewModel { get; } = new SplitViewModel();
-
-        public HashViewModel HashViewModel { get; } = new HashViewModel();
+        public TabViewModelBase[] Tabs { get; }
     }
 }

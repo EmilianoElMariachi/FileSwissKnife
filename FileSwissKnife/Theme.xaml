@@ -13,9 +13,12 @@
     <Color x:Key="DefaultBackgroundColor">#686868</Color>
     <Color x:Key="MainColorDark">#1575AD</Color>
     <Color x:Key="MainColorLight">#7AC0FE</Color>
+    <Color x:Key="FrameBorderColor">#827DFF</Color>
+
     <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="{StaticResource DefaultBackgroundColor}" />
     <SolidColorBrush x:Key="MainColorBrushDark" Color="{StaticResource MainColorDark}" />
     <SolidColorBrush x:Key="MainColorBrushLight" Color="{StaticResource MainColorLight}" />
+    <SolidColorBrush x:Key="FrameBorderBrush" Color="{StaticResource FrameBorderColor}" />
 
 
     <Style x:Key="CloseButton" TargetType="Button">

@@ -8,37 +8,41 @@
              mc:Ignorable="d" 
              d:DesignWidth="400" d:DesignHeight="100" d:DataContext="{d:DesignInstance viewModels:HashedFileViewModel}">
 
-    <Grid Margin="5">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-
-        <TextBox Grid.Column="0" IsReadOnly="True" MinHeight="40" Text="{Binding Path=TextResult, Mode=OneWay}" FontFamily="Courier New" />
-
-        <Grid Grid.Row="1" Grid.Column="0">
-            <customControls:ProgressBarExt  Height="12" 
-                                            Text="{Binding Path=ProgressBarText}" 
-                                            Value="{Binding Path=ProgressBarValue}" Margin="5,5,0,0" />
-        </Grid>
-
-
-        <Grid Grid.Column="1">
+    <Border BorderThickness="1" BorderBrush="{StaticResource FrameBorderBrush}">
+        <Grid Margin="5">
             <Grid.RowDefinitions>
+                <RowDefinition />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <Button Margin="5" Style="{StaticResource CloseButton}" Width="20" Height="20">X</Button>
-                <Button Margin="5">Cancel</Button>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" IsReadOnly="True" MinHeight="40" Text="{Binding Path=TextResult, Mode=OneWay}"
+                     FontFamily="Courier New" />
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <customControls:ProgressBarExt Height="18"
+                                               Visibility="{Binding Path=ProgressBarVisibility}"
+                                               Text="{Binding Path=ProgressBarText}"
+                                               Value="{Binding Path=ProgressBarValue}" Margin="0,3,0,0" />
+            </Grid>
 
 
-        </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <Button Margin="5" Command="{Binding Path=CloseCommand}" Style="{StaticResource CloseButton}"
+                            Width="20" Height="20" />
+                    <Button Margin="5">Cancel</Button>
+                </StackPanel>
 
-    </Grid>
+
+            </Grid>
+
+        </Grid></Border>
 </UserControl>

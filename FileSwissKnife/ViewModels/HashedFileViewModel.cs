@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
 using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
@@ -15,17 +16,11 @@ namespace FileSwissKnife.ViewModels
         private string _textResult;
         private string? _progressBarText;
         private double _progressBarValue;
-        private CancellationTokenSource _cancellationTokenSource;
-        private int _displayLength;
+        private CancellationTokenSource? _cancellationTokenSource;
+        private readonly int _displayLength;
+        private Visibility _progressBarVisibility = Visibility.Collapsed;
 
-        private class InternalHash : Hash
-        {
-            public InternalHash(string hashAlgorithmName) : base(hashAlgorithmName)
-            {
-            }
-
-
-        }
+        public event EventHandler? QueryClose;
 
         public HashedFileViewModel(string fileToHash, string[] hashAlgorithmNames)
         {
@@ -36,7 +31,8 @@ namespace FileSwissKnife.ViewModels
 
             _hashes = hashAlgorithmNames.Select(hashAlgorithmName => new Hash(hashAlgorithmName)).ToArray();
 
-            HashOrCancelCommand = new RelayCommand(OnHashOrCancel);
+            HashOrCancelCommand = new RelayCommand(HashOrCancel);
+            CloseCommand = new RelayCommand(Close, CanClose);
             UpdateDisplay();
         }
 
@@ -73,20 +69,54 @@ namespace FileSwissKnife.ViewModels
 
         public ICommand HashOrCancelCommand { get; }
 
-        private async void OnHashOrCancel()
+        public ICommand CloseCommand { get; }
+
+        public Visibility ProgressBarVisibility
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-
-            var fileHasher = new FileHasher();
-
-            fileHasher.OnProgress += (sender, args) =>
+            get => _progressBarVisibility;
+            private set
             {
-                this.ProgressBarValue = args.Percent;
-            };
+                _progressBarVisibility = value;
+                NotifyPropertyChanged();
+            }
+        }
 
-            await fileHasher.ComputeAsync(_cancellationTokenSource.Token, _fileToHash, _hashes);
+        private async void HashOrCancel()
+        {
+            if (_cancellationTokenSource != null)
+            {
+                if (!_cancellationTokenSource.IsCancellationRequested)
+                {
+                    _cancellationTokenSource.Cancel();
+                    UpdateDisplay();
+                }
 
-            UpdateDisplay();
+                return;
+            }
+
+            try
+            {
+                ProgressBarVisibility = Visibility.Visible;
+                _cancellationTokenSource = new CancellationTokenSource();
+
+                UpdateDisplay();
+
+                var fileHasher = new FileHasher();
+
+                fileHasher.OnProgress += (sender, args) => { this.ProgressBarValue = args.Percent; };
+
+                await fileHasher.ComputeAsync(_cancellationTokenSource.Token, _fileToHash, _hashes);
+            }
+            catch (Exception ex)
+            {
+                //TODO: implémenter l'affichage de l'erreur
+            }
+            finally
+            {
+                _cancellationTokenSource = null;
+                ProgressBarVisibility = Visibility.Collapsed;
+                UpdateDisplay();
+            }
         }
 
         private void UpdateDisplay()
@@ -98,11 +128,28 @@ namespace FileSwissKnife.ViewModels
             {
                 sb.Append(hash.AlgorithmName + new string(' ', _displayLength - hash.AlgorithmName.Length));
                 sb.Append(": ");
-                sb.Append(hash.ComputedValue);
+                sb.Append(_cancellationTokenSource != null ? "in progress..." : hash.ComputedValue); // TODO: à localiser
                 sb.Append(Environment.NewLine);
             }
 
             TextResult = sb.ToString();
+        }
+
+        private bool CanClose()
+        {
+            //TODO: implémenter ici
+            return true;
+        }
+
+        private void Close()
+        {
+            NotifyQueryClose();
+        }
+
+
+        private void NotifyQueryClose()
+        {
+            QueryClose?.Invoke(this, EventArgs.Empty);
         }
     }
 }

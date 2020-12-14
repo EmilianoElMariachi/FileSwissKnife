@@ -32,8 +32,7 @@ namespace FileSwissKnife.Utils
         public Task ComputeAsync(CancellationToken cancellationToken, string file, IEnumerable<Hash> hashes)
         {
 
-            var tuples = hashes
-                .Select(hash =>
+            var tuples = hashes.Select(hash =>
                 {
                     var algorithm = HashAlgorithm.Create(hash.AlgorithmName);
                     if (algorithm == null)
@@ -82,17 +81,5 @@ namespace FileSwissKnife.Utils
             }, cancellationToken);
 
         }
-    }
-
-    public class Hash
-    {
-        public Hash(string hashAlgorithmName)
-        {
-            AlgorithmName = hashAlgorithmName ?? throw new ArgumentNullException(nameof(hashAlgorithmName));
-        }
-
-        public string AlgorithmName { get; }
-
-        public string ComputedValue { get; set; }
     }
 }

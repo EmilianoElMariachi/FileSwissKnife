@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:FileSwissKnife.ViewModels"
              xmlns:views="clr-namespace:FileSwissKnife.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:HashViewModel }">
+             d:DesignHeight="300" d:DesignWidth="600" d:DataContext="{d:DesignInstance viewModels:HashViewModel }">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -25,8 +25,7 @@
 
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=HashInputFiles}" Style="{StaticResource Title}"/>
 
-
-            <ScrollViewer Grid.Row="1" customControls:DropFilesBehaviorExtension.IsEnabled="True">
+            <ScrollViewer Grid.Row="1" customControls:DropFilesBehaviorExtension.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding Path=HashedFiles}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="viewModels:HashedFileViewModel">
@@ -36,34 +35,33 @@
                 </ItemsControl>
             </ScrollViewer>
 
-            <!--<customControls:TextBoxExt x:Name="TextBoxFilesToHash"
-                                       Style="{StaticResource TextBoxDragWatermark}" 
-                                       Text="{Binding Path=InputFiles, UpdateSourceTrigger=PropertyChanged}"
-                                       Grid.Row="1" 
-                                       AllowDrop="True" 
-                                       HorizontalScrollBarVisibility="Auto"
-                                       VerticalScrollBarVisibility="Auto" 
-                                       AcceptsReturn="True"
-                                       WatermarkText="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToHash}"
-                                       PreviewDragOver="TextBoxFilesToHash_OnPreviewDragOver" 
-                                       Drop="TextBoxFilesToHash_OnDrop"/>-->
+            <!-- TODO implémenter la WaterMark-->
 
-            <ItemsControl  ItemsSource="{Binding Path=AvailableHashes}" Grid.Row="2" >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5">
-                            <CheckBox IsChecked="{Binding Path=Compute}" HorizontalAlignment="Center" Content="{Binding Path=HashName}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            <Grid Grid.Row="2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ItemsControl Grid.Column="0" ItemsSource="{Binding Path=AvailableHashes}" HorizontalAlignment="Center" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <CheckBox IsChecked="{Binding Path=Compute}" HorizontalAlignment="Center" Content="{Binding Path=HashName}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
 
-            <Button Content="{Binding Path=HashActionText, FallbackValue=Hash!}" Grid.Row="3" Command="{Binding Path=SelectFilesToHashCommand}" />
+                <Button Width="30" Grid.Column="1" Content="..." Command="{Binding Path=SelectFilesToHashCommand}" />
+
+            </Grid>
+
+
 
         </Grid>
 

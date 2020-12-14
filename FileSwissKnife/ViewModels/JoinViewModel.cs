@@ -10,7 +10,7 @@ using FileSwissKnife.Utils.MVVM;
 
 namespace FileSwissKnife.ViewModels
 {
-    public class JoinViewModel : ViewModelBase, IFilesDropped
+    public class JoinViewModel : TabViewModelBase, IFilesDropped
     {
 
         private bool _isTaskRunning;
@@ -27,8 +27,8 @@ namespace FileSwissKnife.ViewModels
 
         public JoinViewModel()
         {
-            JoinCommand = new RelayCommand(OnJoinOrCancelCommand, CanJoinOrCancelCommand);
-            HideErrorCommand = new RelayCommand(OnHideError);
+            JoinOrCancelCommand = new RelayCommand(JoinOrCancel, CanJoinOrCancel);
+            HideErrorCommand = new RelayCommand(HideError);
             _joinActionText = Localizer.Instance.StartJoin;
 
             _fileJoiner = new FileJoiner();
@@ -41,6 +41,10 @@ namespace FileSwissKnife.ViewModels
                 JoinActionText = Localizer.Instance.CancelJoin;
             };
         }
+
+        public override string DisplayName => Localizer.Instance.TabNameJoin;
+
+        public override string TechName => "Join";
 
         public string OutputFile
         {
@@ -122,21 +126,21 @@ namespace FileSwissKnife.ViewModels
             }
         }
 
-        public ICommand JoinCommand { get; }
+        public ICommand JoinOrCancelCommand { get; }
 
         public ICommand HideErrorCommand { get; }
 
-        private void OnHideError()
+        private void HideError()
         {
             ClearError();
         }
 
-        private bool CanJoinOrCancelCommand()
+        private bool CanJoinOrCancel()
         {
             return true;
         }
 
-        private async void OnJoinOrCancelCommand()
+        private async void JoinOrCancel()
         {
             if (IsTaskRunning)
             {
@@ -221,5 +225,4 @@ namespace FileSwissKnife.ViewModels
         }
 
     }
-
 }

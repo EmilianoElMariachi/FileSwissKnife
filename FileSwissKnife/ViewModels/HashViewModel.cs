@@ -1,12 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using FileSwissKnife.CustomControls;
+using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
 
 namespace FileSwissKnife.ViewModels
 {
-    public class HashViewModel : ViewModelBase, IFilesDropped
+    public class HashViewModel : TabViewModelBase, IFilesDropped
     {
         private readonly ObservableCollection<HashedFileViewModel> _hashedFiles = new ObservableCollection<HashedFileViewModel>();
 
@@ -22,6 +24,11 @@ namespace FileSwissKnife.ViewModels
 
             SelectFilesToHashCommand = new RelayCommand(OnSelectFilesToHash);
         }
+
+
+        public override string DisplayName => Localizer.Instance.TabNameHash;
+
+        public override string TechName => "Hash";
 
         public ObservableCollection<HashedFileViewModel> HashedFiles => _hashedFiles;
 
@@ -43,9 +50,16 @@ namespace FileSwissKnife.ViewModels
             foreach (var fileToHash in filesToHash)
             {
                 var hashedFileViewModel = new HashedFileViewModel(fileToHash, selectedHashes);
+                hashedFileViewModel.QueryClose += OnCloseHashedFile;
+
                 hashedFileViewModel.HashOrCancelCommand.Execute(null);
                 _hashedFiles.Add(hashedFileViewModel);
             }
+        }
+
+        private void OnCloseHashedFile(object? sender, EventArgs e)
+        {
+            _hashedFiles.Remove((HashedFileViewModel)sender);
         }
 
         private string[] GetSelectedHashes()
@@ -58,6 +72,7 @@ namespace FileSwissKnife.ViewModels
         {
             HashFiles(files);
         }
+
     }
 
     public class HashToComputeViewModel : ViewModelBase
