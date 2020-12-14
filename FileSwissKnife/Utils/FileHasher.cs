@@ -14,14 +14,12 @@ namespace FileSwissKnife.Utils
 
         private static string ToHexString(IEnumerable<byte> hash)
         {
-            var sBuilder = new StringBuilder();
+            var sb = new StringBuilder();
 
             foreach (var b in hash)
-            {
-                sBuilder.Append(b.ToString("x2"));
-            }
+                sb.Append(b.ToString("x2"));
 
-            return sBuilder.ToString();
+            return sb.ToString();
         }
 
         public void CheckPrerequisites()
@@ -29,7 +27,7 @@ namespace FileSwissKnife.Utils
             //TODO: à implémenter
         }
 
-        public Task ComputeAsync(CancellationToken cancellationToken, string file, IEnumerable<Hash> hashes)
+        public Task ComputeAsync(string file, IEnumerable<Hash> hashes, CancellationToken cancellationToken)
         {
 
             var tuples = hashes.Select(hash =>
@@ -55,6 +53,7 @@ namespace FileSwissKnife.Utils
 
                 while (true)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
 
                     var nbBytesRead = fileStream.Read(buffer, 0, buffer.Length);
                     nbBytesHashed += nbBytesRead;
@@ -63,6 +62,8 @@ namespace FileSwissKnife.Utils
                     {
                         foreach (var (hashAlgorithm, hash) in tuples)
                         {
+                            cancellationToken.ThrowIfCancellationRequested();
+
                             hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
                             hash.ComputedValue = ToHexString(hashAlgorithm.Hash);
                         }

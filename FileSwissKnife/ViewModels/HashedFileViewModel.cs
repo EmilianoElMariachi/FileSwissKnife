@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using FileSwissKnife.CustomControls;
 using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
 
@@ -19,6 +20,7 @@ namespace FileSwissKnife.ViewModels
         private CancellationTokenSource? _cancellationTokenSource;
         private readonly int _displayLength;
         private Visibility _progressBarVisibility = Visibility.Collapsed;
+        private PlayStopButtonState _state;
 
         public event EventHandler? QueryClose;
 
@@ -34,6 +36,16 @@ namespace FileSwissKnife.ViewModels
             HashOrCancelCommand = new RelayCommand(HashOrCancel);
             CloseCommand = new RelayCommand(Close, CanClose);
             UpdateDisplay();
+        }
+
+        public PlayStopButtonState State
+        {
+            get => _state;
+            set
+            {
+                _state = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public string TextResult
@@ -97,6 +109,7 @@ namespace FileSwissKnife.ViewModels
             try
             {
                 ProgressBarVisibility = Visibility.Visible;
+                State = PlayStopButtonState.Stop;
                 _cancellationTokenSource = new CancellationTokenSource();
 
                 UpdateDisplay();
@@ -105,7 +118,7 @@ namespace FileSwissKnife.ViewModels
 
                 fileHasher.OnProgress += (sender, args) => { this.ProgressBarValue = args.Percent; };
 
-                await fileHasher.ComputeAsync(_cancellationTokenSource.Token, _fileToHash, _hashes);
+                await fileHasher.ComputeAsync(_fileToHash, _hashes, _cancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -115,6 +128,7 @@ namespace FileSwissKnife.ViewModels
             {
                 _cancellationTokenSource = null;
                 ProgressBarVisibility = Visibility.Collapsed;
+                State = PlayStopButtonState.Play;
                 UpdateDisplay();
             }
         }
@@ -128,7 +142,7 @@ namespace FileSwissKnife.ViewModels
             {
                 sb.Append(hash.AlgorithmName + new string(' ', _displayLength - hash.AlgorithmName.Length));
                 sb.Append(": ");
-                sb.Append(_cancellationTokenSource != null ? "in progress..." : hash.ComputedValue); // TODO: à localiser
+                sb.Append(_cancellationTokenSource != null ? (_cancellationTokenSource.IsCancellationRequested ? "Cancelling..." : "in progress...") : hash.ComputedValue); // TODO: à localiser
                 sb.Append(Environment.NewLine);
             }
 

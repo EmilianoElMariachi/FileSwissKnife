@@ -10,15 +10,55 @@
     <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
     <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
 
-    <Color x:Key="DefaultBackgroundColor">#686868</Color>
+
+    <Color x:Key="BackgroundColor">#686868</Color>
+    <Color x:Key="HighlightBackgroundColor">#AEAEAE</Color>
     <Color x:Key="MainColorDark">#1575AD</Color>
     <Color x:Key="MainColorLight">#7AC0FE</Color>
     <Color x:Key="FrameBorderColor">#827DFF</Color>
 
-    <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="{StaticResource DefaultBackgroundColor}" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+    <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="{StaticResource HighlightBackgroundColor}" />
     <SolidColorBrush x:Key="MainColorBrushDark" Color="{StaticResource MainColorDark}" />
     <SolidColorBrush x:Key="MainColorBrushLight" Color="{StaticResource MainColorLight}" />
     <SolidColorBrush x:Key="FrameBorderBrush" Color="{StaticResource FrameBorderColor}" />
+
+
+    <Style TargetType="customControls:PlayStopButton">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="customControls:PlayStopButton">
+                        <Border>
+                            <Viewbox>
+                                <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
+                                    <Ellipse x:Name="Ellipse" Width="100" Height="100" />
+                                    <Path x:Name="PlayIcon" Fill="#51EBAB" Data="M 32,20 85,50 32,80" />
+                                    <Rectangle x:Name="StopIcon" Fill="#DC7D7D" Width="50" Height="50" />
+                                </Grid>
+                            </Viewbox>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource HighlightBackgroundBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource BackgroundBrush}" />
+                            </Trigger>
+                            <Trigger Property="PlayStopButtonState" Value="Play">
+                                <Setter TargetName="PlayIcon" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="StopIcon" Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                            <Trigger Property="PlayStopButtonState" Value="Stop">
+                                <Setter TargetName="PlayIcon" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
 
 
     <Style x:Key="CloseButton" TargetType="Button">
@@ -32,18 +72,8 @@
                     </ControlTemplate.Resources>
                     <Border>
                         <Viewbox>
-                            <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
-                                <Ellipse Width="100" Height="100">
-                                    <Ellipse.Style>
-                                        <Style TargetType="Ellipse">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=Grid, Path=IsMouseOver}" Value="True" >
-                                                    <Setter Property="Fill" Value="{StaticResource DefaultBackgroundBrush}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Ellipse.Style>
-                                </Ellipse>
+                            <Grid Width="100" Height="100" Background="Transparent">
+                                <Ellipse x:Name="Ellipse" Width="100" Height="100" />
                                 <Rectangle Width="{StaticResource LineWidth}" Height="{StaticResource LineHeight}" Fill="{StaticResource MainColorBrushLight}" RadiusX="{StaticResource LineRadius}" RadiusY="{StaticResource LineRadius}" >
                                     <Rectangle.LayoutTransform>
                                         <RotateTransform Angle="-45"/>
@@ -57,6 +87,14 @@
                             </Grid>
                         </Viewbox>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource HighlightBackgroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource BackgroundBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
