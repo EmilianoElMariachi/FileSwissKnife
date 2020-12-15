@@ -126,6 +126,7 @@ namespace FileSwissKnife.Utils
                 var matchTmp = regex.Match(fileNameTmp);
                 if (matchTmp.Success && matchTmp.Groups[1].Value.Trim() == prefix && matchTmp.Groups[3].Value.Trim() == suffix)
                 {
+                    //TODO: fixer le bug si le nombre du nom de fichier est trop long
                     filesWithNumber.Add(new Tuple<string, int>(fileTmp, int.Parse(matchTmp.Groups[2].Value)));
                 }
             }

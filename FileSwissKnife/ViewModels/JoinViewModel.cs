@@ -190,7 +190,7 @@ namespace FileSwissKnife.ViewModels
             if (_cancellationTokenSource != null && !_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
-                ProgressBarText = Localizer.Instance.Cancelling;
+                ProgressBarText = Localizer.Instance.CancellingJoin;
             }
         }
 

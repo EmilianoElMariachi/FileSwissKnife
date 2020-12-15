@@ -6,11 +6,21 @@
 
         string DragMeSomeFilesToHash { get; }
 
-        public string StartJoin { get; }
+        string StartJoin { get; }
 
-        string Cancelling { get; }
+        string CancellingHash { get; }
+
+        string CancellingJoin { get; }
 
         string CancelJoin { get; }
+
+        string ConfirmCloseCancelHash { get; }
+
+        string ConfirmCloseCancelHashTitle { get; }
+
+        string HashInProgress { get; }
+
+        string HashCanceled { get; }
 
         string OperationCanceled { get; }
 

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using FileSwissKnife.CustomControls;
+using FileSwissKnife.Localization;
 using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
 
@@ -22,6 +23,7 @@ namespace FileSwissKnife.ViewModels
         private Visibility _progressBarVisibility = Visibility.Collapsed;
         private PlayStopButtonState _state;
         private string? _errorMessage;
+        private bool _canceled = false;
 
         public event EventHandler? QueryClose;
 
@@ -35,7 +37,7 @@ namespace FileSwissKnife.ViewModels
             _hashes = hashAlgorithmNames.Select(hashAlgorithmName => new Hash(hashAlgorithmName)).ToArray();
 
             HashOrCancelCommand = new RelayCommand(HashOrCancel);
-            CloseCommand = new RelayCommand(Close, CanClose);
+            CloseCommand = new RelayCommand(Close);
             UpdateDisplay();
         }
 
@@ -108,21 +110,22 @@ namespace FileSwissKnife.ViewModels
         {
             if (_cancellationTokenSource != null)
             {
-                if (!_cancellationTokenSource.IsCancellationRequested)
-                {
-                    _cancellationTokenSource.Cancel();
-                    UpdateDisplay();
-                }
+                if (_cancellationTokenSource.IsCancellationRequested)
+                    return;
 
+                _cancellationTokenSource.Cancel();
+                UpdateDisplay();
                 return;
             }
 
             try
             {
+                _canceled = false;
+                _cancellationTokenSource = new CancellationTokenSource();
+
                 ErrorMessage = null;
                 ProgressBarVisibility = Visibility.Visible;
                 State = PlayStopButtonState.Stop;
-                _cancellationTokenSource = new CancellationTokenSource();
 
                 UpdateDisplay();
 
@@ -132,14 +135,19 @@ namespace FileSwissKnife.ViewModels
 
                 await fileHasher.ComputeAsync(_fileToHash, _hashes, _cancellationTokenSource.Token);
             }
+            catch (OperationCanceledException)
+            {
+                _canceled = true;
+            }
             catch (Exception ex)
             {
                 ErrorMessage = ex.Message;
-                //TODO: implémenter l'affichage de l'erreur
             }
             finally
             {
+                _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = null;
+
                 ProgressBarVisibility = Visibility.Collapsed;
                 State = PlayStopButtonState.Play;
                 UpdateDisplay();
@@ -151,28 +159,44 @@ namespace FileSwissKnife.ViewModels
             var sb = new StringBuilder();
             sb.Append(_fileToHash + Environment.NewLine);
 
+
+            string? staticText;
+            if (_canceled)
+            {
+                staticText = Localizer.Instance.HashCanceled;
+            }
+            else if (_cancellationTokenSource != null)
+            {
+                staticText = _cancellationTokenSource.IsCancellationRequested ? Localizer.Instance.CancellingHash : Localizer.Instance.HashInProgress;
+            }
+            else
+            {
+                staticText = null; // Here, computation is finished
+            }
+
             foreach (var hash in _hashes)
             {
                 sb.Append(hash.AlgorithmName + new string(' ', _displayLength - hash.AlgorithmName.Length));
                 sb.Append(": ");
-                sb.Append(_cancellationTokenSource != null ? (_cancellationTokenSource.IsCancellationRequested ? "Cancelling..." : "in progress...") : hash.ComputedValue); // TODO: à localiser
+                sb.Append(staticText ?? hash.ComputedValue);
                 sb.Append(Environment.NewLine);
             }
 
             TextResult = sb.ToString();
         }
 
-        private bool CanClose()
-        {
-            //TODO: implémenter ici
-            return true;
-        }
-
         private void Close()
         {
+            if (_cancellationTokenSource != null)
+            {
+                var messageBoxResult = MessageBox.Show(Application.Current.MainWindow, Localizer.Instance.ConfirmCloseCancelHash, Localizer.Instance.ConfirmCloseCancelHashTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (messageBoxResult == MessageBoxResult.No)
+                    return;
+                _cancellationTokenSource?.Cancel();
+            }
+
             NotifyQueryClose();
         }
-
 
         private void NotifyQueryClose()
         {

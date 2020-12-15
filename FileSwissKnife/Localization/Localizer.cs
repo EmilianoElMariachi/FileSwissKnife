@@ -65,9 +65,17 @@ namespace FileSwissKnife.Localization
 
         public string StartJoin => Current.StartJoin;
 
-        public string Cancelling => Current.Cancelling;
+        public string CancellingHash => Current.CancellingHash;
+
+        public string CancellingJoin => Current.CancellingJoin;
 
         public string CancelJoin => Current.CancelJoin;
+
+        public string ConfirmCloseCancelHashTitle => Current.ConfirmCloseCancelHashTitle;
+
+        public string HashInProgress => Current.HashInProgress;
+
+        public string HashCanceled => Current.HashCanceled;
 
         public string OperationCanceled => Current.OperationCanceled;
 
@@ -95,6 +103,7 @@ namespace FileSwissKnife.Localization
 
         public string HashInputFiles => Current.HashInputFiles;
 
+        public string ConfirmCloseCancelHash => Current.ConfirmCloseCancelHash;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

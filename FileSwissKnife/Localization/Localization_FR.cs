@@ -10,9 +10,19 @@
 
         public string StartJoin => "Go!";
 
-        public string Cancelling => "Annulation...";
+        public string CancellingHash => "annulation";
+
+        public string CancellingJoin => "Annulation...";
 
         public string CancelJoin => "Annuler";
+
+        public string ConfirmCloseCancelHash => "Voulez-vous vraiment fermer et annuler ?";
+
+        public string ConfirmCloseCancelHashTitle => "Fermer et annuler ?";
+
+        public string HashInProgress => "en cours...";
+
+        public string HashCanceled => "annulé.";
 
         public string OperationCanceled => "Annulé";
 
