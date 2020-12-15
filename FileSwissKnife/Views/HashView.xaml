@@ -25,14 +25,14 @@
 
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=HashInputFiles}" Style="{StaticResource Title}"/>
 
-            <ScrollViewer Grid.Row="1" customControls:DropFilesBehaviorExtension.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Path=HashedFiles}">
+            <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" customControls:DropFilesBehaviorExtension.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <customControls:ItemsControlEx ItemsSource="{Binding Path=HashedFiles}" ItemsChanged="OnItemsChanged">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="viewModels:HashedFileViewModel">
                             <views:HashedFileView />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                </customControls:ItemsControlEx>
             </ScrollViewer>
 
             <!-- TODO implémenter la WaterMark-->
