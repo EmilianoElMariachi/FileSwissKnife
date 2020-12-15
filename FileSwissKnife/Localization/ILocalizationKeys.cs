@@ -28,8 +28,6 @@
 
         string TabNameHash { get; }
 
-        string HideError { get; }
-
         string OutputFileCantBeUndefined { get; }
 
         string CanOverrideOutputFile { get; }

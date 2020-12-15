@@ -19,7 +19,6 @@ namespace FileSwissKnife.ViewModels
         private string? _progressBarText;
         private readonly FileJoiner _fileJoiner;
         private string _joinActionText;
-        private Visibility _errorIconVisibility = Visibility.Collapsed;
         private string? _errorMessage;
 
         private string _inputFiles = "";
@@ -28,7 +27,6 @@ namespace FileSwissKnife.ViewModels
         public JoinViewModel()
         {
             JoinOrCancelCommand = new RelayCommand(JoinOrCancel, CanJoinOrCancel);
-            HideErrorCommand = new RelayCommand(HideError);
             _joinActionText = Localizer.Instance.StartJoin;
 
             _fileJoiner = new FileJoiner();
@@ -86,16 +84,6 @@ namespace FileSwissKnife.ViewModels
             }
         }
 
-        public Visibility ErrorIconVisibility
-        {
-            get => _errorIconVisibility;
-            set
-            {
-                _errorIconVisibility = value;
-                NotifyPropertyChanged();
-            }
-        }
-
         public double ProgressBarValue
         {
             get => _progressBarValue;
@@ -128,12 +116,6 @@ namespace FileSwissKnife.ViewModels
 
         public ICommand JoinOrCancelCommand { get; }
 
-        public ICommand HideErrorCommand { get; }
-
-        private void HideError()
-        {
-            ClearError();
-        }
 
         private bool CanJoinOrCancel()
         {
@@ -152,7 +134,7 @@ namespace FileSwissKnife.ViewModels
             {
                 IsTaskRunning = true;
                 _cancellationTokenSource = new CancellationTokenSource();
-                ClearError();
+                ErrorMessage = null;
 
                 var inputFiles = InputFiles.Split(Environment.NewLine);
                 var outputFile = OutputFile;
@@ -165,7 +147,7 @@ namespace FileSwissKnife.ViewModels
             catch (Exception ex)
             {
                 ProgressBarText = Localizer.Instance.OperationError;
-                ShowError(ex.Message);
+                ErrorMessage = ex.Message;
             }
             finally
             {
@@ -210,18 +192,6 @@ namespace FileSwissKnife.ViewModels
                 _cancellationTokenSource.Cancel();
                 ProgressBarText = Localizer.Instance.Cancelling;
             }
-        }
-
-        private void ShowError(string message)
-        {
-            ErrorIconVisibility = Visibility.Visible;
-            ErrorMessage = message;
-        }
-
-        private void ClearError()
-        {
-            ErrorIconVisibility = Visibility.Collapsed;
-            ErrorMessage = "";
         }
 
     }

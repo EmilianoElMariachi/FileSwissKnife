@@ -85,8 +85,6 @@ namespace FileSwissKnife.Localization
 
         public string TabNameHash => Current.TabNameHash;
 
-        public string HideError => Current.HideError;
-
         public string OutputFileCantBeUndefined => Current.OutputFileCantBeUndefined;
 
         public string CanOverrideOutputFile => Current.CanOverrideOutputFile;
