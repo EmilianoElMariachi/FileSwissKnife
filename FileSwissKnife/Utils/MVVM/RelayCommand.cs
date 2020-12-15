@@ -6,22 +6,22 @@ namespace FileSwissKnife.Utils.MVVM
 {
     public class RelayCommand : ICommand
     {
-        private readonly Action<object> _execute;
-        private readonly Predicate<object>? _canExecute;
+        private readonly Action<object?> _execute;
+        private readonly Predicate<object?>? _canExecute;
 
         public RelayCommand(Action execute, Func<bool>? canExecute = null) :
             this(WrapExecuteWithArg(execute), WrapCanExecuteWithArg(canExecute))
         {
         }
 
-        public RelayCommand(Action<object> execute, Predicate<object>? canExecute = null)
+        public RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
 
-        private static Action<object> WrapExecuteWithArg(Action execute)
+        private static Action<object?> WrapExecuteWithArg(Action execute)
         {
             if (execute == null)
                 throw new ArgumentNullException(nameof(execute));
@@ -29,7 +29,7 @@ namespace FileSwissKnife.Utils.MVVM
             return o => { execute(); };
         }
 
-        private static Predicate<object>? WrapCanExecuteWithArg(Func<bool>? canExecute)
+        private static Predicate<object?>? WrapCanExecuteWithArg(Func<bool>? canExecute)
         {
             if (canExecute == null)
                 return null;
@@ -37,14 +37,14 @@ namespace FileSwissKnife.Utils.MVVM
             return o => canExecute();
         }
 
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object? parameter)
         {
             return _canExecute == null || _canExecute(parameter);
         }
 
         public virtual event EventHandler? CanExecuteChanged;
 
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
             _execute(parameter);
         }

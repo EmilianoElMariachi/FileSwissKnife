@@ -23,6 +23,25 @@
     <SolidColorBrush x:Key="MainColorBrushLight" Color="{StaticResource MainColorLight}" />
     <SolidColorBrush x:Key="FrameBorderBrush" Color="{StaticResource FrameBorderColor}" />
 
+    <Style TargetType="customControls:ErrorButton">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="customControls:ErrorButton">
+                        <Border>
+                            <Viewbox>
+                                <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
+                                    <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{StaticResource BackgroundBrush}" />
+                                    <Path Fill="Red" Data="M 40,12 60,12 55,60 45,60"></Path>
+                                    <Rectangle Width="12" Height="12" Fill="Red" VerticalAlignment="Bottom" Margin="0,0,0,15"/>
+                                </Grid>
+                            </Viewbox>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
 
     <Style TargetType="customControls:PlayStopButton">
         <Style.Setters>

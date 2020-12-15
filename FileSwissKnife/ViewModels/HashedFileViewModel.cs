@@ -21,6 +21,7 @@ namespace FileSwissKnife.ViewModels
         private readonly int _displayLength;
         private Visibility _progressBarVisibility = Visibility.Collapsed;
         private PlayStopButtonState _state;
+        private string? _errorMessage;
 
         public event EventHandler? QueryClose;
 
@@ -36,6 +37,16 @@ namespace FileSwissKnife.ViewModels
             HashOrCancelCommand = new RelayCommand(HashOrCancel);
             CloseCommand = new RelayCommand(Close, CanClose);
             UpdateDisplay();
+        }
+
+        public string? ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public PlayStopButtonState State
@@ -108,6 +119,7 @@ namespace FileSwissKnife.ViewModels
 
             try
             {
+                ErrorMessage = null;
                 ProgressBarVisibility = Visibility.Visible;
                 State = PlayStopButtonState.Stop;
                 _cancellationTokenSource = new CancellationTokenSource();
@@ -122,6 +134,7 @@ namespace FileSwissKnife.ViewModels
             }
             catch (Exception ex)
             {
+                ErrorMessage = ex.Message;
                 //TODO: implémenter l'affichage de l'erreur
             }
             finally

@@ -30,23 +30,21 @@
             </Grid>
 
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Margin="5,0,0,0">
-                    <Button 
-                        Margin="0" Width="20" Height="20" Style="{StaticResource CloseButton}"
-                        Command="{Binding Path=CloseCommand}" />
-                    <customControls:PlayStopButton 
-                        Margin="0,5,0,0" Width="20" Height="20" PlayStopButtonState="{Binding State}" 
-                        Command="{Binding Path=HashOrCancelCommand}"
-                        />
-                </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Grid.RowSpan="2">
+                <Button 
+                    Margin="0" Width="20" Height="20" Style="{StaticResource CloseButton}"
+                    Command="{Binding Path=CloseCommand}"
+                    />
+                <customControls:PlayStopButton 
+                    Margin="0,5,0,0" Width="20" Height="20" PlayStopButtonState="{Binding State}" 
+                    Command="{Binding Path=HashOrCancelCommand}"
+                    />
+                <customControls:ErrorButton 
+                    Margin="0,5,0,0" Width="20" Height="20" 
+                    ErrorMessage="{Binding Path=ErrorMessage}"
+                    />
+            </StackPanel>
 
-
-            </Grid>
-
-        </Grid></Border>
+        </Grid>
+    </Border>
 </UserControl>
