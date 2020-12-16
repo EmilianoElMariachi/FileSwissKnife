@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using System.Windows;
 using System.Windows.Input;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
@@ -18,16 +17,15 @@ namespace FileSwissKnife.ViewModels
         private CancellationTokenSource? _cancellationTokenSource;
         private string? _progressBarText;
         private readonly FileJoiner _fileJoiner;
-        private string _joinActionText;
         private string? _errorMessage;
 
         private string _inputFiles = "";
         private string _outputFile = "";
+        private PlayStopButtonState _state;
 
         public JoinViewModel()
         {
-            JoinOrCancelCommand = new RelayCommand(JoinOrCancel, CanJoinOrCancel);
-            _joinActionText = Localizer.Instance.StartJoin;
+            JoinOrCancelCommand = new RelayCommand(JoinOrCancel);
 
             _fileJoiner = new FileJoiner();
 
@@ -36,7 +34,6 @@ namespace FileSwissKnife.ViewModels
                 var percent = args.Percent;
                 this.ProgressBarValue = percent;
                 this.ProgressBarText = percent.ToString("0.00");
-                JoinActionText = Localizer.Instance.CancelJoin;
             };
         }
 
@@ -94,16 +91,6 @@ namespace FileSwissKnife.ViewModels
             }
         }
 
-        public string JoinActionText
-        {
-            get => _joinActionText;
-            set
-            {
-                _joinActionText = value;
-                NotifyPropertyChanged();
-            }
-        }
-
         public string? ErrorMessage
         {
             get => _errorMessage;
@@ -116,10 +103,14 @@ namespace FileSwissKnife.ViewModels
 
         public ICommand JoinOrCancelCommand { get; }
 
-
-        private bool CanJoinOrCancel()
+        public PlayStopButtonState State
         {
-            return true;
+            get => _state;
+            set
+            {
+                _state = value;
+                NotifyPropertyChanged();
+            }
         }
 
         private async void JoinOrCancel()
@@ -133,8 +124,9 @@ namespace FileSwissKnife.ViewModels
             try
             {
                 IsTaskRunning = true;
-                _cancellationTokenSource = new CancellationTokenSource();
                 ErrorMessage = null;
+                State = PlayStopButtonState.Stop;
+                _cancellationTokenSource = new CancellationTokenSource();
 
                 var inputFiles = InputFiles.Split(Environment.NewLine);
                 var outputFile = OutputFile;
@@ -152,7 +144,7 @@ namespace FileSwissKnife.ViewModels
             finally
             {
                 _cancellationTokenSource = null;
-                JoinActionText = Localizer.Instance.StartJoin;
+                State = PlayStopButtonState.Play;
                 IsTaskRunning = false;
             }
         }

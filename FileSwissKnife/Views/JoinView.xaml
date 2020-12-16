@@ -7,7 +7,7 @@
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
              xmlns:viewModels="clr-namespace:FileSwissKnife.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:JoinViewModel}">
+             d:DesignHeight="350" d:DesignWidth="600" d:DataContext="{d:DesignInstance viewModels:JoinViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -23,8 +23,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinInputFiles}" Style="{StaticResource Title}"/>
-            <customControls:TextBoxExt x:Name="TextBoxFilesToJoin"
-                                       customControls:DropFilesBehaviorExtension.IsEnabled ="True"
+            <customControls:TextBoxExt customControls:DropFilesBehaviorExtension.IsEnabled ="True"
                                        Style="{StaticResource TextBoxDragWatermark}" 
                                        Text="{Binding Path=InputFiles, UpdateSourceTrigger=PropertyChanged}"
                                        Grid.Row="1" 
@@ -53,9 +52,9 @@
                 <ColumnDefinition Width="5"  />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Content="{Binding Path=JoinActionText, FallbackValue=Join!}"  Command="{Binding Path=JoinOrCancelCommand}" HorizontalAlignment="Center" Grid.Column="0" MinWidth="60" Height="30"/>
+            <customControls:PlayStopButton Command="{Binding Path=JoinOrCancelCommand}" HorizontalAlignment="Center" Grid.Column="0" MinWidth="30" Height="30" PlayStopButtonState="{Binding Path=State}"/>
             <customControls:ProgressBarExt  Grid.Column="2" Minimum="0" Maximum="100.0" Height="30" Value="{Binding Path=ProgressBarValue}" Text="{Binding Path=ProgressBarText}" />
-            <customControls:ErrorButton Grid.Column="4" ErrorMessage="{Binding Path=ErrorMessage}" NoErrorVisibility="Collapsed" Width="20" Height="20"/>
+            <customControls:ErrorButton Grid.Column="4" ErrorMessage="{Binding Path=ErrorMessage}" NoErrorVisibility="Collapsed" Width="30" Height="30"/>
         </Grid>
 
     </Grid>
