@@ -3,9 +3,70 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:loc="clr-namespace:FileSwissKnife.Localization"
+             xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
+             xmlns:viewModels="clr-namespace:FileSwissKnife.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:SplitViewModel }">
+
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitInputFile}" Style="{StaticResource Title}"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Path=InputFile}" />
+
+            <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Fill="#979797" Width="1" Margin="3"  RadiusX="5" RadiusY="5" />
+            <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" VerticalAlignment="Center" >
+                <customControls:PlayStopButton Width="30" Height="30" VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" />
+                <customControls:ErrorButton Width="30" Height="30" Margin="0,5,0,0" NoErrorVisibility="Collapsed" ErrorMessage="{Binding Path=ErrorMessage}" />
+            </StackPanel>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitOutputFolder}" Style="{StaticResource Title}"/>
+                <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Path=OutputFolder}" />
+
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitSize}" Style="{StaticResource Title}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" MinWidth="50" Margin="3,0,2,0" Text="{Binding Path=SplitSizeStr, UpdateSourceTrigger=PropertyChanged}" />
+
+                <ComboBox Grid.Row="1" Grid.Column="2" MinWidth="50" Margin="1,0,0,0" ItemsSource="{Binding Path=Units}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedUnit}" />
+
+            </Grid>
+        </Grid>
+
+        <GroupBox Grid.Row="1" Header="Settings" >
+            <!--<StackPanel>
+                <TextBox Grid.Row="1" Text="{Binding Path=InputFile}" />
+                <ComboBox ></ComboBox>
+
+            </StackPanel>-->
+
+        </GroupBox>
     </Grid>
+
+
+
 </UserControl>

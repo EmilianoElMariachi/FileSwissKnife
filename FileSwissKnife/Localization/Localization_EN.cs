@@ -8,8 +8,6 @@
 
         public string DragMeSomeFilesToHash => "Drag me one or more files to hash here :)";
 
-        public string StartJoin => "Join!";
-
         public string CancellingHash => "cancelling...";
 
         public string CancellingJoin => "Cancelling...";
@@ -34,6 +32,12 @@
 
         public string JoinOutputFile => "Output file:";
 
+        public string SplitInputFile => "File to split:";
+
+        public string SplitOutputFolder => "Output folder:";
+
+        public string SplitSize => "Size:";
+
         public string TabNameJoin => "Join";
 
         public string TabNameSplit => "Split";
@@ -50,5 +54,22 @@
 
         public string HashInputFiles => "File(s) to hash";
 
+        public string UnitB => "B";
+
+        public string UnitKB => "kB";
+
+        public string UnitKiB => "KiB";
+
+        public string UnitMB => "MB";
+
+        public string UnitMiB => "MiB";
+
+        public string UnitGB => "GB";
+
+        public string UnitGiB => "GiB";
+
+        public string SplitSizeShouldBeDefined => "Split size should be defined.";
+
+        public string SplitSizeInvalid => "Invalid split size «{0}», value should be a strictly positive integer.";
     }
 }

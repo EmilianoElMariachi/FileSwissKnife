@@ -8,8 +8,6 @@
 
         public string DragMeSomeFilesToHash => "Glisse moi un ou plusieurs fichiers à hacher par ici :)";
 
-        public string StartJoin => "Go!";
-
         public string CancellingHash => "annulation";
 
         public string CancellingJoin => "Annulation...";
@@ -34,6 +32,12 @@
 
         public string JoinOutputFile => "Fichier de sortie:";
 
+        public string SplitInputFile => "Fichier à séparer:";
+
+        public string SplitOutputFolder => "Répertoire de sortie:";
+
+        public string SplitSize => "Taille:";
+
         public string TabNameJoin => "Joindre";
 
         public string TabNameSplit => "Séparer";
@@ -50,5 +54,22 @@
 
         public string HashInputFiles => "Fichier(s) à hacher:";
 
+        public string UnitB => "o";
+
+        public string UnitKB => "ko";
+
+        public string UnitKiB => "Kio";
+
+        public string UnitMB => "Mo";
+
+        public string UnitMiB => "Mio";
+
+        public string UnitGB => "Go";
+
+        public string UnitGiB => "Gio";
+
+        public string SplitSizeShouldBeDefined => "La taille de séparation doit être définie.";
+
+        public string SplitSizeInvalid => "Taille de séparation «{0}» invalide, la valeur doit être un entier strictement positif.";
     }
 }

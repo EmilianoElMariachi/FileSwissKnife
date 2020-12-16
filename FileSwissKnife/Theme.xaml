@@ -23,6 +23,11 @@
     <SolidColorBrush x:Key="MainColorBrushLight" Color="{StaticResource MainColorLight}" />
     <SolidColorBrush x:Key="FrameBorderBrush" Color="{StaticResource FrameBorderColor}" />
 
+
+    <Style TargetType="UserControl">
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush}"></Setter>
+    </Style>
+
     <Style TargetType="customControls:ErrorButton">
         <Style.Setters>
             <Setter Property="Template">

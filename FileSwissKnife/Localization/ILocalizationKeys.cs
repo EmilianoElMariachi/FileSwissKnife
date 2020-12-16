@@ -6,8 +6,6 @@
 
         string DragMeSomeFilesToHash { get; }
 
-        string StartJoin { get; }
-
         string CancellingHash { get; }
 
         string CancellingJoin { get; }
@@ -32,6 +30,12 @@
 
         string JoinOutputFile { get; }
 
+        string SplitInputFile { get; }
+
+        string SplitOutputFolder { get; }
+
+        string SplitSize { get; }
+
         string TabNameJoin { get; }
 
         string TabNameSplit { get; }
@@ -47,6 +51,24 @@
         string Override { get; }
 
         string HashInputFiles { get; }
+
+        string UnitB { get; }
+
+        string UnitKB { get; }
+
+        string UnitKiB { get; }
+
+        string UnitMB { get; }
+
+        string UnitMiB { get; }
+
+        string UnitGB { get; }
+
+        string UnitGiB { get; }
+
+        string SplitSizeShouldBeDefined { get; }
+
+        string SplitSizeInvalid { get; }
 
     }
 }

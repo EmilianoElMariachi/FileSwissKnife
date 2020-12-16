@@ -63,8 +63,6 @@ namespace FileSwissKnife.Localization
 
         public string DragMeSomeFilesToHash => Current.DragMeSomeFilesToHash;
 
-        public string StartJoin => Current.StartJoin;
-
         public string CancellingHash => Current.CancellingHash;
 
         public string CancellingJoin => Current.CancellingJoin;
@@ -85,6 +83,12 @@ namespace FileSwissKnife.Localization
 
         public string JoinInputFiles => Current.JoinInputFiles;
 
+        public string SplitInputFile => Current.SplitInputFile;
+
+        public string SplitOutputFolder => Current.SplitOutputFolder;
+
+        public string SplitSize => Current.SplitSize;
+
         public string JoinOutputFile => Current.JoinOutputFile;
 
         public string TabNameJoin => Current.TabNameJoin;
@@ -104,6 +108,24 @@ namespace FileSwissKnife.Localization
         public string HashInputFiles => Current.HashInputFiles;
 
         public string ConfirmCloseCancelHash => Current.ConfirmCloseCancelHash;
+
+        public string UnitB => Current.UnitB;
+
+        public string UnitKB => Current.UnitKB;
+
+        public string UnitKiB => Current.UnitKiB;
+
+        public string UnitMB => Current.UnitMB;
+
+        public string UnitMiB => Current.UnitMiB;
+
+        public string UnitGB => Current.UnitGB;
+
+        public string UnitGiB => Current.UnitGiB;
+
+        public string SplitSizeShouldBeDefined => Current.SplitSizeShouldBeDefined;
+
+        public string SplitSizeInvalid => Current.SplitSizeInvalid;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);
