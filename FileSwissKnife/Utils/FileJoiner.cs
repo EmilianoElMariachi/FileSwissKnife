@@ -91,7 +91,7 @@ namespace FileSwissKnife.Utils
         }
 
         /// <summary>
-        /// 
+        /// Try to guess the list of files to join according to the given file example
         /// </summary>
         /// <param name="fileExample"></param>
         /// <param name="inputFiles"></param>
@@ -102,7 +102,7 @@ namespace FileSwissKnife.Utils
             inputFiles = null;
             outputFile = null;
 
-            var regex = new Regex("(.*?)(\\d+)([^\\d]*)");
+            var regex = new Regex("^(.*?)(\\d+)([^\\d]*)$"); // <Anything><Digits><NonDigits>
 
             var fileName = Path.GetFileName(fileExample);
 
@@ -118,17 +118,17 @@ namespace FileSwissKnife.Utils
 
             var dir = Path.GetDirectoryName(fileExample);
 
-            var filesWithNumber = new List<Tuple<string, int>>();
+            var filesWithNumber = new List<Tuple<string, long>>();
 
             foreach (var fileTmp in Directory.GetFiles(dir))
             {
                 var fileNameTmp = Path.GetFileName(fileTmp);
                 var matchTmp = regex.Match(fileNameTmp);
-                if (matchTmp.Success && matchTmp.Groups[1].Value.Trim() == prefix && matchTmp.Groups[3].Value.Trim() == suffix)
-                {
-                    //TODO: fixer le bug si le nombre du nom de fichier est trop long
-                    filesWithNumber.Add(new Tuple<string, int>(fileTmp, int.Parse(matchTmp.Groups[2].Value)));
-                }
+                if (!matchTmp.Success || matchTmp.Groups[1].Value.Trim() != prefix || matchTmp.Groups[3].Value.Trim() != suffix)
+                    continue;
+
+                if (long.TryParse(matchTmp.Groups[2].Value, out var fileNum))
+                    filesWithNumber.Add(new Tuple<string, long>(fileTmp, fileNum));
             }
 
             if (filesWithNumber.Count <= 0)
@@ -159,7 +159,16 @@ namespace FileSwissKnife.Utils
             outputFile = Path.Combine(dir, outputFileName);
 
 
-            filesWithNumber.Sort((t1, t2) => t1.Item2 - t2.Item2);
+            filesWithNumber.Sort((t1, t2) =>
+            {
+                var (_, fileNum1) = t1;
+                var (_, fileNum2) = t2;
+                if (fileNum1 == fileNum2)
+                    return 0;
+                if (fileNum1 < fileNum2)
+                    return -1;
+                return 1;
+            });
 
             inputFiles = filesWithNumber.Select(tuple => tuple.Item1).ToArray();
             return true;
