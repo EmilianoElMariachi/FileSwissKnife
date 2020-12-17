@@ -22,7 +22,6 @@ namespace FileSwissKnife.ViewModels
         private readonly int _displayLength;
         private Visibility _progressBarVisibility = Visibility.Collapsed;
         private PlayStopButtonState _state;
-        private string? _errorMessage;
         private bool _canceled = false;
 
         public event EventHandler? QueryClose;
@@ -41,15 +40,7 @@ namespace FileSwissKnife.ViewModels
             UpdateDisplay();
         }
 
-        public string? ErrorMessage
-        {
-            get => _errorMessage;
-            set
-            {
-                _errorMessage = value;
-                NotifyPropertyChanged();
-            }
-        }
+        public ErrorsCollection Errors { get; } = new ErrorsCollection();
 
         public PlayStopButtonState State
         {
@@ -123,7 +114,7 @@ namespace FileSwissKnife.ViewModels
                 _canceled = false;
                 _cancellationTokenSource = new CancellationTokenSource();
 
-                ErrorMessage = null;
+                Errors.CleanDeletable();
                 ProgressBarVisibility = Visibility.Visible;
                 State = PlayStopButtonState.Stop;
 
@@ -141,7 +132,10 @@ namespace FileSwissKnife.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                Errors.Add(new ErrorViewModel(true)
+                {
+                    Message = ex.Message
+                });
             }
             finally
             {

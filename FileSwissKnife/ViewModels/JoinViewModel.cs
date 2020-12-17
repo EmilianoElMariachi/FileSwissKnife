@@ -17,7 +17,6 @@ namespace FileSwissKnife.ViewModels
         private CancellationTokenSource? _cancellationTokenSource;
         private string? _progressBarText;
         private readonly FileJoiner _fileJoiner;
-        private string? _errorMessage;
 
         private string _inputFiles = "";
         private string _outputFile = "";
@@ -91,15 +90,7 @@ namespace FileSwissKnife.ViewModels
             }
         }
 
-        public string? ErrorMessage
-        {
-            get => _errorMessage;
-            set
-            {
-                _errorMessage = value;
-                NotifyPropertyChanged();
-            }
-        }
+        public ErrorsCollection Errors { get; } = new ErrorsCollection();
 
         public ICommand JoinOrCancelCommand { get; }
 
@@ -124,7 +115,7 @@ namespace FileSwissKnife.ViewModels
             try
             {
                 IsTaskRunning = true;
-                ErrorMessage = null;
+                Errors.CleanDeletable();
                 State = PlayStopButtonState.Stop;
                 _cancellationTokenSource = new CancellationTokenSource();
 
@@ -139,7 +130,11 @@ namespace FileSwissKnife.ViewModels
             catch (Exception ex)
             {
                 ProgressBarText = Localizer.Instance.OperationError;
-                ErrorMessage = ex.Message;
+
+                Errors.Add(new ErrorViewModel(true)
+                {
+                    Message = ex.Message
+                });
             }
             finally
             {

@@ -5,5 +5,11 @@
     <Setting Name="LastActiveTabTechName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="SplitSize" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="SplitUnit" Type="FileSwissKnife.Utils.UnitsManagement.SIUnit" Scope="User">
+      <Value Profile="(Default)">MB</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

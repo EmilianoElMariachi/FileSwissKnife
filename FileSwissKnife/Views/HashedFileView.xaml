@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignWidth="400" d:DesignHeight="100" d:DataContext="{d:DesignInstance viewModels:HashedFileViewModel}">
 
-    <Border BorderThickness="1" BorderBrush="{StaticResource FrameBorderBrush}">
+    <Border Style="{StaticResource FrameBorderStyle}">
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -20,6 +20,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBox Grid.Column="0" IsReadOnly="True" MinHeight="40" Text="{Binding Path=TextResult, Mode=OneWay}"
+                     HorizontalScrollBarVisibility="Auto"
                      FontFamily="Courier New" />
 
             <Grid Grid.Row="1" Grid.Column="0">
@@ -41,7 +42,7 @@
                     />
                 <customControls:ErrorButton 
                     Margin="0,5,0,0" Width="20" Height="20" 
-                    ErrorMessage="{Binding Path=ErrorMessage}"
+                    Errors="{Binding Path=Errors}"
                     />
             </StackPanel>
 

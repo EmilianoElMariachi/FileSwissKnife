@@ -22,14 +22,9 @@ namespace FileSwissKnife.ViewModels
             SelectedTab = tabToSelect ?? Tabs[0];
         }
 
-        private void OnAppExit(object sender, ExitEventArgs e)
+        private static void OnAppExit(object sender, ExitEventArgs e)
         {
-            var selectedTab = SelectedTab;
-            if (selectedTab != null)
-            {
-                Settings.Default.LastActiveTabTechName = selectedTab.TechName;
-                Settings.Default.Save();
-            }
+            Settings.Default.Save();
         }
 
         public TabViewModelBase? SelectedTab
@@ -38,6 +33,8 @@ namespace FileSwissKnife.ViewModels
             set
             {
                 _selectedTab = value;
+                if (_selectedTab != null)
+                    Settings.Default.LastActiveTabTechName = _selectedTab.TechName;
                 NotifyPropertyChanged();
             }
         }

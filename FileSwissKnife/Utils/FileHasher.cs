@@ -43,7 +43,6 @@ namespace FileSwissKnife.Utils
             return Task.Run(() =>
             {
 
-
                 using var fileStream = File.OpenRead(file);
 
                 var buffer = new byte[1000000]; // TODO: rendre paramétrable?

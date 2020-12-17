@@ -8,6 +8,8 @@
 
         public string DragMeSomeFilesToHash => "Glisse moi un ou plusieurs fichiers à hacher par ici :)";
 
+        public string DragMeSomeFileToSplit => "Glisse moi un fichier à séparer par ici :)";
+
         public string CancellingHash => "annulation";
 
         public string CancellingJoin => "Annulation...";
@@ -71,5 +73,7 @@
         public string SplitSizeShouldBeDefined => "La taille de séparation doit être définie.";
 
         public string SplitSizeInvalid => "Taille de séparation «{0}» invalide, la valeur doit être un entier strictement positif.";
+
+        public string SplitUnitShouldBeSelected => "Veuillez sélectionner une unité de séparation.";
     }
 }

@@ -25,17 +25,20 @@
 
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=HashInputFiles}" Style="{StaticResource Title}"/>
 
-            <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" customControls:DropFilesBehaviorExtension.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <customControls:ItemsControlEx ItemsSource="{Binding Path=HashedFiles}" ItemsChanged="OnItemsChanged">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="viewModels:HashedFileViewModel">
-                            <views:HashedFileView />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </customControls:ItemsControlEx>
-            </ScrollViewer>
-
-            <!-- TODO implémenter la WaterMark-->
+            <Border Grid.Row="1" Style="{StaticResource FrameBorderStyle}">
+                <Grid>
+                    <TextBlock Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToHash}" />
+                    <ScrollViewer x:Name="ScrollViewer" customControls:DropFilesBehaviorExtension.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <customControls:ItemsControlEx ItemsSource="{Binding Path=HashedFiles}" ItemsChanged="OnItemsChanged">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="viewModels:HashedFileViewModel">
+                                    <views:HashedFileView />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </customControls:ItemsControlEx>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
 
             <Grid Grid.Row="2" >
                 <Grid.ColumnDefinitions>

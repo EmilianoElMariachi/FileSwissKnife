@@ -8,6 +8,8 @@
 
         public string DragMeSomeFilesToHash => "Drag me one or more files to hash here :)";
 
+        public string DragMeSomeFileToSplit => "Drag me some file to split :)";
+
         public string CancellingHash => "cancelling...";
 
         public string CancellingJoin => "Cancelling...";
@@ -71,5 +73,7 @@
         public string SplitSizeShouldBeDefined => "Split size should be defined.";
 
         public string SplitSizeInvalid => "Invalid split size «{0}», value should be a strictly positive integer.";
+
+        public string SplitUnitShouldBeSelected => "Please select a split unit.";
     }
 }

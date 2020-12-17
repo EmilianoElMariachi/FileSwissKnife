@@ -63,6 +63,8 @@ namespace FileSwissKnife.Localization
 
         public string DragMeSomeFilesToHash => Current.DragMeSomeFilesToHash;
 
+        public string DragMeSomeFileToSplit => Current.DragMeSomeFileToSplit;
+
         public string CancellingHash => Current.CancellingHash;
 
         public string CancellingJoin => Current.CancellingJoin;
@@ -126,6 +128,8 @@ namespace FileSwissKnife.Localization
         public string SplitSizeShouldBeDefined => Current.SplitSizeShouldBeDefined;
 
         public string SplitSizeInvalid => Current.SplitSizeInvalid;
+
+        public string SplitUnitShouldBeSelected => Current.SplitUnitShouldBeSelected;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

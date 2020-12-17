@@ -54,7 +54,7 @@
             </Grid.ColumnDefinitions>
             <customControls:PlayStopButton Command="{Binding Path=JoinOrCancelCommand}" HorizontalAlignment="Center" Grid.Column="0" MinWidth="30" Height="30" PlayStopButtonState="{Binding Path=State}"/>
             <customControls:ProgressBarExt  Grid.Column="2" Minimum="0" Maximum="100.0" Height="30" Value="{Binding Path=ProgressBarValue}" Text="{Binding Path=ProgressBarText}" />
-            <customControls:ErrorButton Grid.Column="4" ErrorMessage="{Binding Path=ErrorMessage}" NoErrorVisibility="Collapsed" Width="30" Height="30"/>
+            <customControls:ErrorButton Grid.Column="4" Errors="{Binding Path=Errors}" NoErrorVisibility="Collapsed" Width="30" Height="30"/>
         </Grid>
 
     </Grid>

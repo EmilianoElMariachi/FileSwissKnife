@@ -1,42 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Input;
+using System.Linq;
+using System.Threading;
+using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
+using FileSwissKnife.Properties;
+using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
+using FileSwissKnife.Utils.UnitsManagement;
 
 namespace FileSwissKnife.ViewModels
 {
     public class SplitViewModel : TabViewModelBase
     {
-        private readonly List<Unit> _units = new List<Unit>();
         private string _inputFile;
         private string _splitSizeStr;
-        private ulong? _splitSize;
-        private Unit _selectedUnit;
-        private string _errorMessage;
+        private long? _splitSize;
+        private Unit? _selectedUnit;
         private string _outputFolder;
+        private readonly ErrorViewModel _splitSizeError = new ErrorViewModel(false);
+        private readonly NoSelectedUnitErrorViewModel _noSelectedUnitError = new NoSelectedUnitErrorViewModel();
+
+        private CancellationTokenSource? _cancellationTokenSource;
 
         public SplitViewModel()
         {
-            const int K_FACTOR = 1000;
-            const int KI_FACTOR = 1024;
+            SplitOrCancelCommand = new RelayCommand(SplitOrCancel, CanSplitOrCancel);
 
-            _units.Add(new Unit(Localizer.Instance.UnitB, (int)Math.Pow(K_FACTOR, 0)));
-            _units.Add(new Unit(Localizer.Instance.UnitKB, (int)Math.Pow(K_FACTOR, 1)));
-            _units.Add(new Unit(Localizer.Instance.UnitKiB, (int)Math.Pow(KI_FACTOR, 1)));
-            _units.Add(new Unit(Localizer.Instance.UnitMB, (int)Math.Pow(K_FACTOR, 2)));
-            _units.Add(new Unit(Localizer.Instance.UnitMiB, (int)Math.Pow(KI_FACTOR, 2)));
-            _units.Add(new Unit(Localizer.Instance.UnitGB, (int)Math.Pow(K_FACTOR, 3)));
-            _units.Add(new Unit(Localizer.Instance.UnitGiB, (int)Math.Pow(KI_FACTOR, 3)));
-
-            SplitOrCancelCommand = new RelayCommand(SplitOrCancel);
+            SplitSizeStr = Settings.Default.SplitSize.ToString();
+            SelectedUnit = Units.All.FirstOrDefault(unit => unit.SIUnit == Settings.Default.SplitUnit);
         }
 
         public override string DisplayName => Localizer.Instance.TabNameSplit;
 
         public override string TechName => "Split";
 
-        public List<Unit> Units => _units;
+        public Units Units => Units.All;
 
         public string InputFile
         {
@@ -56,49 +54,59 @@ namespace FileSwissKnife.ViewModels
                 _splitSizeStr = value;
                 _splitSize = null;
 
-                try
-                {
-                    _splitSize = ParseSplitSize(value);
-                }
-                catch (Exception ex)
-                {
-                    this.ErrorMessage = ex.Message;
-                }
+                UpdateSplitSize();
 
                 NotifyPropertyChanged();
             }
         }
 
-        private static ulong ParseSplitSize(string splitSizeStr)
+        private void UpdateSplitSize()
         {
-            if (string.IsNullOrWhiteSpace(splitSizeStr))
-                throw new Exception(Localizer.Instance.SplitSizeShouldBeDefined);
+            var errors = Errors;
 
-            if (!ulong.TryParse(splitSizeStr, out var splitSize))
-                throw new Exception(string.Format(Localizer.Instance.SplitSizeInvalid, splitSizeStr));
+            _splitSize = null;
+            try
+            {
+                var splitSizeStr = SplitSizeStr;
+                if (string.IsNullOrWhiteSpace(splitSizeStr))
+                    throw new Exception(Localizer.Instance.SplitSizeShouldBeDefined);
 
-            return splitSize;
+                if (!long.TryParse(splitSizeStr, out var splitSize) || splitSize <= 0)
+                    throw new Exception(string.Format(Localizer.Instance.SplitSizeInvalid, splitSizeStr));
+
+                _splitSize = splitSize;
+                Settings.Default.SplitSize = splitSize;
+                errors.Remove(_splitSizeError);
+            }
+            catch (Exception ex)
+            {
+                _splitSizeError.Message = ex.Message;
+                errors.Add(_splitSizeError);
+            }
+
+            SplitOrCancelCommand.TriggerCanExecuteChanged();
         }
 
-        public Unit SelectedUnit
+        public Unit? SelectedUnit
         {
             get => _selectedUnit;
             set
             {
                 _selectedUnit = value;
+
+                if (_selectedUnit == null)
+                    Errors.Add(_noSelectedUnitError);
+                else
+                {
+                    Settings.Default.SplitUnit = _selectedUnit.SIUnit;
+                    Errors.Remove(_noSelectedUnitError);
+                }
+
                 NotifyPropertyChanged();
             }
         }
 
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-            set
-            {
-                _errorMessage = value;
-                NotifyPropertyChanged();
-            }
-        }
+        public ErrorsCollection Errors { get; } = new ErrorsCollection();
 
         public string OutputFolder
         {
@@ -110,29 +118,54 @@ namespace FileSwissKnife.ViewModels
             }
         }
 
-        public ICommand SplitOrCancelCommand { get; }
+        public RelayCommand SplitOrCancelCommand { get; }
 
-        private void SplitOrCancel()
+        private async void SplitOrCancel()
         {
+            var errors = Errors;
+
+            try
+            {
+                errors.Clear();
+
+                var fileSplitter = new FileSplitter();
+                _cancellationTokenSource = new CancellationTokenSource();
+                await fileSplitter.Split(InputFile, OutputFolder, _splitSize.Value, _cancellationTokenSource.Token);
+            }
+            catch (Exception ex)
+            {
+                errors.Add(new ErrorViewModel(true)
+                {
+                    Message = ex.Message
+                });
+            }
+            finally
+            {
+                _cancellationTokenSource = null;
+            }
+
 
             //TODO: à implémenter
         }
 
-    }
-
-    public class Unit
-    {
-        public Unit(string name, int factor)
+        private bool CanSplitOrCancel()
         {
-            Factor = factor;
-            Name = name;
+            return _splitSize != null;
         }
 
-        public string Name { get; }
+        private class NoSelectedUnitErrorViewModel : ErrorViewModel
+        {
+            public NoSelectedUnitErrorViewModel() : base(false)
+            {
+                Localizer.Instance.LocalizationChanged += (sender, args) =>
+                {
+                    Message = Localizer.Instance.SplitUnitShouldBeSelected;
+                };
 
-        public int Factor { get; }
+                Message = Localizer.Instance.SplitUnitShouldBeSelected;
+            }
+        }
+
     }
-
-
 
 }

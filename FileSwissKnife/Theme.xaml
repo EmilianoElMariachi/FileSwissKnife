@@ -33,7 +33,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="customControls:ErrorButton">
-                        <Border>
+                        <Border ToolTipService.ShowDuration="12000">
                             <Viewbox>
                                 <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
                                     <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{StaticResource BackgroundBrush}" />
@@ -41,6 +41,20 @@
                                     <Rectangle Width="12" Height="12" Fill="Red" VerticalAlignment="Bottom" Margin="0,0,0,15"/>
                                 </Grid>
                             </Viewbox>
+
+                            <Border.ToolTip>
+                                <ToolTip MaxWidth="600" >
+                                    <ItemsControl ItemsSource="{TemplateBinding Errors}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="customControls:ErrorViewModel">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Path=Message}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ToolTip>
+                            </Border.ToolTip>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -136,6 +150,19 @@
         </Setter>
     </Style>
 
+    <Style x:Key="WaterMarkText" TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="DarkGray" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="FrameBorderStyle" TargetType="Border">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource FrameBorderBrush}" />
+    </Style>
 
     <Style TargetType="customControls:TextBoxExt" x:Key="TextBoxDragWatermark">
         <Style.Setters>
@@ -152,7 +179,7 @@
                             <Grid>
                                 <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                                 <Grid IsHitTestVisible="False" Visibility="{TemplateBinding WatermarkVisibility}">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding WatermarkText}" FontStyle="Italic" Foreground="DarkGray" FontSize="16"/>
+                                    <TextBlock Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding WatermarkText}" />
                                 </Grid>
                             </Grid>
                         </Border>

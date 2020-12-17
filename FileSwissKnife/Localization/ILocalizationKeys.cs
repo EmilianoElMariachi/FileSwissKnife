@@ -6,6 +6,8 @@
 
         string DragMeSomeFilesToHash { get; }
 
+        string DragMeSomeFileToSplit { get; }
+
         string CancellingHash { get; }
 
         string CancellingJoin { get; }
@@ -69,6 +71,8 @@
         string SplitSizeShouldBeDefined { get; }
 
         string SplitSizeInvalid { get; }
+
+        string SplitUnitShouldBeSelected { get; }
 
     }
 }
