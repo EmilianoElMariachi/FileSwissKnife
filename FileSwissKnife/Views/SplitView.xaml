@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:SplitViewModel }">
 
-    <Grid>
+    <Grid customControls:DropFilesBehaviorExtension.IsEnabled="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

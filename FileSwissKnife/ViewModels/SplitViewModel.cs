@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using FileSwissKnife.CustomControls;
@@ -10,7 +11,7 @@ using FileSwissKnife.Utils.UnitsManagement;
 
 namespace FileSwissKnife.ViewModels
 {
-    public class SplitViewModel : TabViewModelBase
+    public class SplitViewModel : TabViewModelBase, IFilesDropped
     {
         private string _inputFile;
         private string _splitSizeStr;
@@ -130,7 +131,8 @@ namespace FileSwissKnife.ViewModels
 
                 var fileSplitter = new FileSplitter();
                 _cancellationTokenSource = new CancellationTokenSource();
-                await fileSplitter.Split(InputFile, OutputFolder, _splitSize.Value, _cancellationTokenSource.Token);
+                var splitSize = SelectedUnit.ToNbBytes(_splitSize.Value);
+                await fileSplitter.Split(InputFile, OutputFolder, splitSize, _cancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -166,6 +168,19 @@ namespace FileSwissKnife.ViewModels
             }
         }
 
+        public void OnFilesDropped(string[] files)
+        {
+            if (files.Length <= 0) 
+                return;
+            var file = files[0];
+            if (!File.Exists(file))
+                return;
+
+            var dir = Path.GetDirectoryName(file);
+            this.OutputFolder = dir;
+
+            InputFile = file;
+        }
     }
 
 }
