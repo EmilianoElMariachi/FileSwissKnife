@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace FileSwissKnife.Utils
     public class FileSplitter : ProgressReporterBase
     {
 
-        public Task Split(string inputFile, string outputFolder, long splitSize, CancellationToken cancellationToken)
+        public Task Split(string inputFile, string outputFolder, long splitSize, CancellationToken ct)
         {
             var fileInfo = new FileInfo(inputFile);
 
@@ -28,31 +29,46 @@ namespace FileSwissKnife.Utils
                     StartNumber = 1,
                 };
 
-                using var parts = PrepareParts(inputFile, outputFolder, splitSize, namingOptions);
+                using var parts = PrepareParts(inputFile, outputFolder, splitSize, namingOptions, ct);
 
-                var buffer = new byte[1000000];
-                var totalBytesRemaining = parts.InputStream.Length;
-
-                foreach (var part in parts)
+                try
                 {
-                    using var outputFile = File.Create(part.FilePath);
 
-                    var remainingBytes = part.FileSize;
-                    do
+                    var buffer = new byte[1000000];
+                    var totalBytesRemaining = parts.InputStream.Length;
+
+                    foreach (var part in parts)
                     {
-                        var nbBytesToRead = (int)Math.Min(remainingBytes, buffer.Length);
-                        var nbBytesRead = parts.InputStream.Read(buffer, 0, nbBytesToRead);
-                        if (nbBytesRead != nbBytesToRead)
-                            throw new Exception("Aïe! Lé où l'problème?");
+                        ct.ThrowIfCancellationRequested();
 
-                        outputFile.Write(buffer, 0, nbBytesRead);
-                        totalBytesRemaining -= nbBytesRead;
-                        remainingBytes -= nbBytesRead;
-                    } while (remainingBytes > 0);
+                        using var outputFile = File.Create(part.FilePath);
+
+                        var remainingBytes = part.FileSize;
+                        do
+                        {
+                            ct.ThrowIfCancellationRequested();
+
+                            var nbBytesToRead = (int)Math.Min(remainingBytes, buffer.Length);
+                            var nbBytesRead = parts.InputStream.Read(buffer, 0, nbBytesToRead);
+                            if (nbBytesRead != nbBytesToRead)
+                                throw new Exception("Aïe! Lé où l'problème?");
+
+                            outputFile.Write(buffer, 0, nbBytesRead);
+                            totalBytesRemaining -= nbBytesRead;
+                            remainingBytes -= nbBytesRead;
+                        } while (remainingBytes > 0);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    foreach (var part in parts.Where(part => File.Exists(part.FilePath)))
+                        File.Delete(part.FilePath);
+
+                    throw;
                 }
 
-                //TODO: implémenter la cancellationToken
-            }, cancellationToken);
+                //TODO: implémenter la progression
+            }, ct);
         }
 
         private class Parts : List<Part>, IDisposable
@@ -83,7 +99,7 @@ namespace FileSwissKnife.Utils
             public long FileSize { get; }
         }
 
-        private static Parts PrepareParts(string inputFilePath, string outputFolder, long splitSize, NamingOptions namingOptions)
+        private static Parts PrepareParts(string inputFilePath, string outputFolder, long splitSize, NamingOptions namingOptions, CancellationToken ct)
         {
             var parts = new Parts(inputFilePath);
 
@@ -97,6 +113,8 @@ namespace FileSwissKnife.Utils
             var fileNum = namingOptions.StartNumber;
             while (totalBytesRemaining > 0)
             {
+                ct.ThrowIfCancellationRequested();
+
                 var nextFileSize = Math.Min(totalBytesRemaining, splitSize);
 
                 totalBytesRemaining -= nextFileSize;

@@ -32,7 +32,7 @@
 
             <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Fill="#979797" Width="1" Margin="3"  RadiusX="5" RadiusY="5" />
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" VerticalAlignment="Center" >
-                <customControls:PlayStopButton Width="30" Height="30" VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" />
+                <customControls:PlayStopButton Width="30" Height="30" VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" PlayStopButtonState="{Binding Path=State}" />
                 <customControls:ErrorButton Width="30" Height="30" Margin="0,5,0,0" NoErrorVisibility="Collapsed" Errors="{Binding Path=Errors}" />
             </StackPanel>
             <Grid Grid.Row="2" Grid.Column="0">

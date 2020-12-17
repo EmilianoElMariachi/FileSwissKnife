@@ -22,6 +22,7 @@ namespace FileSwissKnife.ViewModels
         private readonly NoSelectedUnitErrorViewModel _noSelectedUnitError = new NoSelectedUnitErrorViewModel();
 
         private CancellationTokenSource? _cancellationTokenSource;
+        private PlayStopButtonState _state;
 
         public SplitViewModel()
         {
@@ -121,14 +122,30 @@ namespace FileSwissKnife.ViewModels
 
         public RelayCommand SplitOrCancelCommand { get; }
 
+        public PlayStopButtonState State
+        {
+            get => _state;
+            set
+            {
+                _state = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private async void SplitOrCancel()
         {
+            if (_cancellationTokenSource != null)
+            {
+                _cancellationTokenSource.Cancel();
+                return;
+            }
+
             var errors = Errors;
 
             try
             {
                 errors.Clear();
-
+                State = PlayStopButtonState.Stop;
                 var fileSplitter = new FileSplitter();
                 _cancellationTokenSource = new CancellationTokenSource();
                 var splitSize = SelectedUnit.ToNbBytes(_splitSize.Value);
@@ -143,6 +160,7 @@ namespace FileSwissKnife.ViewModels
             }
             finally
             {
+                State = PlayStopButtonState.Play;
                 _cancellationTokenSource = null;
             }
 
@@ -170,7 +188,7 @@ namespace FileSwissKnife.ViewModels
 
         public void OnFilesDropped(string[] files)
         {
-            if (files.Length <= 0) 
+            if (files.Length <= 0)
                 return;
             var file = files[0];
             if (!File.Exists(file))
