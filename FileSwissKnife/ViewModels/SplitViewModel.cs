@@ -23,6 +23,7 @@ namespace FileSwissKnife.ViewModels
 
         private CancellationTokenSource? _cancellationTokenSource;
         private PlayStopButtonState _state;
+        private double _progressBarValue;
 
         public SplitViewModel()
         {
@@ -132,6 +133,16 @@ namespace FileSwissKnife.ViewModels
             }
         }
 
+        public double ProgressBarValue
+        {
+            get => _progressBarValue;
+            set
+            {
+                _progressBarValue = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private async void SplitOrCancel()
         {
             if (_cancellationTokenSource != null)
@@ -149,6 +160,11 @@ namespace FileSwissKnife.ViewModels
                 var fileSplitter = new FileSplitter();
                 _cancellationTokenSource = new CancellationTokenSource();
                 var splitSize = SelectedUnit.ToNbBytes(_splitSize.Value);
+                fileSplitter.OnProgress += (sender, args) =>
+                {
+                    ProgressBarValue = args.Percent;
+                };
+
                 await fileSplitter.Split(InputFile, OutputFolder, splitSize, _cancellationTokenSource.Token);
             }
             catch (Exception ex)

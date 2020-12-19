@@ -9,6 +9,8 @@
 
     public class ProgressHandlerArgs
     {
+        public string? Message { get; set; }
+
         public double Percent { get; set; }
     }
 }

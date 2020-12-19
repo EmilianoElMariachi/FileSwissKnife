@@ -35,7 +35,8 @@ namespace FileSwissKnife.Utils
                 {
 
                     var buffer = new byte[1000000];
-                    var totalBytesRemaining = parts.InputStream.Length;
+                    var totalBytes = parts.InputStream.Length;
+                    var totalBytesRemaining = totalBytes;
 
                     foreach (var part in parts)
                     {
@@ -54,6 +55,9 @@ namespace FileSwissKnife.Utils
                                 throw new Exception("Aïe! Lé où l'problème?");
 
                             outputFile.Write(buffer, 0, nbBytesRead);
+
+                            NotifyProgressChanged((double)((totalBytes - totalBytesRemaining) / (decimal)totalBytes * 100));
+
                             totalBytesRemaining -= nbBytesRead;
                             remainingBytes -= nbBytesRead;
                         } while (remainingBytes > 0);
