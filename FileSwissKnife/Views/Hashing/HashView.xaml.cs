@@ -1,6 +1,6 @@
 ﻿using System.Collections.Specialized;
 
-namespace FileSwissKnife.Views
+namespace FileSwissKnife.Views.Hashing
 {
     /// <summary>
     /// Interaction logic for HashView.xaml

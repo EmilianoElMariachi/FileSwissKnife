@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace FileSwissKnife.Views
+namespace FileSwissKnife.Views.Hashing
 {
     /// <summary>
     /// Interaction logic for HashedFileView.xaml

@@ -1,4 +1,4 @@
-﻿namespace FileSwissKnife.Views
+﻿namespace FileSwissKnife.Views.Splitting
 {
     /// <summary>
     /// Interaction logic for SplitView.xaml

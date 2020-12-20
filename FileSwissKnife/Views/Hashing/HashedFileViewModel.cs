@@ -9,7 +9,7 @@ using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
 
-namespace FileSwissKnife.ViewModels
+namespace FileSwissKnife.Views.Hashing
 {
     public class HashedFileViewModel : ViewModelBase
     {

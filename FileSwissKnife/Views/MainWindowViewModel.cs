@@ -3,8 +3,11 @@ using System.Linq;
 using System.Windows;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
+using FileSwissKnife.Views.Hashing;
+using FileSwissKnife.Views.Joining;
+using FileSwissKnife.Views.Splitting;
 
-namespace FileSwissKnife.ViewModels
+namespace FileSwissKnife.Views
 {
     public class MainWindowViewModel : ViewModelBase
     {

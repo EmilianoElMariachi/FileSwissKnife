@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -8,7 +9,7 @@ using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
 using Microsoft.Win32;
 
-namespace FileSwissKnife.ViewModels
+namespace FileSwissKnife.Views.Hashing
 {
     public class HashViewModel : TabViewModelBase, IFilesDropped
     {
@@ -54,7 +55,7 @@ namespace FileSwissKnife.ViewModels
             HashFiles(openFileDialog.FileNames);
         }
 
-        private void HashFiles(string[] filesToHash)
+        private void HashFiles(IEnumerable<string> filesToHash)
         {
             var selectedHashes = GetSelectedHashes();
 
@@ -84,27 +85,5 @@ namespace FileSwissKnife.ViewModels
             HashFiles(files);
         }
 
-    }
-
-    public class HashToComputeViewModel : ViewModelBase
-    {
-        private bool _compute;
-
-        public HashToComputeViewModel(string hashName)
-        {
-            HashName = hashName;
-        }
-
-        public string HashName { get; }
-
-        public bool Compute
-        {
-            get => _compute;
-            set
-            {
-                _compute = value;
-                NotifyPropertyChanged();
-            }
-        }
     }
 }

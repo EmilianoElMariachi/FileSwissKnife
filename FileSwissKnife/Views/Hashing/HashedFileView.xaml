@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="FileSwissKnife.Views.HashedFileView"
+﻿<UserControl x:Class="FileSwissKnife.Views.Hashing.HashedFileView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
-             xmlns:viewModels="clr-namespace:FileSwissKnife.ViewModels"
+             xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
              mc:Ignorable="d" 
-             d:DesignWidth="400" d:DesignHeight="100" d:DataContext="{d:DesignInstance viewModels:HashedFileViewModel}">
+             d:DesignWidth="400" d:DesignHeight="100" d:DataContext="{d:DesignInstance hashing:HashedFileViewModel}">
 
     <Border Style="{StaticResource FrameBorderStyle}">
         <Grid Margin="5">

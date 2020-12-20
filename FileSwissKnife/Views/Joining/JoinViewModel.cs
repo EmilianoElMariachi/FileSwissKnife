@@ -8,7 +8,7 @@ using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
 
-namespace FileSwissKnife.ViewModels
+namespace FileSwissKnife.Views.Joining
 {
     public class JoinViewModel : TabViewModelBase, IFilesDropped
     {

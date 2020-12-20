@@ -1,14 +1,14 @@
-﻿<UserControl x:Class="FileSwissKnife.Views.HashView"
+﻿<UserControl x:Class="FileSwissKnife.Views.Hashing.HashView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:FileSwissKnife.Localization"
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
-             xmlns:viewModels="clr-namespace:FileSwissKnife.ViewModels"
              xmlns:views="clr-namespace:FileSwissKnife.Views"
+             xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600" d:DataContext="{d:DesignInstance viewModels:HashViewModel }">
+             d:DesignHeight="300" d:DesignWidth="600" d:DataContext="{d:DesignInstance hashing:HashViewModel }">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -31,8 +31,8 @@
                     <ScrollViewer x:Name="ScrollViewer" customControls:DropFilesBehaviorExtension.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <customControls:ItemsControlEx ItemsSource="{Binding Path=HashedFiles}" ItemsChanged="OnItemsChanged">
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="viewModels:HashedFileViewModel">
-                                    <views:HashedFileView />
+                                <DataTemplate DataType="hashing:HashedFileViewModel">
+                                    <hashing:HashedFileView />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </customControls:ItemsControlEx>

@@ -1,6 +1,4 @@
-﻿using FileSwissKnife.ViewModels;
-
-namespace FileSwissKnife.Views
+﻿namespace FileSwissKnife.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

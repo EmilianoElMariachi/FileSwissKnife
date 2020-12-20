@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:FileSwissKnife.ViewModels"
+        xmlns:views="clr-namespace:FileSwissKnife.Views"
         mc:Ignorable="d"
-        Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
+        Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance views:MainWindowViewModel}">
     <Window.Resources>
     </Window.Resources>
     <Grid Margin="5">

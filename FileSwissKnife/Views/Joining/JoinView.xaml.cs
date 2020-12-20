@@ -1,4 +1,4 @@
-﻿namespace FileSwissKnife.Views
+﻿namespace FileSwissKnife.Views.Joining
 {
     /// <summary>
     /// Interaction logic for JoinView.xaml

@@ -9,7 +9,7 @@ using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
 using FileSwissKnife.Utils.UnitsManagement;
 
-namespace FileSwissKnife.ViewModels
+namespace FileSwissKnife.Views.Splitting
 {
     public class SplitViewModel : TabViewModelBase, IFilesDropped
     {
