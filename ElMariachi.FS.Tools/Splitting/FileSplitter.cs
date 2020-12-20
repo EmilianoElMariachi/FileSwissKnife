@@ -27,11 +27,6 @@ namespace ElMariachi.FS.Tools.Splitting
 
         public Task Split(string inputFile, string outputFolder, long splitSize, CancellationToken ct)
         {
-            var fileInfo = new FileInfo(inputFile);
-
-            if (fileInfo.Length <= splitSize)
-                throw new InvalidOperationException($"Split size «{splitSize}» is greater than file size «{fileInfo.Length}».");
-
             if (splitSize < 0)
                 throw new ArgumentOutOfRangeException(nameof(splitSize), "Split size should be strictly greater than 0.");
 
@@ -53,6 +48,8 @@ namespace ElMariachi.FS.Tools.Splitting
                     var totalBytes = parts.InputStream.Length;
                     var totalBytesRemaining = totalBytes;
 
+                    NotifyProgressChanged(0);
+
                     foreach (var part in parts)
                     {
                         ct.ThrowIfCancellationRequested();
@@ -71,11 +68,10 @@ namespace ElMariachi.FS.Tools.Splitting
 
                             outputFile.Write(buffer, 0, nbBytesRead);
 
-                            var percentage = (double)((totalBytes - totalBytesRemaining) / (decimal)totalBytes * 100);
-                            NotifyProgressChanged(percentage, part.FileName);
-
                             totalBytesRemaining -= nbBytesRead;
                             remainingBytes -= nbBytesRead;
+                            var percentage = (double)((totalBytes - totalBytesRemaining) / (decimal)totalBytes * 100);
+                            NotifyProgressChanged(percentage, part.FileName);
                         } while (remainingBytes > 0);
                     }
                 }

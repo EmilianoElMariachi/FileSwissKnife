@@ -166,18 +166,33 @@ namespace FileSwissKnife.Views.Splitting
 
             try
             {
+                var inputFile = InputFile;
+
+                var splitSize = SelectedUnit.ToNbBytes(_splitSize.Value);
+
+                var fileInfo = new FileInfo(inputFile);
+
+                if (fileInfo.Length <= splitSize)
+                {
+                    this.Errors.Add(new ErrorViewModel(true)
+                    {
+                        Message = $"Split size «{splitSize}» is greater than file size «{fileInfo.Length}»."
+                    });
+                    return;
+                }
+
+
                 errors.Clear();
                 State = PlayStopButtonState.Stop;
                 var fileSplitter = new FileSplitter();
                 _cancellationTokenSource = new CancellationTokenSource();
-                var splitSize = SelectedUnit.ToNbBytes(_splitSize.Value);
                 fileSplitter.OnProgress += (sender, args) =>
                 {
                     ProgressBarValue = args.Percent;
                     ProgressBarText = args.Message;
                 };
 
-                await fileSplitter.Split(InputFile, OutputFolder, splitSize, _cancellationTokenSource.Token);
+                await fileSplitter.Split(inputFile, OutputFolder, splitSize, _cancellationTokenSource.Token);
             }
             catch (Exception ex)
             {

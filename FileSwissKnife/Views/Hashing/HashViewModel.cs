@@ -48,7 +48,7 @@ namespace FileSwissKnife.Views.Hashing
                 Title = Localizer.Instance.OpenFilesToHashTitle,
             };
 
-            var result = !openFileDialog.ShowDialog(Application.Current.MainWindow);
+            var result = openFileDialog.ShowDialog(Application.Current.MainWindow);
             if (result == null || !result.Value)
                 return;
 

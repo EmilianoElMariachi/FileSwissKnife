@@ -41,7 +41,7 @@
 
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinOutputFile}" Style="{StaticResource Title}"/>
-            <TextBox Grid.Row="1" Text="{Binding Path=OutputFile, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Grid.Row="1" Text="{Binding Path=OutputFile, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}" />
         </Grid>
 
         <Grid Grid.Row="2">

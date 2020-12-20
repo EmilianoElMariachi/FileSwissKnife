@@ -22,7 +22,6 @@
     <SolidColorBrush x:Key="MainColorBrushLight" Color="{StaticResource MainColorLight}" />
     <SolidColorBrush x:Key="FrameBorderBrush" Color="{StaticResource FrameBorderColor}" />
 
-    <system:Double x:Key="DefaultButtonWith">26</system:Double>
     <system:Double x:Key="DefaultButtonHeight">26</system:Double>
 
     <Style TargetType="UserControl">
@@ -35,7 +34,6 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="customControls:ErrorButton">
                         <Border ToolTipService.ShowDuration="12000"
-                                Width="{StaticResource DefaultButtonWith}"
                                 Height="{StaticResource DefaultButtonHeight}">
                             <Viewbox>
                                 <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
@@ -46,12 +44,15 @@
                             </Viewbox>
 
                             <Border.ToolTip>
-                                <ToolTip MaxWidth="600" >
+                                <ToolTip >
                                     <ItemsControl ItemsSource="{TemplateBinding Errors}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="customControls:ErrorViewModel">
-                                                <StackPanel>
-                                                    <TextBlock Text="{Binding Path=Message}" />
+                                                <StackPanel HorizontalAlignment="Left">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="‣" />
+                                                        <TextBlock Text="{Binding Path=Message}"/>
+                                                    </StackPanel>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -70,8 +71,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="customControls:PlayStopButton">
-                        <Border Width="{StaticResource DefaultButtonWith}"
-                                Height="{StaticResource DefaultButtonHeight}">
+                        <Border Height="{StaticResource DefaultButtonHeight}">
                             <Viewbox>
                                 <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
                                     <Ellipse x:Name="Ellipse" Width="100" Height="100" />
@@ -112,8 +112,7 @@
                         <system:Double x:Key="LineWidth">10</system:Double>
                         <system:Double x:Key="LineHeight">70</system:Double>
                     </ControlTemplate.Resources>
-                    <Border Width="{StaticResource DefaultButtonWith}"
-                            Height="{StaticResource DefaultButtonHeight}">
+                    <Border Height="{StaticResource DefaultButtonHeight}">
                         <Viewbox>
                             <Grid Width="100" Height="100" Background="Transparent">
                                 <Ellipse x:Name="Ellipse" Width="100" Height="100" />
@@ -141,6 +140,42 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="BrowseButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <ControlTemplate.Resources>
+                        <SolidColorBrush x:Key="EllipseColor" Color="#FF53C98E" />
+                        <Thickness x:Key="EllipseMargin">1,0</Thickness>
+                        <system:Double x:Key="EllipseSize">14</system:Double>
+                    </ControlTemplate.Resources>
+                    <Border Height="22" Margin="0">
+                        <Viewbox>
+                            <Border x:Name="Grid" Width="100" Height="76" CornerRadius="5" BorderThickness="1" BorderBrush="Black">
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Ellipse Fill="{StaticResource EllipseColor}" Width="{StaticResource EllipseSize}" Height="{StaticResource EllipseSize}" Margin="{StaticResource EllipseMargin}" />
+                                    <Ellipse Fill="{StaticResource EllipseColor}" Width="{StaticResource EllipseSize}" Height="{StaticResource EllipseSize}" Margin="{StaticResource EllipseMargin}"/>
+                                    <Ellipse Fill="{StaticResource EllipseColor}" Width="{StaticResource EllipseSize}" Height="{StaticResource EllipseSize}" Margin="{StaticResource EllipseMargin}"/>
+                                </StackPanel>
+
+                            </Border>
+                        </Viewbox>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Grid" Property="Background" Value="{StaticResource HighlightBackgroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="Grid" Property="Background" Value="{StaticResource BackgroundBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
     </Style>
 
     <Style TargetType="CheckBox" x:Key="LeftTextCheckBox">
@@ -260,4 +295,9 @@
         </Setter>
     </Style>
 
+    <Style x:Key="SingleLineTextBox" TargetType="TextBox">
+        <Setter Property="Height" Value="22" />
+        <Setter Property="AcceptsReturn" Value="False" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
 </ResourceDictionary>

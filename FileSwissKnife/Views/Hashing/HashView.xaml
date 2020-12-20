@@ -60,7 +60,7 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
 
-                <Button Width="30" Grid.Column="1" Content="..." Command="{Binding Path=SelectFilesToHashCommand}" />
+                <Button Style="{StaticResource BrowseButton}" Width="30" Grid.Column="1" Content="..." Command="{Binding Path=SelectFilesToHashCommand}" HorizontalAlignment="Right" />
 
             </Grid>
 

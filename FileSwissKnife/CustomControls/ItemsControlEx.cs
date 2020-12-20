@@ -7,7 +7,7 @@ namespace FileSwissKnife.CustomControls
     public class ItemsControlEx : ItemsControl
     {
 
-        public event EventHandler<NotifyCollectionChangedEventArgs> ItemsChanged;
+        public event EventHandler<NotifyCollectionChangedEventArgs>? ItemsChanged;
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {

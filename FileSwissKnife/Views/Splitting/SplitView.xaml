@@ -29,7 +29,18 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitInputFile}" Style="{StaticResource Title}"/>
-            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Path=InputFile}" />
+
+
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding Path=InputFile}" 
+                         Style="{StaticResource SingleLineTextBox}"/>
+                <Button Grid.Column="1" Style="{StaticResource BrowseButton}" Command="{Binding Path=BrowseInputFileCommand}" />
+            </Grid>
 
             <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Fill="#979797" Width="1" Margin="3"  RadiusX="5" RadiusY="5" />
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" VerticalAlignment="Center" >
@@ -42,18 +53,30 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="25*" />
+                    <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitOutputFolder}" Style="{StaticResource Title}"/>
-                <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Path=OutputFolder}" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitOutputFolder}" Style="{StaticResource Title}" Grid.ColumnSpan="2" Margin="0,0,0,22" Grid.RowSpan="2"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitSize}" Style="{StaticResource Title}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" MinWidth="50" Margin="3,0,2,0" Text="{Binding Path=SplitSizeStr, UpdateSourceTrigger=PropertyChanged}" />
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding Path=OutputFolder}" 
+                             Style="{StaticResource SingleLineTextBox}" />
+                    <Button Grid.Column="1" Style="{StaticResource BrowseButton}" Command="{Binding BrowseOutputDirCommand}" />
+                </Grid>
 
-                <ComboBox Grid.Row="1" Grid.Column="2" MinWidth="50" Margin="1,0,0,0" ItemsSource="{Binding Path=Units}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedUnit}" />
+                <TextBlock Grid.Column="2" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitSize}" Style="{StaticResource Title}" Height="16" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="2" MinWidth="50" Margin="3,0,2,0" 
+                         Text="{Binding Path=SplitSizeStr, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource SingleLineTextBox}"/>
+
+                <ComboBox Grid.Row="1" Grid.Column="3" MinWidth="50" Margin="1,0,0,0" ItemsSource="{Binding Path=Units}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedUnit}" />
 
             </Grid>
 

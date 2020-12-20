@@ -41,7 +41,6 @@ namespace FileSwissKnife.CustomControls
                 newErrors.CollectionChanged += OnErrorsCollectionChanged;
 
             UpdateDisplay();
-
         }
 
         private void UpdateDisplay()
@@ -56,7 +55,6 @@ namespace FileSwissKnife.CustomControls
                 this.Visibility = Visibility.Visible;
             else
                 this.Visibility = NoErrorVisibility;
-
         }
 
         private void OnErrorsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
