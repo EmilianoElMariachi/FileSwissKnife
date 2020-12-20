@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileSwissKnife.Utils
+namespace ElMariachi.FS.Tools.Hashing
 {
     public class Hash
     {

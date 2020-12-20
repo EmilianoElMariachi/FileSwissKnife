@@ -1,4 +1,4 @@
-﻿namespace FileSwissKnife
+﻿namespace ElMariachi.FS.Tools.Progression
 {
     public abstract class ProgressReporterBase : IProgressReporter
     {

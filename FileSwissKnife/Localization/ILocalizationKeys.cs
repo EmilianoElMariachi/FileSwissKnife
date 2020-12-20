@@ -74,5 +74,8 @@
 
         string SplitUnitShouldBeSelected { get; }
 
+        string AllFiles { get; }
+
+        string OpenFilesToHashTitle { get; }
     }
 }

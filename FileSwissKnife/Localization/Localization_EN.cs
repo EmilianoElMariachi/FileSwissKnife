@@ -75,5 +75,9 @@
         public string SplitSizeInvalid => "Invalid split size «{0}», value should be a strictly positive integer.";
 
         public string SplitUnitShouldBeSelected => "Please select a split unit.";
+
+        public string AllFiles => "All files";
+
+        public string OpenFilesToHashTitle => "Select files.";
     }
 }

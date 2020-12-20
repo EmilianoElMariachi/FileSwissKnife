@@ -5,40 +5,40 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using FileSwissKnife.Localization;
+using ElMariachi.FS.Tools.Progression;
 
-namespace FileSwissKnife.Utils
+namespace ElMariachi.FS.Tools.Joining
 {
     public class FileJoiner : ProgressReporterBase
     {
+        public const int DefaultBufferSize = 1024 * 1024 * 4;
 
-        private void CheckPrerequisites(string[] inputFiles, string outputFile)
+        public FileJoiner()
+        {
+        }
+
+        public FileJoiner(int bufferSize)
+        {
+            if (bufferSize < 1)
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Buffer should be greater than or equal to 1.");
+            BufferSize = bufferSize;
+        }
+
+        public int BufferSize { get; } = DefaultBufferSize;
+
+        public Task Run(string[] inputFiles, string outputFile, CancellationToken ct)
         {
             if (inputFiles == null)
-                throw new ArgumentNullException(nameof(inputFiles)); // TODO: à localiser?
+                throw new ArgumentNullException(nameof(inputFiles));
+
+            if (outputFile == null)
+                throw new ArgumentNullException(nameof(outputFile));
 
             foreach (var inputFile in inputFiles)
             {
-                if (string.IsNullOrEmpty(inputFile))
-                    throw new ArgumentException(); // TODO: à localiser
+                if (!File.Exists(inputFile))
+                    throw new FileNotFoundException($"Input file «{inputFile}» not found.");
             }
-
-            if (string.IsNullOrEmpty(outputFile))
-                throw new ArgumentException(Localizer.Instance.OutputFileCantBeUndefined);
-
-            if (!File.Exists(outputFile))
-                return;
-
-            var currentMainWindow = Application.Current.MainWindow;
-            var messageBoxResult = MessageBox.Show(currentMainWindow, string.Format(Localizer.Instance.CanOverrideOutputFile, outputFile), Localizer.Instance.Override, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
-            if (messageBoxResult != MessageBoxResult.Yes)
-                throw new InvalidOperationException(string.Format(Localizer.Instance.YouChooseNotToOverride, outputFile));
-        }
-
-        public Task Run(CancellationToken cancellationToken, string[] inputFiles, string outputFile)
-        {
-            CheckPrerequisites(inputFiles, outputFile);
 
             return Task.Run(() =>
             {
@@ -46,7 +46,7 @@ namespace FileSwissKnife.Utils
                 {
                     var totalBytes = ComputeTotalBytesSize(inputFiles);
 
-                    var buffer = new byte[4096];
+                    var buffer = new byte[BufferSize];
 
                     using var outStream = File.Create(outputFile);
                     outStream.SetLength(totalBytes);
@@ -59,7 +59,7 @@ namespace FileSwissKnife.Utils
 
                         while (true)
                         {
-                            cancellationToken.ThrowIfCancellationRequested();
+                            ct.ThrowIfCancellationRequested();
 
                             var nbBytesRead = fileStream.Read(buffer, 0, buffer.Length);
 
@@ -87,7 +87,7 @@ namespace FileSwissKnife.Utils
                     if (!(ex is OperationCanceledException))
                         throw;
                 }
-            }, cancellationToken);
+            }, ct);
         }
 
         /// <summary>
@@ -178,7 +178,6 @@ namespace FileSwissKnife.Utils
         {
             return files.Sum(file => new FileInfo(file).Length);
         }
-
 
     }
 }

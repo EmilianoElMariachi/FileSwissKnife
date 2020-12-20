@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
+using Microsoft.Win32;
 
 namespace FileSwissKnife.ViewModels
 {
@@ -38,9 +40,18 @@ namespace FileSwissKnife.ViewModels
 
         private void OnSelectFilesToHash()
         {
-            // TODO: à implémenter
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = $"{Localizer.Instance.AllFiles} (*.*)|*.*",
+                Multiselect = true,
+                Title = Localizer.Instance.OpenFilesToHashTitle,
+            };
 
+            var result = !openFileDialog.ShowDialog(Application.Current.MainWindow);
+            if (result == null || !result.Value)
+                return;
 
+            HashFiles(openFileDialog.FileNames);
         }
 
         private void HashFiles(string[] filesToHash)

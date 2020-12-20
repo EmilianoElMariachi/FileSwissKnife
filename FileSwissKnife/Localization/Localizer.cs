@@ -130,6 +130,10 @@ namespace FileSwissKnife.Localization
         public string SplitSizeInvalid => Current.SplitSizeInvalid;
 
         public string SplitUnitShouldBeSelected => Current.SplitUnitShouldBeSelected;
+
+        public string AllFiles => Current.AllFiles;
+
+        public string OpenFilesToHashTitle => Current.OpenFilesToHashTitle;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

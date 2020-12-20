@@ -2,10 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
+using ElMariachi.FS.Tools.Splitting;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
-using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
 using FileSwissKnife.Utils.UnitsManagement;
 

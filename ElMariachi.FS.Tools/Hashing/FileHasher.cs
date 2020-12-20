@@ -6,30 +6,30 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ElMariachi.FS.Tools.Progression;
 
-namespace FileSwissKnife.Utils
+namespace ElMariachi.FS.Tools.Hashing
 {
     public class FileHasher : ProgressReporterBase
     {
 
-        private static string ToHexString(IEnumerable<byte> hash)
+        public const int DefaultBufferSize = 1024 * 1024 * 4;
+
+        public FileHasher()
         {
-            var sb = new StringBuilder();
-
-            foreach (var b in hash)
-                sb.Append(b.ToString("x2"));
-
-            return sb.ToString();
         }
 
-        public void CheckPrerequisites()
+        public FileHasher(int bufferSize)
         {
-            //TODO: à implémenter
+            if (bufferSize < 1)
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Buffer should be greater than or equal to 1.");
+            BufferSize = bufferSize;
         }
 
-        public Task ComputeAsync(string file, IEnumerable<Hash> hashes, CancellationToken cancellationToken)
-        {
+        public int BufferSize { get; } = DefaultBufferSize;
 
+        public Task ComputeAsync(string file, IEnumerable<Hash> hashes, CancellationToken ct)
+        {
             var tuples = hashes.Select(hash =>
                 {
                     var algorithm = HashAlgorithm.Create(hash.AlgorithmName);
@@ -45,14 +45,14 @@ namespace FileSwissKnife.Utils
 
                 using var fileStream = File.OpenRead(file);
 
-                var buffer = new byte[1000000]; // TODO: rendre paramétrable?
+                var buffer = new byte[BufferSize];
 
                 var totalBytes = fileStream.Length;
                 var nbBytesHashed = 0L;
 
                 while (true)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
+                    ct.ThrowIfCancellationRequested();
 
                     var nbBytesRead = fileStream.Read(buffer, 0, buffer.Length);
                     nbBytesHashed += nbBytesRead;
@@ -61,7 +61,7 @@ namespace FileSwissKnife.Utils
                     {
                         foreach (var (hashAlgorithm, hash) in tuples)
                         {
-                            cancellationToken.ThrowIfCancellationRequested();
+                            ct.ThrowIfCancellationRequested();
 
                             hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
                             hash.ComputedValue = ToHexString(hashAlgorithm.Hash);
@@ -78,8 +78,17 @@ namespace FileSwissKnife.Utils
 
                 }
 
-            }, cancellationToken);
+            }, ct);
+        }
 
+        private static string ToHexString(IEnumerable<byte> hash)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var b in hash)
+                sb.Append(b.ToString("x2"));
+
+            return sb.ToString();
         }
     }
 }

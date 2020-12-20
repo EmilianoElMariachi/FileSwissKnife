@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
+using ElMariachi.FS.Tools.Joining;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
-using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
 
 namespace FileSwissKnife.ViewModels
@@ -35,6 +36,7 @@ namespace FileSwissKnife.ViewModels
                 this.ProgressBarText = percent.ToString("0.00");
             };
         }
+
 
         public override string DisplayName => Localizer.Instance.TabNameJoin;
 
@@ -114,16 +116,28 @@ namespace FileSwissKnife.ViewModels
 
             try
             {
+                var inputFiles = InputFiles.Split(Environment.NewLine);
+                var outputFile = OutputFile;
+
+                if (string.IsNullOrEmpty(outputFile))
+                    throw new ArgumentException(Localizer.Instance.OutputFileCantBeUndefined);
+
+                if (File.Exists(outputFile))
+                {
+                    var currentMainWindow = Application.Current.MainWindow;
+                    var messageBoxResult = MessageBox.Show(currentMainWindow, string.Format(Localizer.Instance.CanOverrideOutputFile, outputFile), Localizer.Instance.Override, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                    if (messageBoxResult != MessageBoxResult.Yes)
+                        throw new InvalidOperationException(string.Format(Localizer.Instance.YouChooseNotToOverride, outputFile));
+                }
+
                 IsTaskRunning = true;
                 Errors.CleanDeletable();
                 State = PlayStopButtonState.Stop;
                 _cancellationTokenSource = new CancellationTokenSource();
 
-                var inputFiles = InputFiles.Split(Environment.NewLine);
-                var outputFile = OutputFile;
                 var startDateTime = DateTime.Now;
 
-                await _fileJoiner.Run(_cancellationTokenSource.Token, inputFiles, outputFile);
+                await _fileJoiner.Run(inputFiles, outputFile, _cancellationTokenSource.Token);
 
                 ProgressBarText = _cancellationTokenSource.IsCancellationRequested ? Localizer.Instance.OperationCanceled : string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDateTime));
             }

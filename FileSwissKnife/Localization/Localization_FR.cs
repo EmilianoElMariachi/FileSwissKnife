@@ -75,5 +75,9 @@
         public string SplitSizeInvalid => "Taille de séparation «{0}» invalide, la valeur doit être un entier strictement positif.";
 
         public string SplitUnitShouldBeSelected => "Veuillez sélectionner une unité de séparation.";
+
+        public string AllFiles => "Tous les fichiers";
+
+        public string OpenFilesToHashTitle => "Sélectionnez des fichiers.";
     }
 }

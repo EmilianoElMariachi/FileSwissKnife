@@ -4,9 +4,9 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using ElMariachi.FS.Tools.Hashing;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
-using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
 
 namespace FileSwissKnife.ViewModels

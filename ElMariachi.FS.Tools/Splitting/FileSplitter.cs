@@ -4,18 +4,33 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ElMariachi.FS.Tools.Progression;
 
-namespace FileSwissKnife.Utils
+namespace ElMariachi.FS.Tools.Splitting
 {
     public class FileSplitter : ProgressReporterBase
     {
+        public const int DefaultBufferSize = 1024 * 1024 * 4;
+
+        public FileSplitter()
+        {
+        }
+
+        public FileSplitter(int bufferSize)
+        {
+            if (bufferSize < 1)
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Buffer should be greater than or equal to 1.");
+            BufferSize = bufferSize;
+        }
+
+        public int BufferSize { get; } = DefaultBufferSize;
 
         public Task Split(string inputFile, string outputFolder, long splitSize, CancellationToken ct)
         {
             var fileInfo = new FileInfo(inputFile);
 
             if (fileInfo.Length <= splitSize)
-                throw new InvalidOperationException($"Split size «{splitSize}» is greater than file size «{fileInfo.Length}»."); //TODO: à localiser
+                throw new InvalidOperationException($"Split size «{splitSize}» is greater than file size «{fileInfo.Length}».");
 
             if (splitSize < 0)
                 throw new ArgumentOutOfRangeException(nameof(splitSize), "Split size should be strictly greater than 0.");
@@ -34,7 +49,7 @@ namespace FileSwissKnife.Utils
                 try
                 {
 
-                    var buffer = new byte[1000000];
+                    var buffer = new byte[BufferSize];
                     var totalBytes = parts.InputStream.Length;
                     var totalBytesRemaining = totalBytes;
 
@@ -72,7 +87,6 @@ namespace FileSwissKnife.Utils
                     throw;
                 }
 
-                //TODO: implémenter la progression
             }, ct);
         }
 
@@ -156,35 +170,5 @@ namespace FileSwissKnife.Utils
             }
         }
 
-        public class NamingOptions
-        {
-            public NumPos NumPos { get; set; }
-
-            public string? NumSuffix { get; set; }
-
-            public string? NumPrefix { get; set; }
-
-            public int StartNumber { get; set; }
-        }
-
-        public enum NumPos
-        {
-            /// <summary>
-            /// 123README.TXT
-            /// </summary>
-            BeforeBaseName,
-            /// <summary>
-            /// README123.TXT
-            /// </summary>
-            AfterBaseName,
-            /// <summary>
-            /// README.123TXT
-            /// </summary>
-            BeforeExt,
-            /// <summary>
-            /// README.TXT123
-            /// </summary>
-            AfterExt
-        }
     }
 }
