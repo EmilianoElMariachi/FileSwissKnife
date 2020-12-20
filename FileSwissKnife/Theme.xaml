@@ -205,9 +205,9 @@
 
     <!-- GLOW EFFECT -->
     <LinearGradientBrush x:Key="GlowFXProgress">
-        <GradientStop Offset="0" Color="#660099FF"></GradientStop>
-        <GradientStop Offset=".5" Color="#660022AA"></GradientStop>
-        <GradientStop Offset="1" Color="#6B00C58F"></GradientStop>
+        <GradientStop Offset="0" Color="#9919148F" />
+        <GradientStop Offset="0.5" Color="#660099FF" />
+        <GradientStop Offset="1" Color="#9945DE6F" />
     </LinearGradientBrush>
 
     <!-- GLOW ANIMATION -->
@@ -228,7 +228,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type customControls:ProgressBarExt}">
-                    <Grid MinWidth="20" x:Name="Grid">
+                    <Grid MinWidth="20" x:Name="Grid" Height="16">
                         <Border x:Name="BackgroundRectangle" 
                                 Background="{StaticResource BackgroundBrush}" 
                                 CornerRadius="{StaticResource ProgressBarCornerRadius}" />

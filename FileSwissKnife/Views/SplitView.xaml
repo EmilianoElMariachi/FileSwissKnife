@@ -58,7 +58,7 @@
             </Grid>
 
             <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFileToSplit}" />
-            <customControls:ProgressBarExt Grid.Row="4" Height="10" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" />
+            <customControls:ProgressBarExt Grid.Row="4" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" />
         </Grid>
 
         <GroupBox Grid.Row="1" Header="Settings" Background="Transparent" >

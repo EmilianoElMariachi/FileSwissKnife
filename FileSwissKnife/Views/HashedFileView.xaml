@@ -24,8 +24,7 @@
                      FontFamily="Courier New" />
 
             <Grid Grid.Row="1" Grid.Column="0">
-                <customControls:ProgressBarExt Height="18"
-                                               Visibility="{Binding Path=ProgressBarVisibility}"
+                <customControls:ProgressBarExt Visibility="{Binding Path=ProgressBarVisibility}"
                                                Text="{Binding Path=ProgressBarText}"
                                                Value="{Binding Path=ProgressBarValue}" Margin="0,3,0,0" />
             </Grid>
