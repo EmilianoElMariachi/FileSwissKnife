@@ -56,7 +56,8 @@ namespace FileSwissKnife.Utils
 
                             outputFile.Write(buffer, 0, nbBytesRead);
 
-                            NotifyProgressChanged((double)((totalBytes - totalBytesRemaining) / (decimal)totalBytes * 100));
+                            var percentage = (double)((totalBytes - totalBytesRemaining) / (decimal)totalBytes * 100);
+                            NotifyProgressChanged(percentage, part.FileName);
 
                             totalBytesRemaining -= nbBytesRead;
                             remainingBytes -= nbBytesRead;
@@ -92,13 +93,16 @@ namespace FileSwissKnife.Utils
 
         private class Part
         {
-            public Part(string filePath, long fileSize)
+            public Part(string filePath, string fileName, long fileSize)
             {
                 FilePath = filePath;
+                FileName = fileName;
                 FileSize = fileSize;
             }
 
             public string FilePath { get; }
+
+            public string FileName { get; }
 
             public long FileSize { get; }
         }
@@ -127,7 +131,7 @@ namespace FileSwissKnife.Utils
 
                 var filePath = Path.Combine(outputFolder, fileName);
 
-                parts.Add(new Part(filePath, nextFileSize));
+                parts.Add(new Part(filePath, fileName, nextFileSize));
             }
 
             return parts;

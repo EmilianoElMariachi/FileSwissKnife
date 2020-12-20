@@ -31,16 +31,16 @@
 
 
             <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Grid.RowSpan="2">
-                <Button 
-                    Margin="0" Width="20" Height="20" Style="{StaticResource CloseButton}"
+                <Button
+                    Margin="0" Style="{StaticResource CloseButton}"
                     Command="{Binding Path=CloseCommand}"
                     />
-                <customControls:PlayStopButton 
-                    Margin="0,5,0,0" Width="20" Height="20" PlayStopButtonState="{Binding State}" 
+                <customControls:PlayStopButton
+                    Margin="0,5,0,0" PlayStopButtonState="{Binding State}"
                     Command="{Binding Path=HashOrCancelCommand}"
                     />
                 <customControls:ErrorButton 
-                    Margin="0,5,0,0" Width="20" Height="20" 
+                    Margin="0,5,0,0"
                     Errors="{Binding Path=Errors}"
                     />
             </StackPanel>

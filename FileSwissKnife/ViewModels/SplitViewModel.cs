@@ -24,6 +24,7 @@ namespace FileSwissKnife.ViewModels
         private CancellationTokenSource? _cancellationTokenSource;
         private PlayStopButtonState _state;
         private double _progressBarValue;
+        private string _progressBarText;
 
         public SplitViewModel()
         {
@@ -133,6 +134,16 @@ namespace FileSwissKnife.ViewModels
             }
         }
 
+        public string? ProgressBarText
+        {
+            get => _progressBarText;
+            set
+            {
+                _progressBarText = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public double ProgressBarValue
         {
             get => _progressBarValue;
@@ -163,6 +174,7 @@ namespace FileSwissKnife.ViewModels
                 fileSplitter.OnProgress += (sender, args) =>
                 {
                     ProgressBarValue = args.Percent;
+                    ProgressBarText = args.Message;
                 };
 
                 await fileSplitter.Split(InputFile, OutputFolder, splitSize, _cancellationTokenSource.Token);

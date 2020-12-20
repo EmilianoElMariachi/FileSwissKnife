@@ -33,8 +33,8 @@
 
             <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Fill="#979797" Width="1" Margin="3"  RadiusX="5" RadiusY="5" />
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" VerticalAlignment="Center" >
-                <customControls:PlayStopButton Width="30" Height="30" VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" PlayStopButtonState="{Binding Path=State}" />
-                <customControls:ErrorButton Width="30" Height="30" Margin="0,5,0,0" NoErrorVisibility="Collapsed" Errors="{Binding Path=Errors}" />
+                <customControls:PlayStopButton VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" PlayStopButtonState="{Binding Path=State}" />
+                <customControls:ErrorButton Margin="0,5,0,0" NoErrorVisibility="Collapsed" Errors="{Binding Path=Errors}" />
             </StackPanel>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -58,7 +58,7 @@
             </Grid>
 
             <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFileToSplit}" />
-            <customControls:ProgressBarExt Grid.Row="4" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" />
+            <customControls:ProgressBarExt Grid.Row="4" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" Text="{Binding Path=ProgressBarText, FallbackValue=File.001}" />
         </Grid>
 
         <GroupBox Grid.Row="1" Header="Settings" Background="Transparent" >
