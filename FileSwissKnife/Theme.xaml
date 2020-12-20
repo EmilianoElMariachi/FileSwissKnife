@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
                     xmlns:views="clr-namespace:FileSwissKnife.Views"
-                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:localization="clr-namespace:FileSwissKnife.Localization">
 
     <Color x:Key="ControlLightColor">White</Color>
     <Color x:Key="BorderMediumColor">#FF888888</Color>
@@ -35,6 +36,13 @@
                     <ControlTemplate TargetType="customControls:ErrorButton">
                         <Border ToolTipService.ShowDuration="12000"
                                 Height="{StaticResource DefaultButtonHeight}">
+
+                            <Border.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="{Binding Source={x:Static localization:Localizer.Instance}, Path=CopyErrors}" Command="{TemplateBinding CopyErrorMessageCommand}" />
+                                </ContextMenu>
+                            </Border.ContextMenu>
+
                             <Viewbox>
                                 <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
                                     <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{StaticResource BackgroundBrush}" />

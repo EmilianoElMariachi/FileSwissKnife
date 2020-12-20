@@ -77,5 +77,7 @@
         string AllFiles { get; }
 
         string OpenFilesToHashTitle { get; }
+
+        string CopyErrors { get; }
     }
 }

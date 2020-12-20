@@ -79,5 +79,7 @@
         public string AllFiles => "Tous les fichiers";
 
         public string OpenFilesToHashTitle => "Sélectionnez des fichiers.";
+
+        public string CopyErrors => "Copier le(s) message(s) d'erreur";
     }
 }

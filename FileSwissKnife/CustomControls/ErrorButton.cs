@@ -1,15 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using FileSwissKnife.Utils.MVVM;
 
 namespace FileSwissKnife.CustomControls
 {
     public class ErrorButton : Button
     {
+        public static readonly DependencyProperty CopyErrorMessageCommandProperty = DependencyProperty.Register(
+            "CopyErrorMessageCommand", typeof(ICommand), typeof(ErrorButton), new PropertyMetadata(default(ICommand)));
+
+        public ICommand CopyErrorMessageCommand
+        {
+            get => (ICommand)GetValue(CopyErrorMessageCommandProperty);
+            private set => SetValue(CopyErrorMessageCommandProperty, value);
+        }
+
         public static readonly DependencyProperty NoErrorVisibilityProperty = DependencyProperty.Register(
             "NoErrorVisibility", typeof(Visibility), typeof(ErrorButton), new PropertyMetadata(Visibility.Hidden, OnNoErrorVisibilityChanged));
 
@@ -71,6 +84,15 @@ namespace FileSwissKnife.CustomControls
         public ErrorButton()
         {
             UpdateDisplay();
+            CopyErrorMessageCommand = new RelayCommand(OnCopyErrors);
+        }
+
+        private void OnCopyErrors()
+        {
+            var errors = Errors;
+            string errorsText = errors != null ? string.Join(Environment.NewLine, errors.Select(err => $"‣ {err.Message}")) : "";
+
+            Clipboard.SetText(errorsText);
         }
 
         protected override void OnClick()

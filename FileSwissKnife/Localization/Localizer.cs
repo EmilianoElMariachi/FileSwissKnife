@@ -134,6 +134,8 @@ namespace FileSwissKnife.Localization
         public string AllFiles => Current.AllFiles;
 
         public string OpenFilesToHashTitle => Current.OpenFilesToHashTitle;
+
+        public string CopyErrors => Current.CopyErrors;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);
