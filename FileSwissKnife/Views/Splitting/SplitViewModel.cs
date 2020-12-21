@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -28,6 +29,7 @@ namespace FileSwissKnife.Views.Splitting
         private PlayStopButtonState _state;
         private double _progressBarValue;
         private string? _progressBarText;
+        private NumPosViewModel? _selectedNumPos;
 
         public SplitViewModel()
         {
@@ -37,6 +39,10 @@ namespace FileSwissKnife.Views.Splitting
 
             SplitSizeStr = Settings.Default.SplitSize.ToString();
             SelectedUnit = Units.All.FirstOrDefault(unit => unit.SIUnit == Settings.Default.SplitUnit);
+
+            NumPositions = Enum.GetValues<NumPos>().Select(numPos => new NumPosViewModel(numPos)).ToArray();
+
+            SelectedNumPos = NumPositions.FirstOrDefault(vm => vm.NumPos == Settings.Default.SplitNumPos);
         }
 
         public ICommand BrowseInputFileCommand { get; }
@@ -123,6 +129,20 @@ namespace FileSwissKnife.Views.Splitting
 
         public ErrorsCollection Errors { get; } = new ErrorsCollection();
 
+        public NumPosViewModel? SelectedNumPos
+        {
+            get => _selectedNumPos;
+            set
+            {
+                _selectedNumPos = value;
+
+                if (value != null)
+                    Settings.Default.SplitNumPos = value.NumPos;
+
+                NotifyPropertyChanged();
+            }
+        }
+
         public string OutputDir
         {
             get => Settings.Default.SplitOutputDir;
@@ -162,6 +182,8 @@ namespace FileSwissKnife.Views.Splitting
                 NotifyPropertyChanged();
             }
         }
+
+        public IEnumerable<NumPosViewModel> NumPositions { get; }
 
         private void BrowseOutputDir()
         {
@@ -286,5 +308,4 @@ namespace FileSwissKnife.Views.Splitting
             InputFile = file;
         }
     }
-
 }

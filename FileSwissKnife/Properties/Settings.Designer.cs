@@ -81,5 +81,17 @@ namespace FileSwissKnife.Properties {
                 this["SplitOutputDir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AfterExt")]
+        public global::ElMariachi.FS.Tools.Splitting.NumPos SplitNumPos {
+            get {
+                return ((global::ElMariachi.FS.Tools.Splitting.NumPos)(this["SplitNumPos"]));
+            }
+            set {
+                this["SplitNumPos"] = value;
+            }
+        }
     }
 }

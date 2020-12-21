@@ -4,6 +4,7 @@
 // TODO: faire la page des settings et exposer la taille des buffers
 // TODO: faire une icône pour l'application
 // TODO: faire le thème sombre
+// TODO: implémenter la règle de nommage du split
 
 namespace FileSwissKnife
 {

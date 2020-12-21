@@ -140,6 +140,14 @@ namespace FileSwissKnife.Localization
         public string BrowseSplitOutputDirTitle => Current.BrowseSplitOutputDirTitle;
 
         public string BrowseFileToSplitTitle => Current.BrowseFileToSplitTitle;
+
+        public string SplitNumPosBeforeBaseName => Current.SplitNumPosBeforeBaseName;
+
+        public string SplitNumPosAfterBaseName => Current.SplitNumPosAfterBaseName;
+
+        public string SplitNumPosBeforeExt => Current.SplitNumPosBeforeExt;
+
+        public string SplitNumPosAfterExt => Current.SplitNumPosAfterExt;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

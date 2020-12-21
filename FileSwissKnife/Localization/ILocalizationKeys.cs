@@ -83,5 +83,13 @@
         string BrowseSplitOutputDirTitle { get; }
 
         string BrowseFileToSplitTitle { get; }
+
+        string SplitNumPosBeforeBaseName { get; }
+
+        string SplitNumPosAfterBaseName { get; }
+
+        string SplitNumPosBeforeExt { get; }
+
+        string SplitNumPosAfterExt { get; }
     }
 }

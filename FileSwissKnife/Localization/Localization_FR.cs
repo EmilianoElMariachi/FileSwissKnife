@@ -85,5 +85,13 @@
         public string BrowseSplitOutputDirTitle => "Sélection du répertoire de sortie";
 
         public string BrowseFileToSplitTitle => "Sélection du fichier d'entrée";
+
+        public string SplitNumPosBeforeBaseName => "Avant le nom";
+
+        public string SplitNumPosAfterBaseName => "Après le nom";
+
+        public string SplitNumPosBeforeExt => "Avant l'extension";
+
+        public string SplitNumPosAfterExt => "Après l'extension";
     }
 }

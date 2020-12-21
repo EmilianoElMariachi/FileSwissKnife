@@ -85,5 +85,13 @@
         public string BrowseSplitOutputDirTitle => "Output directory selection";
 
         public string BrowseFileToSplitTitle => "Input file selection";
+
+        public string SplitNumPosBeforeBaseName => "Before name";
+
+        public string SplitNumPosAfterBaseName => "After name";
+
+        public string SplitNumPosBeforeExt => "Before extension";
+
+        public string SplitNumPosAfterExt => "After extension";
     }
 }

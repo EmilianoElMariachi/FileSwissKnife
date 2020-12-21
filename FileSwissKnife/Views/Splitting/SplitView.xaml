@@ -86,6 +86,7 @@
 
         <GroupBox Grid.Row="1" Header="Settings" Background="Transparent" >
 
+            <ComboBox ItemsSource="{Binding Path=NumPositions}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
 
         </GroupBox>
     </Grid>

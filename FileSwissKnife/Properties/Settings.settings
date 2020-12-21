@@ -17,5 +17,8 @@
     <Setting Name="SplitOutputDir" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="SplitNumPos" Type="ElMariachi.FS.Tools.Splitting.NumPos" Scope="User">
+      <Value Profile="(Default)">AfterExt</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
