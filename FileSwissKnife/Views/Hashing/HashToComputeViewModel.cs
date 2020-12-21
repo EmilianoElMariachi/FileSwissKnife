@@ -4,7 +4,7 @@ namespace FileSwissKnife.Views.Hashing
 {
     public class HashToComputeViewModel : ViewModelBase
     {
-        private bool _compute;
+        private bool _isComputed;
 
         public HashToComputeViewModel(string hashName)
         {
@@ -13,12 +13,12 @@ namespace FileSwissKnife.Views.Hashing
 
         public string HashName { get; }
 
-        public bool Compute
+        public bool IsComputed
         {
-            get => _compute;
+            get => _isComputed;
             set
             {
-                _compute = value;
+                _isComputed = value;
                 NotifyPropertyChanged();
             }
         }

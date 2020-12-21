@@ -49,7 +49,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="5">
-                                <CheckBox IsChecked="{Binding Path=Compute}" HorizontalAlignment="Center" Content="{Binding Path=HashName}" />
+                                <CheckBox IsChecked="{Binding Path=IsComputed}" HorizontalAlignment="Center" Content="{Binding Path=HashName}" />
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

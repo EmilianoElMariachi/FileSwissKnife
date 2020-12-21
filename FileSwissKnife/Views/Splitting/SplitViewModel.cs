@@ -28,7 +28,7 @@ namespace FileSwissKnife.Views.Splitting
         private CancellationTokenSource? _cancellationTokenSource;
         private PlayStopButtonState _state;
         private double _progressBarValue;
-        private string _progressBarText;
+        private string? _progressBarText;
 
         public SplitViewModel()
         {

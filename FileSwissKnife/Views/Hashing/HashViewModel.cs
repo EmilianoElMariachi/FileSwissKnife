@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
+using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
 using Microsoft.Win32;
 
@@ -19,10 +21,24 @@ namespace FileSwissKnife.Views.Hashing
         {
             var hashNames = new[] { "SHA1", "MD5", "SHA256", "SHA384", "SHA512" };
 
-
-            AvailableHashes = hashNames.Select(hashName => new HashToComputeViewModel(hashName)
+            AvailableHashes = hashNames.Select(hashName =>
             {
-                Compute = true,
+                var selectedHashesSaved = Settings.Default.SelectedHashes ?? new StringCollection();
+
+                var hashToComputeViewModel = new HashToComputeViewModel(hashName)
+                {
+                    IsComputed = selectedHashesSaved.Count <= 0 || selectedHashesSaved.Contains(hashName),
+                };
+                hashToComputeViewModel.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(HashToComputeViewModel.IsComputed))
+                    {
+                        var selectedHashes = new StringCollection();
+                        selectedHashes.AddRange(GetSelectedHashes());
+                        Settings.Default.SelectedHashes = selectedHashes;
+                    }
+                };
+                return hashToComputeViewModel;
             }).ToArray();
 
             SelectFilesToHashCommand = new RelayCommand(OnSelectFilesToHash);
@@ -76,7 +92,7 @@ namespace FileSwissKnife.Views.Hashing
 
         private string[] GetSelectedHashes()
         {
-            return AvailableHashes.Where(model => model.Compute).Select(model => model.HashName).ToArray();
+            return AvailableHashes.Where(model => model.IsComputed).Select(model => model.HashName).ToArray();
         }
 
 

@@ -11,5 +11,8 @@
     <Setting Name="SplitUnit" Type="FileSwissKnife.Utils.UnitsManagement.SIUnit" Scope="User">
       <Value Profile="(Default)">MB</Value>
     </Setting>
+    <Setting Name="SelectedHashes" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
