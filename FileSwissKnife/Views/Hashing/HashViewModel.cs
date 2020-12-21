@@ -45,7 +45,7 @@ namespace FileSwissKnife.Views.Hashing
             {
                 Filter = $"{Localizer.Instance.AllFiles} (*.*)|*.*",
                 Multiselect = true,
-                Title = Localizer.Instance.OpenFilesToHashTitle,
+                Title = Localizer.Instance.BrowseFilesToHashTitle,
             };
 
             var result = openFileDialog.ShowDialog(Application.Current.MainWindow);

@@ -133,9 +133,13 @@ namespace FileSwissKnife.Localization
 
         public string AllFiles => Current.AllFiles;
 
-        public string OpenFilesToHashTitle => Current.OpenFilesToHashTitle;
+        public string BrowseFilesToHashTitle => Current.BrowseFilesToHashTitle;
 
         public string CopyErrors => Current.CopyErrors;
+
+        public string BrowseSplitOutputDirTitle => Current.BrowseSplitOutputDirTitle;
+
+        public string BrowseFileToSplitTitle => Current.BrowseFileToSplitTitle;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

@@ -78,8 +78,12 @@
 
         public string AllFiles => "All files";
 
-        public string OpenFilesToHashTitle => "Select files.";
+        public string BrowseFilesToHashTitle => "Input files selection";
 
         public string CopyErrors => "Copy error messages";
+
+        public string BrowseSplitOutputDirTitle => "Output directory selection";
+
+        public string BrowseFileToSplitTitle => "Input file selection";
     }
 }

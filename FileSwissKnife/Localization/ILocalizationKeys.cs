@@ -76,8 +76,12 @@
 
         string AllFiles { get; }
 
-        string OpenFilesToHashTitle { get; }
+        string BrowseFilesToHashTitle { get; }
 
         string CopyErrors { get; }
+
+        string BrowseSplitOutputDirTitle { get; }
+
+        string BrowseFileToSplitTitle { get; }
     }
 }

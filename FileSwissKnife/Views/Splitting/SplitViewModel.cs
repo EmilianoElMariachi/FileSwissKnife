@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
 using ElMariachi.FS.Tools.Splitting;
 using FileSwissKnife.CustomControls;
@@ -9,6 +10,8 @@ using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
 using FileSwissKnife.Utils.UnitsManagement;
+using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FileSwissKnife.Views.Splitting
 {
@@ -31,20 +34,17 @@ namespace FileSwissKnife.Views.Splitting
         {
             SplitOrCancelCommand = new RelayCommand(SplitOrCancel, CanSplitOrCancel);
             BrowseOutputDirCommand = new RelayCommand(BrowseOutputDir);
+            BrowseInputFileCommand = new RelayCommand(BrowseInputFile);
 
             SplitSizeStr = Settings.Default.SplitSize.ToString();
             SelectedUnit = Units.All.FirstOrDefault(unit => unit.SIUnit == Settings.Default.SplitUnit);
         }
 
-        private void BrowseOutputDir()
-        {
-            //new FolderBrowserDialog();
-        }
+        public ICommand BrowseInputFileCommand { get; }
 
         public ICommand BrowseOutputDirCommand { get; }
 
         public RelayCommand SplitOrCancelCommand { get; }
-
 
         public override string DisplayName => Localizer.Instance.TabNameSplit;
 
@@ -162,6 +162,34 @@ namespace FileSwissKnife.Views.Splitting
                 _progressBarValue = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        private void BrowseOutputDir()
+        {
+            var dialog = new CommonOpenFileDialog
+            {
+                InitialDirectory = "C:\\Users",
+                IsFolderPicker = true,
+                Title = Localizer.Instance.BrowseSplitOutputDirTitle
+            };
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                this.OutputDir = dialog.FileName;
+        }
+
+        private void BrowseInputFile()
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = $"{Localizer.Instance.AllFiles} (*.*)|*.*",
+                Multiselect = false,
+                Title = Localizer.Instance.BrowseFileToSplitTitle,
+            };
+
+            var result = openFileDialog.ShowDialog(Application.Current.MainWindow);
+            if (result == null || !result.Value)
+                return;
+
+            InputFile = openFileDialog.FileName;
         }
 
         private async void SplitOrCancel()
