@@ -26,12 +26,12 @@ namespace FileSwissKnife.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastActiveTabTechName {
+        public string ActiveTabTechName {
             get {
-                return ((string)(this["LastActiveTabTechName"]));
+                return ((string)(this["ActiveTabTechName"]));
             }
             set {
-                this["LastActiveTabTechName"] = value;
+                this["ActiveTabTechName"] = value;
             }
         }
         
@@ -67,6 +67,18 @@ namespace FileSwissKnife.Properties {
             }
             set {
                 this["SelectedHashes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SplitOutputDir {
+            get {
+                return ((string)(this["SplitOutputDir"]));
+            }
+            set {
+                this["SplitOutputDir"] = value;
             }
         }
     }

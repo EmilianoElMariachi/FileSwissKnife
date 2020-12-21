@@ -21,7 +21,6 @@ namespace FileSwissKnife.Views.Splitting
         private string _splitSizeStr;
         private long? _splitSize;
         private Unit? _selectedUnit;
-        private string _outputDir;
         private readonly ErrorViewModel _splitSizeError = new ErrorViewModel(false);
         private readonly NoSelectedUnitErrorViewModel _noSelectedUnitError = new NoSelectedUnitErrorViewModel();
 
@@ -126,10 +125,10 @@ namespace FileSwissKnife.Views.Splitting
 
         public string OutputDir
         {
-            get => _outputDir;
+            get => Settings.Default.SplitOutputDir;
             set
             {
-                _outputDir = value;
+                Settings.Default.SplitOutputDir = value;
                 NotifyPropertyChanged();
             }
         }
@@ -168,7 +167,7 @@ namespace FileSwissKnife.Views.Splitting
         {
             var dialog = new CommonOpenFileDialog
             {
-                InitialDirectory = "C:\\Users",
+                InitialDirectory = Settings.Default.SplitOutputDir,
                 IsFolderPicker = true,
                 Title = Localizer.Instance.BrowseSplitOutputDirTitle
             };
@@ -230,7 +229,15 @@ namespace FileSwissKnife.Views.Splitting
                     ProgressBarText = args.Message;
                 };
 
-                await fileSplitter.Split(inputFile, OutputDir, splitSize, _cancellationTokenSource.Token);
+                //TODO: implémenter l'édition
+                var namingOptions = new NamingOptions
+                {
+                    NumPrefix = ".part",
+                    NumPos = NumPos.AfterExt,
+                    StartNumber = 1,
+                };
+
+                await fileSplitter.Split(inputFile, OutputDir, splitSize, namingOptions, _cancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -245,8 +252,6 @@ namespace FileSwissKnife.Views.Splitting
                 _cancellationTokenSource = null;
             }
 
-
-            //TODO: à implémenter
         }
 
         private bool CanSplitOrCancel()

@@ -20,7 +20,7 @@ namespace FileSwissKnife.Views
             Tabs = new TabViewModelBase[] { new JoinViewModel(), new SplitViewModel(), new HashViewModel() };
 
 
-            var tabToSelect = Tabs.FirstOrDefault(tab => string.Equals(tab.TechName, Settings.Default.LastActiveTabTechName, StringComparison.OrdinalIgnoreCase));
+            var tabToSelect = Tabs.FirstOrDefault(tab => string.Equals(tab.TechName, Settings.Default.ActiveTabTechName, StringComparison.OrdinalIgnoreCase));
 
             SelectedTab = tabToSelect ?? Tabs[0];
         }
@@ -37,7 +37,7 @@ namespace FileSwissKnife.Views
             {
                 _selectedTab = value;
                 if (_selectedTab != null)
-                    Settings.Default.LastActiveTabTechName = _selectedTab.TechName;
+                    Settings.Default.ActiveTabTechName = _selectedTab.TechName;
                 NotifyPropertyChanged();
             }
         }

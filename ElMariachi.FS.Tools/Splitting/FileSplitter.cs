@@ -25,20 +25,13 @@ namespace ElMariachi.FS.Tools.Splitting
 
         public int BufferSize { get; } = DefaultBufferSize;
 
-        public Task Split(string inputFile, string outputDir, long splitSize, CancellationToken ct)
+        public Task Split(string inputFile, string outputDir, long splitSize, NamingOptions namingOptions, CancellationToken ct)
         {
             if (splitSize < 0)
                 throw new ArgumentOutOfRangeException(nameof(splitSize), "Split size should be strictly greater than 0.");
 
             return Task.Run(() =>
             {
-                var namingOptions = new NamingOptions
-                {
-                    NumPrefix = ".part",
-                    NumPos = NumPos.AfterExt,
-                    StartNumber = 1,
-                };
-
                 using var parts = PrepareParts(inputFile, outputDir, splitSize, namingOptions, ct);
 
                 try
