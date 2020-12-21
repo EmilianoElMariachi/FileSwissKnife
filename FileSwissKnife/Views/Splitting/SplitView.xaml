@@ -8,7 +8,7 @@
              xmlns:splitting="clr-namespace:FileSwissKnife.Views.Splitting"
              xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance splitting:SplitViewModel }">
+             d:DesignHeight="260" d:DesignWidth="400" d:DataContext="{d:DesignInstance splitting:SplitViewModel }">
 
     <Grid customControls:DropFilesBehaviorExtension.IsEnabled="True">
         <Grid.RowDefinitions>
@@ -31,8 +31,6 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitInputFile}" Style="{StaticResource Title}"/>
 
-
-
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -43,7 +41,7 @@
                 <Button Grid.Column="1" Style="{StaticResource BrowseButton}" Command="{Binding Path=BrowseInputFileCommand}" />
             </Grid>
 
-            <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Fill="#979797" Width="1" Margin="3"  RadiusX="5" RadiusY="5" />
+            <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Style="{StaticResource VerticalSeparator}" />
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" VerticalAlignment="Center" >
                 <customControls:PlayStopButton VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" PlayStopButtonState="{Binding Path=State}" />
                 <error:ErrorButton Margin="0,5,0,0" NoErrorVisibility="Collapsed" Errors="{Binding Path=Errors}" />
@@ -85,13 +83,72 @@
             <customControls:ProgressBarExt Grid.Row="4" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" Text="{Binding Path=ProgressBarText, FallbackValue=File.001}" />
         </Grid>
 
-        <GroupBox Grid.Row="1" Header="Settings" Background="Transparent" >
+        <Expander Grid.Row="1" Header="Naming options" Background="Transparent" >
 
-            <ComboBox ItemsSource="{Binding Path=NumPositions}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
 
-        </GroupBox>
+            <Grid VerticalAlignment="Top" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.6*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource Title}">
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                            <Setter Property="Margin" Value="0,2,0,2" />
+                        </Style>
+                        <Style TargetType="TextBox" >
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition MinWidth="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Num. prefix:" />
+                    <TextBox Grid.Row="0" Grid.Column="2" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Num. start:" />
+                    <TextBox Grid.Row="1" Grid.Column="2" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Zeros padding:" />
+                    <CheckBox Grid.Row="2" Grid.Column="2" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Num. suffix:" />
+                    <TextBox Grid.Row="3" Grid.Column="2"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Num. position:" HorizontalAlignment="Right" />
+                    <ComboBox Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Path=NumPositions}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
+
+                </Grid>
+
+                <Rectangle Grid.Row="0" Grid.Column="1" Style="{StaticResource VerticalSeparator}" />
+
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Overview" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="{Binding Path=NameOverview, FallbackValue=MyMovie.mp4.part001}" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                </Grid>
+
+            </Grid>
+
+        </Expander>
     </Grid>
-
-
 
 </UserControl>

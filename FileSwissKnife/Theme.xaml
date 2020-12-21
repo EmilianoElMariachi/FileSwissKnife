@@ -30,6 +30,24 @@
         <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
     </Style>
 
+    <Style x:Key="VerticalSeparator" TargetType="Rectangle">
+        <Setter Property="Width" Value="1" />
+        <Setter Property="Margin" Value="3" />
+
+        <Setter Property="Fill" Value="{StaticResource MainColorBrushDark}" />
+        <Setter Property="RadiusX" Value="5" />
+        <Setter Property="RadiusY" Value="5" />
+    </Style>    
+    
+    <Style x:Key="HorizontalSeparator" TargetType="Rectangle">
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="3" />
+
+        <Setter Property="Fill" Value="{StaticResource MainColorBrushDark}" />
+        <Setter Property="RadiusX" Value="5" />
+        <Setter Property="RadiusY" Value="5" />
+    </Style>
+
     <Style TargetType="error:ErrorButton">
         <Style.Setters>
             <Setter Property="Template">

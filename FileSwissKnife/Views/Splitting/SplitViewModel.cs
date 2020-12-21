@@ -233,7 +233,6 @@ namespace FileSwissKnife.Views.Splitting
             var errors = Errors;
             errors.Clear();
 
-            var inputFile = InputFile;
 
             var selectedUnit = SelectedUnit;
             if (selectedUnit == null)
@@ -250,6 +249,14 @@ namespace FileSwissKnife.Views.Splitting
             }
 
             var splitSizeBytes = selectedUnit.ToNbBytes(splitSize.Value);
+
+            var inputFile = InputFile;
+
+            if (!File.Exists(inputFile))
+            {
+                _fileSizeSplitSizeError.Show("Input file not found!");
+                return;
+            }
 
             var fileInfo = new FileInfo(inputFile);
 
@@ -282,6 +289,7 @@ namespace FileSwissKnife.Views.Splitting
                 {
                     NumPrefix = ".part",
                     NumPos = selectedNumPos.NumPos,
+                    NumSuffix = "",
                     StartNumber = 1,
                 };
 
