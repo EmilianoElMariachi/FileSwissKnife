@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using FileSwissKnife.Utils.MVVM;
 
-namespace FileSwissKnife.CustomControls
+namespace FileSwissKnife.CustomControls.Error
 {
     public class ErrorButton : Button
     {
@@ -98,56 +95,9 @@ namespace FileSwissKnife.CustomControls
         protected override void OnClick()
         {
             var errors = Errors;
-            errors?.CleanDeletable();
+            errors?.Clear();
             UpdateDisplay();
         }
 
-    }
-
-    public class ErrorsCollection : ObservableCollection<ErrorViewModel>
-    {
-        public void CleanDeletable()
-        {
-            var errorsToDelete = new List<ErrorViewModel>();
-            foreach (var error in this)
-            {
-                if (error.Deletable)
-                    errorsToDelete.Add(error);
-            }
-
-            foreach (var errorToDelete in errorsToDelete)
-            {
-                this.Remove(errorToDelete);
-            }
-        }
-
-        protected override void InsertItem(int index, ErrorViewModel item)
-        {
-            if (this.Contains(item))
-                return;
-            base.InsertItem(index, item);
-        }
-    }
-
-    public class ErrorViewModel : ViewModelBase
-    {
-        private string _message;
-
-        public ErrorViewModel(bool deletable)
-        {
-            Deletable = deletable;
-        }
-
-        public string Message
-        {
-            get => _message;
-            set
-            {
-                _message = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public bool Deletable { get; }
     }
 }

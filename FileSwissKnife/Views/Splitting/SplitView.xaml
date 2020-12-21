@@ -6,6 +6,7 @@
              xmlns:loc="clr-namespace:FileSwissKnife.Localization"
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
              xmlns:splitting="clr-namespace:FileSwissKnife.Views.Splitting"
+             xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400" d:DataContext="{d:DesignInstance splitting:SplitViewModel }">
 
@@ -45,7 +46,7 @@
             <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Fill="#979797" Width="1" Margin="3"  RadiusX="5" RadiusY="5" />
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" VerticalAlignment="Center" >
                 <customControls:PlayStopButton VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" PlayStopButtonState="{Binding Path=State}" />
-                <customControls:ErrorButton Margin="0,5,0,0" NoErrorVisibility="Collapsed" Errors="{Binding Path=Errors}" />
+                <error:ErrorButton Margin="0,5,0,0" NoErrorVisibility="Collapsed" Errors="{Binding Path=Errors}" />
             </StackPanel>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.RowDefinitions>

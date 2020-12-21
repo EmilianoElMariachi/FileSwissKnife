@@ -6,6 +6,7 @@
              xmlns:loc="clr-namespace:FileSwissKnife.Localization"
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
              xmlns:joining="clr-namespace:FileSwissKnife.Views.Joining"
+             xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600" d:DataContext="{d:DesignInstance joining:JoinViewModel}">
     <Grid>
@@ -54,7 +55,7 @@
             </Grid.ColumnDefinitions>
             <customControls:PlayStopButton Command="{Binding Path=JoinOrCancelCommand}" HorizontalAlignment="Center" Grid.Column="0" PlayStopButtonState="{Binding Path=State}"/>
             <customControls:ProgressBarExt  Grid.Column="2" Minimum="0" Maximum="100.0" Value="{Binding Path=ProgressBarValue, FallbackValue=100}" Text="{Binding Path=ProgressBarText}" />
-            <customControls:ErrorButton Grid.Column="4" Errors="{Binding Path=Errors}" NoErrorVisibility="Collapsed" />
+            <error:ErrorButton Grid.Column="4" Errors="{Binding Path=Errors}" NoErrorVisibility="Collapsed" />
         </Grid>
 
     </Grid>

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using ElMariachi.FS.Tools.Splitting;
 using FileSwissKnife.CustomControls;
+using FileSwissKnife.CustomControls.Error;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
@@ -22,18 +23,28 @@ namespace FileSwissKnife.Views.Splitting
         private string _splitSizeStr;
         private long? _splitSize;
         private Unit? _selectedUnit;
-        private readonly ErrorViewModel _splitSizeError = new ErrorViewModel(false);
-        private readonly NoSelectedUnitErrorViewModel _noSelectedUnitError = new NoSelectedUnitErrorViewModel();
+        private readonly StaticErrorViewModel _splitSizeUndefinedError;
+        private readonly NoSelectedUnitErrorViewModel _noSelectedUnitError;
+
+        private readonly ErrorsCollection _errors = new ErrorsCollection();
 
         private CancellationTokenSource? _cancellationTokenSource;
         private PlayStopButtonState _state;
         private double _progressBarValue;
         private string? _progressBarText;
         private NumPosViewModel? _selectedNumPos;
+        private readonly StaticErrorViewModel _fileSizeSplitSizeError;
+        private readonly NoSelectedNumPosErrorViewModel _noSelectedNumPosError;
 
         public SplitViewModel()
         {
-            SplitOrCancelCommand = new RelayCommand(SplitOrCancel, CanSplitOrCancel);
+            _noSelectedUnitError = new NoSelectedUnitErrorViewModel(_errors);
+            _splitSizeUndefinedError = new StaticErrorViewModel(_errors);
+            _fileSizeSplitSizeError = new StaticErrorViewModel(_errors);
+            _noSelectedNumPosError = new NoSelectedNumPosErrorViewModel(_errors);
+
+
+            SplitOrCancelCommand = new RelayCommand(SplitOrCancel);
             BrowseOutputDirCommand = new RelayCommand(BrowseOutputDir);
             BrowseInputFileCommand = new RelayCommand(BrowseInputFile);
 
@@ -83,8 +94,6 @@ namespace FileSwissKnife.Views.Splitting
 
         private void UpdateSplitSize()
         {
-            var errors = Errors;
-
             _splitSize = null;
             try
             {
@@ -97,12 +106,12 @@ namespace FileSwissKnife.Views.Splitting
 
                 _splitSize = splitSize;
                 Settings.Default.SplitSize = splitSize;
-                errors.Remove(_splitSizeError);
+                _splitSizeUndefinedError.Hide();
             }
             catch (Exception ex)
             {
-                _splitSizeError.Message = ex.Message;
-                errors.Add(_splitSizeError);
+                _splitSizeUndefinedError.Message = ex.Message;
+                _splitSizeUndefinedError.Show();
             }
 
             SplitOrCancelCommand.TriggerCanExecuteChanged();
@@ -116,18 +125,18 @@ namespace FileSwissKnife.Views.Splitting
                 _selectedUnit = value;
 
                 if (_selectedUnit == null)
-                    Errors.Add(_noSelectedUnitError);
+                    _noSelectedUnitError.Show();
                 else
                 {
                     Settings.Default.SplitUnit = _selectedUnit.SIUnit;
-                    Errors.Remove(_noSelectedUnitError);
+                    _noSelectedUnitError.Hide();
                 }
 
                 NotifyPropertyChanged();
             }
         }
 
-        public ErrorsCollection Errors { get; } = new ErrorsCollection();
+        public ErrorsCollection Errors => _errors;
 
         public NumPosViewModel? SelectedNumPos
         {
@@ -222,26 +231,43 @@ namespace FileSwissKnife.Views.Splitting
             }
 
             var errors = Errors;
+            errors.Clear();
+
+            var inputFile = InputFile;
+
+            var selectedUnit = SelectedUnit;
+            if (selectedUnit == null)
+            {
+                _noSelectedUnitError.Show();
+                return;
+            }
+
+            var splitSize = _splitSize;
+            if (splitSize == null)
+            {
+                _splitSizeUndefinedError.Show();
+                return;
+            }
+
+            var splitSizeBytes = selectedUnit.ToNbBytes(splitSize.Value);
+
+            var fileInfo = new FileInfo(inputFile);
+
+            if (fileInfo.Length <= splitSizeBytes)
+            {
+                _fileSizeSplitSizeError.Show(string.Format(Localizer.Instance.SplitErrorFileSizeLessThanSplitSize, splitSizeBytes, fileInfo.Length));
+                return;
+            }
+
+            var selectedNumPos = this.SelectedNumPos;
+            if (selectedNumPos == null)
+            {
+                _noSelectedNumPosError.Show();
+                return;
+            }
 
             try
             {
-                var inputFile = InputFile;
-
-                var splitSize = SelectedUnit.ToNbBytes(_splitSize.Value);
-
-                var fileInfo = new FileInfo(inputFile);
-
-                if (fileInfo.Length <= splitSize)
-                {
-                    this.Errors.Add(new ErrorViewModel(true)
-                    {
-                        Message = $"Split size «{splitSize}» is greater than file size «{fileInfo.Length}»."
-                    });
-                    return;
-                }
-
-
-                errors.Clear();
                 State = PlayStopButtonState.Stop;
                 var fileSplitter = new FileSplitter();
                 _cancellationTokenSource = new CancellationTokenSource();
@@ -255,15 +281,15 @@ namespace FileSwissKnife.Views.Splitting
                 var namingOptions = new NamingOptions
                 {
                     NumPrefix = ".part",
-                    NumPos = NumPos.AfterExt,
+                    NumPos = selectedNumPos.NumPos,
                     StartNumber = 1,
                 };
 
-                await fileSplitter.Split(inputFile, OutputDir, splitSize, namingOptions, _cancellationTokenSource.Token);
+                await fileSplitter.Split(inputFile, OutputDir, splitSizeBytes, namingOptions, _cancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
-                errors.Add(new ErrorViewModel(true)
+                errors.Add(new ErrorViewModel
                 {
                     Message = ex.Message
                 });
@@ -273,17 +299,11 @@ namespace FileSwissKnife.Views.Splitting
                 State = PlayStopButtonState.Play;
                 _cancellationTokenSource = null;
             }
-
         }
 
-        private bool CanSplitOrCancel()
+        private class NoSelectedUnitErrorViewModel : StaticErrorViewModel
         {
-            return _splitSize != null;
-        }
-
-        private class NoSelectedUnitErrorViewModel : ErrorViewModel
-        {
-            public NoSelectedUnitErrorViewModel() : base(false)
+            public NoSelectedUnitErrorViewModel(ErrorsCollection errorsCollection) : base(errorsCollection)
             {
                 Localizer.Instance.LocalizationChanged += (sender, args) =>
                 {
@@ -291,6 +311,19 @@ namespace FileSwissKnife.Views.Splitting
                 };
 
                 Message = Localizer.Instance.SplitUnitShouldBeSelected;
+            }
+        }
+
+        private class NoSelectedNumPosErrorViewModel : StaticErrorViewModel
+        {
+            public NoSelectedNumPosErrorViewModel(ErrorsCollection errorsCollection) : base(errorsCollection)
+            {
+                Localizer.Instance.LocalizationChanged += (sender, args) =>
+                {
+                    Message = Localizer.Instance.SplitNumPosShouldBeSelected;
+                };
+
+                Message = Localizer.Instance.SplitNumPosShouldBeSelected;
             }
         }
 

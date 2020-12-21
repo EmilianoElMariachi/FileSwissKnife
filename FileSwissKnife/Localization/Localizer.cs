@@ -148,6 +148,10 @@ namespace FileSwissKnife.Localization
         public string SplitNumPosBeforeExt => Current.SplitNumPosBeforeExt;
 
         public string SplitNumPosAfterExt => Current.SplitNumPosAfterExt;
+
+        public string SplitErrorFileSizeLessThanSplitSize => Current.SplitErrorFileSizeLessThanSplitSize;
+
+        public string SplitNumPosShouldBeSelected => Current.SplitNumPosShouldBeSelected;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

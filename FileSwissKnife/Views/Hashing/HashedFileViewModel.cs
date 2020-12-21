@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using ElMariachi.FS.Tools.Hashing;
 using FileSwissKnife.CustomControls;
+using FileSwissKnife.CustomControls.Error;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
 
@@ -109,12 +110,14 @@ namespace FileSwissKnife.Views.Hashing
                 return;
             }
 
+            var errors = Errors;
             try
             {
+                errors.Clear();
+
                 _canceled = false;
                 _cancellationTokenSource = new CancellationTokenSource();
 
-                Errors.CleanDeletable();
                 ProgressBarVisibility = Visibility.Visible;
                 State = PlayStopButtonState.Stop;
 
@@ -132,7 +135,7 @@ namespace FileSwissKnife.Views.Hashing
             }
             catch (Exception ex)
             {
-                Errors.Add(new ErrorViewModel(true)
+                errors.Add(new ErrorViewModel
                 {
                     Message = ex.Message
                 });

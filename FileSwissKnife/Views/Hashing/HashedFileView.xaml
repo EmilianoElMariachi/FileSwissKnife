@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
              xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
+             xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
              d:DesignWidth="400" d:DesignHeight="100" d:DataContext="{d:DesignInstance hashing:HashedFileViewModel}">
 
@@ -39,7 +40,7 @@
                     Margin="0,5,0,0" PlayStopButtonState="{Binding State}"
                     Command="{Binding Path=HashOrCancelCommand}"
                     />
-                <customControls:ErrorButton 
+                <error:ErrorButton 
                     Margin="0,5,0,0"
                     Errors="{Binding Path=Errors}"
                     />

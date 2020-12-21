@@ -93,5 +93,9 @@
         public string SplitNumPosBeforeExt => "Avant l'extension";
 
         public string SplitNumPosAfterExt => "Après l'extension";
+
+        public string SplitErrorFileSizeLessThanSplitSize => "La taille de séparation ({0}) est plus grande que la taille du fichier spécifié ({1}).";
+
+        public string SplitNumPosShouldBeSelected => "La position de la numérotation doit être sélectionnée.";
     }
 }

@@ -3,7 +3,8 @@
                     xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
                     xmlns:views="clr-namespace:FileSwissKnife.Views"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime"
-                    xmlns:localization="clr-namespace:FileSwissKnife.Localization">
+                    xmlns:localization="clr-namespace:FileSwissKnife.Localization"
+                    xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error">
 
     <Color x:Key="ControlLightColor">White</Color>
     <Color x:Key="BorderMediumColor">#FF888888</Color>
@@ -29,11 +30,11 @@
         <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
     </Style>
 
-    <Style TargetType="customControls:ErrorButton">
+    <Style TargetType="error:ErrorButton">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="customControls:ErrorButton">
+                    <ControlTemplate TargetType="error:ErrorButton">
                         <Border ToolTipService.ShowDuration="12000"
                                 Height="{StaticResource DefaultButtonHeight}">
 
@@ -55,7 +56,7 @@
                                 <ToolTip >
                                     <ItemsControl ItemsSource="{TemplateBinding Errors}">
                                         <ItemsControl.ItemTemplate>
-                                            <DataTemplate DataType="customControls:ErrorViewModel">
+                                            <DataTemplate DataType="error:ErrorViewModel">
                                                 <StackPanel HorizontalAlignment="Left">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="‣" />

@@ -17,7 +17,6 @@ namespace FileSwissKnife.Views.Splitting
 
         private void Initialize()
         {
-
             switch (NumPos)
             {
                 case NumPos.BeforeBaseName:

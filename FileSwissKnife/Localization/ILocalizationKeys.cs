@@ -91,5 +91,10 @@
         string SplitNumPosBeforeExt { get; }
 
         string SplitNumPosAfterExt { get; }
+
+        string SplitErrorFileSizeLessThanSplitSize { get; }
+
+        string SplitNumPosShouldBeSelected { get; }
+
     }
 }

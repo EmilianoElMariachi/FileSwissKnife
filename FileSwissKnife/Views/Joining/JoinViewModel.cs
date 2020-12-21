@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using ElMariachi.FS.Tools.Joining;
 using FileSwissKnife.CustomControls;
+using FileSwissKnife.CustomControls.Error;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
 
@@ -114,6 +115,9 @@ namespace FileSwissKnife.Views.Joining
                 return;
             }
 
+            var errors = Errors;
+            errors.Clear();
+
             try
             {
                 var inputFiles = InputFiles.Split(Environment.NewLine);
@@ -131,7 +135,6 @@ namespace FileSwissKnife.Views.Joining
                 }
 
                 IsTaskRunning = true;
-                Errors.CleanDeletable();
                 State = PlayStopButtonState.Stop;
                 _cancellationTokenSource = new CancellationTokenSource();
 
@@ -145,7 +148,7 @@ namespace FileSwissKnife.Views.Joining
             {
                 ProgressBarText = Localizer.Instance.OperationError;
 
-                Errors.Add(new ErrorViewModel(true)
+                errors.Add(new ErrorViewModel
                 {
                     Message = ex.Message
                 });
