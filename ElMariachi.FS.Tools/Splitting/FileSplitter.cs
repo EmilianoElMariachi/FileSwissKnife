@@ -25,7 +25,7 @@ namespace ElMariachi.FS.Tools.Splitting
 
         public int BufferSize { get; } = DefaultBufferSize;
 
-        public Task Split(string inputFile, string outputFolder, long splitSize, CancellationToken ct)
+        public Task Split(string inputFile, string outputDir, long splitSize, CancellationToken ct)
         {
             if (splitSize < 0)
                 throw new ArgumentOutOfRangeException(nameof(splitSize), "Split size should be strictly greater than 0.");
@@ -39,7 +39,7 @@ namespace ElMariachi.FS.Tools.Splitting
                     StartNumber = 1,
                 };
 
-                using var parts = PrepareParts(inputFile, outputFolder, splitSize, namingOptions, ct);
+                using var parts = PrepareParts(inputFile, outputDir, splitSize, namingOptions, ct);
 
                 try
                 {
@@ -117,7 +117,7 @@ namespace ElMariachi.FS.Tools.Splitting
             public long FileSize { get; }
         }
 
-        private static Parts PrepareParts(string inputFilePath, string outputFolder, long splitSize, NamingOptions namingOptions, CancellationToken ct)
+        private static Parts PrepareParts(string inputFilePath, string outputDir, long splitSize, NamingOptions namingOptions, CancellationToken ct)
         {
             var parts = new Parts(inputFilePath);
 
@@ -139,7 +139,7 @@ namespace ElMariachi.FS.Tools.Splitting
 
                 var fileName = BuildFileName(baseName, extension, namingOptions, fileNum++);
 
-                var filePath = Path.Combine(outputFolder, fileName);
+                var filePath = Path.Combine(outputDir, fileName);
 
                 parts.Add(new Part(filePath, fileName, nextFileSize));
             }

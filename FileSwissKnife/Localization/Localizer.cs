@@ -87,7 +87,7 @@ namespace FileSwissKnife.Localization
 
         public string SplitInputFile => Current.SplitInputFile;
 
-        public string SplitOutputFolder => Current.SplitOutputFolder;
+        public string SplitOutputDir => Current.SplitOutputDir;
 
         public string SplitSize => Current.SplitSize;
 

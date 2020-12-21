@@ -34,7 +34,7 @@
 
         string SplitInputFile { get; }
 
-        string SplitOutputFolder { get; }
+        string SplitOutputDir { get; }
 
         string SplitSize { get; }
 

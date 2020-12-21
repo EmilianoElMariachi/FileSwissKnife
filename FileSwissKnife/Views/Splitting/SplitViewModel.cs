@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows.Input;
 using ElMariachi.FS.Tools.Splitting;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
@@ -17,7 +18,7 @@ namespace FileSwissKnife.Views.Splitting
         private string _splitSizeStr;
         private long? _splitSize;
         private Unit? _selectedUnit;
-        private string _outputFolder;
+        private string _outputDir;
         private readonly ErrorViewModel _splitSizeError = new ErrorViewModel(false);
         private readonly NoSelectedUnitErrorViewModel _noSelectedUnitError = new NoSelectedUnitErrorViewModel();
 
@@ -29,10 +30,21 @@ namespace FileSwissKnife.Views.Splitting
         public SplitViewModel()
         {
             SplitOrCancelCommand = new RelayCommand(SplitOrCancel, CanSplitOrCancel);
+            BrowseOutputDirCommand = new RelayCommand(BrowseOutputDir);
 
             SplitSizeStr = Settings.Default.SplitSize.ToString();
             SelectedUnit = Units.All.FirstOrDefault(unit => unit.SIUnit == Settings.Default.SplitUnit);
         }
+
+        private void BrowseOutputDir()
+        {
+            //new FolderBrowserDialog();
+        }
+
+        public ICommand BrowseOutputDirCommand { get; }
+
+        public RelayCommand SplitOrCancelCommand { get; }
+
 
         public override string DisplayName => Localizer.Instance.TabNameSplit;
 
@@ -112,17 +124,15 @@ namespace FileSwissKnife.Views.Splitting
 
         public ErrorsCollection Errors { get; } = new ErrorsCollection();
 
-        public string OutputFolder
+        public string OutputDir
         {
-            get => _outputFolder;
+            get => _outputDir;
             set
             {
-                _outputFolder = value;
+                _outputDir = value;
                 NotifyPropertyChanged();
             }
         }
-
-        public RelayCommand SplitOrCancelCommand { get; }
 
         public PlayStopButtonState State
         {
@@ -192,7 +202,7 @@ namespace FileSwissKnife.Views.Splitting
                     ProgressBarText = args.Message;
                 };
 
-                await fileSplitter.Split(inputFile, OutputFolder, splitSize, _cancellationTokenSource.Token);
+                await fileSplitter.Split(inputFile, OutputDir, splitSize, _cancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -238,7 +248,7 @@ namespace FileSwissKnife.Views.Splitting
                 return;
 
             var dir = Path.GetDirectoryName(file);
-            this.OutputFolder = dir;
+            this.OutputDir = dir;
 
             InputFile = file;
         }

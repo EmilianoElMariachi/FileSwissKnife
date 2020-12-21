@@ -36,7 +36,7 @@
 
         public string SplitInputFile => "File to split:";
 
-        public string SplitOutputFolder => "Output folder:";
+        public string SplitOutputDir => "Output directory:";
 
         public string SplitSize => "Size:";
 
