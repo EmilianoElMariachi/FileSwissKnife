@@ -7,7 +7,7 @@
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
              xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600" d:DataContext="{d:DesignInstance hashing:HashViewModel }">
+             d:DesignHeight="250" d:DesignWidth="450" d:DataContext="{d:DesignInstance hashing:HashViewModel }">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

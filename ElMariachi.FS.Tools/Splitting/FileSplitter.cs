@@ -121,7 +121,14 @@ namespace ElMariachi.FS.Tools.Splitting
 
             var totalBytesRemaining = parts.InputStream.Length;
 
-            var padding = namingOptions.PadWithZeros ? parts.Count.ToString().Length : 0;
+            int padding;
+            if (namingOptions.PadWithZeros)
+            {
+                var nbFilesToProduce = totalBytesRemaining / splitSize + (totalBytesRemaining % splitSize == 0 ? 0 : 1);
+                padding = nbFilesToProduce.ToString().Length;
+            }
+            else
+                padding = 0;
 
             var fileNum = namingOptions.StartNumber;
             while (totalBytesRemaining > 0)
@@ -154,16 +161,18 @@ namespace ElMariachi.FS.Tools.Splitting
 
             var fileNumFull = $"{namingOptions.NumPrefix}{fileNumStr}{namingOptions.NumSuffix}";
 
+            var extensionSeparator = string.IsNullOrEmpty(extension) ? "" : ".";
+
             switch (namingOptions.NumPos)
             {
                 case NumPos.BeforeBaseName:
-                    return fileNumFull + baseName + "." + extension;
+                    return fileNumFull + baseName + extensionSeparator + extension;
                 case NumPos.AfterBaseName:
-                    return baseName + fileNumFull + "." + extension;
+                    return baseName + fileNumFull + extensionSeparator + extension;
                 case NumPos.BeforeExt:
-                    return baseName + "." + fileNumFull + extension;
+                    return baseName + extensionSeparator + fileNumFull + extension;
                 case NumPos.AfterExt:
-                    return baseName + "." + extension + fileNumFull;
+                    return baseName + extensionSeparator + extension + fileNumFull;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(namingOptions.NumPos));
             }
