@@ -8,7 +8,7 @@
              xmlns:joining="clr-namespace:FileSwissKnife.Views.Joining"
              xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="600" d:DataContext="{d:DesignInstance joining:JoinViewModel}">
+             d:DesignHeight="250" d:DesignWidth="350" d:DataContext="{d:DesignInstance joining:JoinViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -24,15 +24,19 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinInputFiles}" Style="{StaticResource Title}"/>
-            <customControls:TextBoxExt customControls:DropFilesBehaviorExtension.IsEnabled ="True"
-                                       Style="{StaticResource TextBoxDragWatermark}" 
-                                       Text="{Binding Path=InputFiles, UpdateSourceTrigger=PropertyChanged}"
-                                       Grid.Row="1" 
-                                       AllowDrop="True" 
-                                       HorizontalScrollBarVisibility="Auto"
-                                       VerticalScrollBarVisibility="Auto" 
-                                       AcceptsReturn="True"
-                                       WatermarkText="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToJoin}"/>
+
+            <Grid Grid.Row="1" >
+                <customControls:TextBoxExt customControls:DropFilesBehaviorExtension.IsEnabled ="True"
+                                           Style="{StaticResource TextBoxDragWatermark}" 
+                                           Text="{Binding Path=InputFiles, UpdateSourceTrigger=PropertyChanged}"
+                                           AllowDrop="True" 
+                                           HorizontalScrollBarVisibility="Auto"
+                                           VerticalScrollBarVisibility="Auto" 
+                                           AcceptsReturn="True"
+                                           WatermarkText="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToJoin}"/>
+                <Button Style="{StaticResource BrowseButton}" HorizontalAlignment="Right" VerticalAlignment="Top" />
+            </Grid>
+
         </Grid>
 
         <Grid Grid.Row="1">
@@ -42,7 +46,11 @@
 
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinOutputFile}" Style="{StaticResource Title}"/>
-            <TextBox Grid.Row="1" Text="{Binding Path=OutputFile, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}" />
+
+            <Grid Grid.Row="1" >
+                <TextBox Text="{Binding Path=OutputFile, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}" />
+                <Button Style="{StaticResource BrowseButton}" HorizontalAlignment="Right" />
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="2">

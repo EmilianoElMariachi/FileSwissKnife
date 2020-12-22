@@ -5,7 +5,7 @@ using FileSwissKnife.Properties;
 // TODO: faire la page des settings et exposer la taille des buffers
 // TODO: faire une icône pour l'application
 // TODO: faire le thème sombre
-
+// TODO: afficher le % d'avancement dans le calcul des hash
 namespace FileSwissKnife
 {
     /// <summary>
