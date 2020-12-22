@@ -83,17 +83,18 @@
             <customControls:ProgressBarExt Grid.Row="4" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" Text="{Binding Path=ProgressBarText, FallbackValue=File.001}" />
         </Grid>
 
-        <Expander Grid.Row="1" Header="Naming options" Background="Transparent" >
+        <Expander Grid.Row="1" Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingOptions}" Background="Transparent" >
 
 
             <Grid VerticalAlignment="Top" Margin="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.6*" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="224*"/>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="152*"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid>
+                <Grid Grid.ColumnSpan="3" Margin="0,0,7,0">
                     <Grid.Resources>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource Title}">
                             <Setter Property="HorizontalAlignment" Value="Right" />
@@ -116,33 +117,32 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Num. prefix:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingNumPrefix}" />
                     <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Path=NumPrefix, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Num. start:" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingStartNum}" />
                     <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=NumStart, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Zeros padding:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingPadWithZeros}" />
                     <CheckBox Grid.Row="2" Grid.Column="2" IsChecked="{Binding Path=PadWithZeros}" VerticalAlignment="Center"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Num. suffix:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingNumSuffix}" />
                     <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Path=NumSuffix, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Num. position:" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingNumPos}" HorizontalAlignment="Right" />
                     <ComboBox Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Path=NumPositions, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
 
                 </Grid>
 
-                <Rectangle Grid.Row="0" Grid.Column="1" Style="{StaticResource VerticalSeparator}" />
+                <Rectangle Grid.Row="0" Grid.Column="2" Style="{StaticResource VerticalSeparator}" Margin="3,3,3,3" />
 
-                <Grid Grid.Column="2">
+                <Grid Grid.Column="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Preview" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center"/> <!-- Localiser les champs -->
-
+                    <TextBlock Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingPreview}" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding Path=NamePreview, FallbackValue=MyMovie.mp4.part001}" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
                 </Grid>
 

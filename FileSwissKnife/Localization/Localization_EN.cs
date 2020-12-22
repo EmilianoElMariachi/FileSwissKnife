@@ -104,5 +104,19 @@
 
         public string SplitInputFileNotFound => "Input file «{0}» not found.";
 
+        public string SplitNamingOptions => "Naming options";
+
+        public string SplitNamingPreview => "Preview";
+
+        public string SplitNamingNumPrefix => "Number prefix:";
+
+        public string SplitNamingStartNum => "Start number:";
+
+        public string SplitNamingPadWithZeros => "Pad with zeros:";
+
+        public string SplitNamingNumSuffix => "Number suffix:";
+
+        public string SplitNamingNumPos => "Number position:";
+
     }
 }

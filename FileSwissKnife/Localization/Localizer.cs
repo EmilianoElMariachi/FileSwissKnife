@@ -158,6 +158,21 @@ namespace FileSwissKnife.Localization
         public string SplitStartNumberInvalid => Current.SplitStartNumberInvalid;
 
         public string SplitInputFileNotFound => Current.SplitInputFileNotFound;
+
+        public string SplitNamingOptions => Current.SplitNamingOptions;
+
+        public string SplitNamingPreview => Current.SplitNamingPreview;
+
+        public string SplitNamingNumPrefix => Current.SplitNamingNumPrefix;
+
+        public string SplitNamingStartNum => Current.SplitNamingStartNum;
+
+        public string SplitNamingPadWithZeros => Current.SplitNamingPadWithZeros;
+
+        public string SplitNamingNumSuffix => Current.SplitNamingNumSuffix;
+
+        public string SplitNamingNumPos => Current.SplitNamingNumPos;
+
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

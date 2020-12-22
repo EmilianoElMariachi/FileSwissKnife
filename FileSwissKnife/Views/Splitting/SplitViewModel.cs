@@ -34,7 +34,6 @@ namespace FileSwissKnife.Views.Splitting
         private NumPosViewModel? _selectedNumPos;
         private readonly StaticErrorViewModel _fileSizeSplitSizeError;
         private readonly NoSelectedNumPosErrorViewModel _noSelectedNumPosError;
-        private string _numSuffix;
         private string _namePreview;
 
         private readonly SplitSizeValidator _splitSizeValidator;
@@ -207,10 +206,10 @@ namespace FileSwissKnife.Views.Splitting
 
         public string NumSuffix
         {
-            get => _numSuffix;
+            get => Settings.Default.SplitNumSuffix;
             set
             {
-                _numSuffix = value;
+                Settings.Default.SplitNumSuffix = value;
                 NotifyPropertyChanged();
             }
         }
@@ -262,7 +261,7 @@ namespace FileSwissKnife.Views.Splitting
             var baseName = Path.GetFileNameWithoutExtension(fileNameBase);
             var ext = Path.GetExtension(fileNameBase).Substring(1);
 
-            NamePreview = FileSplitter.BuildFileName(baseName, ext, namingOptions, namingOptions.StartNumber);
+            NamePreview = FileSplitter.BuildFileName(baseName, ext, namingOptions, namingOptions.StartNumber, 3);
         }
 
         private void BrowseOutputDir()

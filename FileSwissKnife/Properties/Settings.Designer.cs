@@ -129,5 +129,17 @@ namespace FileSwissKnife.Properties {
                 this["SplitLastDir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SplitNumSuffix {
+            get {
+                return ((string)(this["SplitNumSuffix"]));
+            }
+            set {
+                this["SplitNumSuffix"] = value;
+            }
+        }
     }
 }

@@ -102,5 +102,19 @@
 
         string SplitInputFileNotFound { get; }
 
+        string SplitNamingOptions { get; }
+
+        string SplitNamingPreview { get; }
+
+        string SplitNamingNumPrefix { get; }
+
+        string SplitNamingStartNum { get; }
+
+        string SplitNamingPadWithZeros { get; }
+
+        string SplitNamingNumSuffix { get; }
+
+        string SplitNamingNumPos { get; }
+
     }
 }

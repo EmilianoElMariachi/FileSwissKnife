@@ -121,6 +121,8 @@ namespace ElMariachi.FS.Tools.Splitting
 
             var totalBytesRemaining = parts.InputStream.Length;
 
+            var padding = namingOptions.PadWithZeros ? parts.Count.ToString().Length : 0;
+
             var fileNum = namingOptions.StartNumber;
             while (totalBytesRemaining > 0)
             {
@@ -130,7 +132,7 @@ namespace ElMariachi.FS.Tools.Splitting
 
                 totalBytesRemaining -= nextFileSize;
 
-                var fileName = BuildFileName(baseName, extension, namingOptions, fileNum++);
+                var fileName = BuildFileName(baseName, extension, namingOptions, fileNum++, padding);
 
                 var filePath = Path.Combine(outputDir, fileName);
 
@@ -140,9 +142,17 @@ namespace ElMariachi.FS.Tools.Splitting
             return parts;
         }
 
-        public static string BuildFileName(string baseName, string extension, NamingOptions namingOptions, int fileNum)
+        public static string BuildFileName(string baseName, string extension, NamingOptions namingOptions, int fileNum, int padding)
         {
-            var fileNumFull = $"{namingOptions.NumPrefix}{fileNum}{namingOptions.NumSuffix}";
+            var fileNumStr = fileNum.ToString();
+
+            if (namingOptions.PadWithZeros)
+            {
+                var nbMissingZeros = Math.Max(0, padding - fileNumStr.Length);
+                fileNumStr = new string('0', nbMissingZeros) + fileNumStr;
+            }
+
+            var fileNumFull = $"{namingOptions.NumPrefix}{fileNumStr}{namingOptions.NumSuffix}";
 
             switch (namingOptions.NumPos)
             {

@@ -10,7 +10,6 @@
 
         public int StartNumber { get; set; }
 
-        //TODO: supporter cette propriété
         public bool PadWithZeros { get; set; }
     }
 }
