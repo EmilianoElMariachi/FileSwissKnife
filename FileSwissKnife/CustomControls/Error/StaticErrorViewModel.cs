@@ -9,6 +9,8 @@
             _errors = errors;
         }
 
+        public bool IsFixed { get; set; }
+
         public void Show(string newMessage)
         {
             _errors.Add(this);

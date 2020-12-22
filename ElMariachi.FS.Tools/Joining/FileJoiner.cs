@@ -97,10 +97,10 @@ namespace ElMariachi.FS.Tools.Joining
         /// <param name="inputFiles"></param>
         /// <param name="outputFile"></param>
         /// <returns></returns>
-        public static bool TryGuessFilesToJoin(string fileExample, out string[]? inputFiles, out string? outputFile)
+        public static bool TryGuessFilesToJoin(string fileExample, out string[] inputFiles, out string outputFile)
         {
-            inputFiles = null;
-            outputFile = null;
+            inputFiles = new string[0];
+            outputFile = "";
 
             var regex = new Regex("^(.*?)(\\d+)([^\\d]*)$"); // <Anything><Digits><NonDigits>
 

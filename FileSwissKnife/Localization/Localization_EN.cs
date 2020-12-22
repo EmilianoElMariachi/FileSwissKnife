@@ -97,5 +97,12 @@
         public string SplitErrorFileSizeLessThanSplitSize => "The split size ({0}) is greater than the specified file size ({1}).";
 
         public string SplitNumPosShouldBeSelected => "The numbering position should be selected.";
+
+        public string SplitStartNumberShouldBeDefined => "The start number should be defined.";
+
+        public string SplitStartNumberInvalid => "The start number ({0}) is not a valid integer.";
+
+        public string SplitInputFileNotFound => "Input file «{0}» not found.";
+
     }
 }

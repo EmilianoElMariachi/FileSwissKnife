@@ -96,5 +96,11 @@
 
         string SplitNumPosShouldBeSelected { get; }
 
+        string SplitStartNumberShouldBeDefined { get; }
+
+        string SplitStartNumberInvalid { get; }
+
+        string SplitInputFileNotFound { get; }
+
     }
 }

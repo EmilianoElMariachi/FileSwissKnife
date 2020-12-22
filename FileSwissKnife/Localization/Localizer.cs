@@ -152,6 +152,12 @@ namespace FileSwissKnife.Localization
         public string SplitErrorFileSizeLessThanSplitSize => Current.SplitErrorFileSizeLessThanSplitSize;
 
         public string SplitNumPosShouldBeSelected => Current.SplitNumPosShouldBeSelected;
+
+        public string SplitStartNumberShouldBeDefined => Current.SplitStartNumberShouldBeDefined;
+
+        public string SplitStartNumberInvalid => Current.SplitStartNumberInvalid;
+
+        public string SplitInputFileNotFound => Current.SplitInputFileNotFound;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

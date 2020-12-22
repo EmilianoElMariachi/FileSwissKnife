@@ -72,18 +72,6 @@ namespace FileSwissKnife.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SplitOutputDir {
-            get {
-                return ((string)(this["SplitOutputDir"]));
-            }
-            set {
-                this["SplitOutputDir"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("AfterExt")]
         public global::ElMariachi.FS.Tools.Splitting.NumPos SplitNumPos {
             get {
@@ -91,6 +79,54 @@ namespace FileSwissKnife.Properties {
             }
             set {
                 this["SplitNumPos"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".part")]
+        public string SplitNumPrefix {
+            get {
+                return ((string)(this["SplitNumPrefix"]));
+            }
+            set {
+                this["SplitNumPrefix"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SplitPadWithZeros {
+            get {
+                return ((bool)(this["SplitPadWithZeros"]));
+            }
+            set {
+                this["SplitPadWithZeros"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int SplitStartNumber {
+            get {
+                return ((int)(this["SplitStartNumber"]));
+            }
+            set {
+                this["SplitStartNumber"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SplitLastDir {
+            get {
+                return ((string)(this["SplitLastDir"]));
+            }
+            set {
+                this["SplitLastDir"] = value;
             }
         }
     }

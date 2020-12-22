@@ -13,6 +13,7 @@ using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
 using FileSwissKnife.Utils.UnitsManagement;
+using FileSwissKnife.Views.Splitting.Validators;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -21,10 +22,7 @@ namespace FileSwissKnife.Views.Splitting
     public class SplitViewModel : TabViewModelBase, IFilesDropped
     {
         private string _inputFile;
-        private string _splitSizeStr;
-        private long? _splitSize;
         private Unit? _selectedUnit;
-        private readonly StaticErrorViewModel _splitSizeUndefinedError;
         private readonly NoSelectedUnitErrorViewModel _noSelectedUnitError;
 
         private readonly ErrorsCollection _errors = new ErrorsCollection();
@@ -36,16 +34,18 @@ namespace FileSwissKnife.Views.Splitting
         private NumPosViewModel? _selectedNumPos;
         private readonly StaticErrorViewModel _fileSizeSplitSizeError;
         private readonly NoSelectedNumPosErrorViewModel _noSelectedNumPosError;
-        private string _numPrefix;
-        private string _numStart;
-        private bool _padWithZeros;
         private string _numSuffix;
         private string _namePreview;
 
+        private readonly SplitSizeValidator _splitSizeValidator;
+        private readonly StartNumberValidator _startNumberValidator;
+        private string _outputDir;
+
         public SplitViewModel()
         {
+            _splitSizeValidator = new SplitSizeValidator(_errors);
+            _startNumberValidator = new StartNumberValidator(_errors);
             _noSelectedUnitError = new NoSelectedUnitErrorViewModel(_errors);
-            _splitSizeUndefinedError = new StaticErrorViewModel(_errors);
             _fileSizeSplitSizeError = new StaticErrorViewModel(_errors);
             _noSelectedNumPosError = new NoSelectedNumPosErrorViewModel(_errors);
 
@@ -62,6 +62,8 @@ namespace FileSwissKnife.Views.Splitting
             SelectedNumPos = NumPositions.FirstOrDefault(vm => vm.NumPos == Settings.Default.SplitNumPos);
 
             this.PropertyChanged += OnPropertyChanged;
+
+            UpdateNamingPreview();
         }
 
         public ICommand BrowseInputFileCommand { get; }
@@ -88,41 +90,12 @@ namespace FileSwissKnife.Views.Splitting
 
         public string SplitSizeStr
         {
-            get => _splitSizeStr;
+            get => _splitSizeValidator.EditedValue;
             set
             {
-                _splitSizeStr = value;
-                _splitSize = null;
-
-                UpdateSplitSize();
-
+                _splitSizeValidator.EditedValue = value;
                 NotifyPropertyChanged();
             }
-        }
-
-        private void UpdateSplitSize()
-        {
-            _splitSize = null;
-            try
-            {
-                var splitSizeStr = SplitSizeStr;
-                if (string.IsNullOrWhiteSpace(splitSizeStr))
-                    throw new Exception(Localizer.Instance.SplitSizeShouldBeDefined);
-
-                if (!long.TryParse(splitSizeStr, out var splitSize) || splitSize <= 0)
-                    throw new Exception(string.Format(Localizer.Instance.SplitSizeInvalid, splitSizeStr));
-
-                _splitSize = splitSize;
-                Settings.Default.SplitSize = splitSize;
-                _splitSizeUndefinedError.Hide();
-            }
-            catch (Exception ex)
-            {
-                _splitSizeUndefinedError.Message = ex.Message;
-                _splitSizeUndefinedError.Show();
-            }
-
-            SplitOrCancelCommand.TriggerCanExecuteChanged();
         }
 
         public Unit? SelectedUnit
@@ -162,10 +135,10 @@ namespace FileSwissKnife.Views.Splitting
 
         public string OutputDir
         {
-            get => Settings.Default.SplitOutputDir;
+            get => _outputDir;
             set
             {
-                Settings.Default.SplitOutputDir = value;
+                _outputDir = value;
                 NotifyPropertyChanged();
             }
         }
@@ -204,30 +177,30 @@ namespace FileSwissKnife.Views.Splitting
 
         public string NumPrefix
         {
-            get => _numPrefix;
+            get => Settings.Default.SplitNumPrefix;
             set
             {
-                _numPrefix = value;
+                Settings.Default.SplitNumPrefix = value;
                 NotifyPropertyChanged();
             }
         }
 
         public string NumStart
         {
-            get => _numStart;
+            get => _startNumberValidator.EditedValue;
             set
             {
-                _numStart = value;
+                _startNumberValidator.EditedValue = value;
                 NotifyPropertyChanged();
             }
         }
 
         public bool PadWithZeros
         {
-            get => _padWithZeros;
+            get => Settings.Default.SplitPadWithZeros;
             set
             {
-                _padWithZeros = value;
+                Settings.Default.SplitPadWithZeros = value;
                 NotifyPropertyChanged();
             }
         }
@@ -265,15 +238,24 @@ namespace FileSwissKnife.Views.Splitting
 
         private void UpdateNamingPreview()
         {
-
             var fileNameBase = "MyMovie.mp4";
 
-            var namingOptions = new NamingOptions()
+            if (!_startNumberValidator.TryGetStartNumber(out var startNumber))
+                return;
+
+            var selectedNumPos = this.SelectedNumPos;
+            if (selectedNumPos == null)
+            {
+                _noSelectedNumPosError.Show();
+                return;
+            }
+
+            var namingOptions = new NamingOptions
             {
                 NumSuffix = NumSuffix,
                 NumPrefix = NumPrefix,
-                NumPos = SelectedNumPos.NumPos, // TODO: gérer la nullabilité
-                StartNumber = int.Parse(NumStart), // TODO: rendre numérique
+                NumPos = selectedNumPos.NumPos,
+                StartNumber = startNumber,
                 PadWithZeros = PadWithZeros
             };
 
@@ -287,12 +269,16 @@ namespace FileSwissKnife.Views.Splitting
         {
             var dialog = new CommonOpenFileDialog
             {
-                InitialDirectory = Settings.Default.SplitOutputDir,
+                InitialDirectory = Settings.Default.SplitLastDir,
                 IsFolderPicker = true,
                 Title = Localizer.Instance.BrowseSplitOutputDirTitle
             };
+
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                Settings.Default.SplitLastDir = dialog.FileName;
                 this.OutputDir = dialog.FileName;
+            }
         }
 
         private void BrowseInputFile()
@@ -322,7 +308,6 @@ namespace FileSwissKnife.Views.Splitting
             var errors = Errors;
             errors.Clear();
 
-
             var selectedUnit = SelectedUnit;
             if (selectedUnit == null)
             {
@@ -330,20 +315,19 @@ namespace FileSwissKnife.Views.Splitting
                 return;
             }
 
-            var splitSize = _splitSize;
-            if (splitSize == null)
-            {
-                _splitSizeUndefinedError.Show();
+            if (!_splitSizeValidator.TryGetSplitSize(out var splitSize))
                 return;
-            }
 
-            var splitSizeBytes = selectedUnit.ToNbBytes(splitSize.Value);
+            if (!_startNumberValidator.TryGetStartNumber(out var startNumber))
+                return;
+
+            var splitSizeBytes = selectedUnit.ToNbBytes(splitSize);
 
             var inputFile = InputFile;
 
             if (!File.Exists(inputFile))
             {
-                _fileSizeSplitSizeError.Show("Input file not found!");
+                _fileSizeSplitSizeError.Show(string.Format(Localizer.Instance.SplitInputFileNotFound, inputFile));
                 return;
             }
 
@@ -378,7 +362,7 @@ namespace FileSwissKnife.Views.Splitting
                     NumPrefix = NumPrefix,
                     NumPos = selectedNumPos.NumPos,
                     NumSuffix = NumSuffix,
-                    StartNumber = int.Parse(NumStart), // TODO: gérer l'erreur proprement
+                    StartNumber = startNumber,
                     PadWithZeros = PadWithZeros,
                 };
 
