@@ -117,19 +117,19 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Num. prefix:" />
-                    <TextBox Grid.Row="0" Grid.Column="2" />
+                    <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Path=NumPrefix, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Num. start:" />
-                    <TextBox Grid.Row="1" Grid.Column="2" />
+                    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=NumStart, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Zeros padding:" />
-                    <CheckBox Grid.Row="2" Grid.Column="2" />
+                    <CheckBox Grid.Row="2" Grid.Column="2" IsChecked="{Binding Path=PadWithZeros}" VerticalAlignment="Center"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Num. suffix:" />
-                    <TextBox Grid.Row="3" Grid.Column="2"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Path=NumSuffix, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Num. position:" HorizontalAlignment="Right" />
-                    <ComboBox Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Path=NumPositions}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
+                    <ComboBox Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Path=NumPositions, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
 
                 </Grid>
 
@@ -141,9 +141,9 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Overview" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Preview" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center"/> <!-- Localiser les champs -->
 
-                    <TextBlock Text="{Binding Path=NameOverview, FallbackValue=MyMovie.mp4.part001}" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Path=NamePreview, FallbackValue=MyMovie.mp4.part001}" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
                 </Grid>
 
             </Grid>

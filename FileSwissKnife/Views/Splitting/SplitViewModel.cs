@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -35,6 +36,11 @@ namespace FileSwissKnife.Views.Splitting
         private NumPosViewModel? _selectedNumPos;
         private readonly StaticErrorViewModel _fileSizeSplitSizeError;
         private readonly NoSelectedNumPosErrorViewModel _noSelectedNumPosError;
+        private string _numPrefix;
+        private string _numStart;
+        private bool _padWithZeros;
+        private string _numSuffix;
+        private string _namePreview;
 
         public SplitViewModel()
         {
@@ -54,6 +60,8 @@ namespace FileSwissKnife.Views.Splitting
             NumPositions = Enum.GetValues<NumPos>().Select(numPos => new NumPosViewModel(numPos)).ToArray();
 
             SelectedNumPos = NumPositions.FirstOrDefault(vm => vm.NumPos == Settings.Default.SplitNumPos);
+
+            this.PropertyChanged += OnPropertyChanged;
         }
 
         public ICommand BrowseInputFileCommand { get; }
@@ -194,6 +202,87 @@ namespace FileSwissKnife.Views.Splitting
 
         public IEnumerable<NumPosViewModel> NumPositions { get; }
 
+        public string NumPrefix
+        {
+            get => _numPrefix;
+            set
+            {
+                _numPrefix = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string NumStart
+        {
+            get => _numStart;
+            set
+            {
+                _numStart = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public bool PadWithZeros
+        {
+            get => _padWithZeros;
+            set
+            {
+                _padWithZeros = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string NumSuffix
+        {
+            get => _numSuffix;
+            set
+            {
+                _numSuffix = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string NamePreview
+        {
+            get => _namePreview;
+            set
+            {
+                _namePreview = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(NumPrefix)
+                || e.PropertyName == nameof(NumSuffix)
+                || e.PropertyName == nameof(NumStart)
+                || e.PropertyName == nameof(SelectedNumPos)
+                || e.PropertyName == nameof(PadWithZeros)
+                )
+                UpdateNamingPreview();
+        }
+
+        private void UpdateNamingPreview()
+        {
+
+            var fileNameBase = "MyMovie.mp4";
+
+            var namingOptions = new NamingOptions()
+            {
+                NumSuffix = NumSuffix,
+                NumPrefix = NumPrefix,
+                NumPos = SelectedNumPos.NumPos, // TODO: gérer la nullabilité
+                StartNumber = int.Parse(NumStart), // TODO: rendre numérique
+                PadWithZeros = PadWithZeros
+            };
+
+            var baseName = Path.GetFileNameWithoutExtension(fileNameBase);
+            var ext = Path.GetExtension(fileNameBase).Substring(1);
+
+            NamePreview = FileSplitter.BuildFileName(baseName, ext, namingOptions, namingOptions.StartNumber);
+        }
+
         private void BrowseOutputDir()
         {
             var dialog = new CommonOpenFileDialog
@@ -208,7 +297,7 @@ namespace FileSwissKnife.Views.Splitting
 
         private void BrowseInputFile()
         {
-            var openFileDialog = new OpenFileDialog
+            var openFileDialog = new OpenFileDialog // TODO: remplacer par l'autre lib?
             {
                 Filter = $"{Localizer.Instance.AllFiles} (*.*)|*.*",
                 Multiselect = false,
@@ -284,13 +373,13 @@ namespace FileSwissKnife.Views.Splitting
                     ProgressBarText = args.Message;
                 };
 
-                //TODO: implémenter l'édition
                 var namingOptions = new NamingOptions
                 {
-                    NumPrefix = ".part",
+                    NumPrefix = NumPrefix,
                     NumPos = selectedNumPos.NumPos,
-                    NumSuffix = "",
-                    StartNumber = 1,
+                    NumSuffix = NumSuffix,
+                    StartNumber = int.Parse(NumStart), // TODO: gérer l'erreur proprement
+                    PadWithZeros = PadWithZeros,
                 };
 
                 await fileSplitter.Split(inputFile, OutputDir, splitSizeBytes, namingOptions, _cancellationTokenSource.Token);

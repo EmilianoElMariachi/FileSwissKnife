@@ -9,5 +9,8 @@
         public string? NumPrefix { get; set; }
 
         public int StartNumber { get; set; }
+
+        //TODO: supporter cette propriété
+        public bool PadWithZeros { get; set; }
     }
 }

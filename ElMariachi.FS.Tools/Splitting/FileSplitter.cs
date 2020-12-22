@@ -140,7 +140,7 @@ namespace ElMariachi.FS.Tools.Splitting
             return parts;
         }
 
-        private static string BuildFileName(string baseName, string extension, NamingOptions namingOptions, int fileNum)
+        public static string BuildFileName(string baseName, string extension, NamingOptions namingOptions, int fileNum)
         {
             var fileNumFull = $"{namingOptions.NumPrefix}{fileNum}{namingOptions.NumSuffix}";
 

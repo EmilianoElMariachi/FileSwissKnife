@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:FileSwissKnife.Localization"
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
-             xmlns:views="clr-namespace:FileSwissKnife.Views"
              xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600" d:DataContext="{d:DesignInstance hashing:HashViewModel }">
