@@ -24,14 +24,28 @@
 
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=HashInputFiles}" Style="{StaticResource Title}"/>
 
-            <Border Grid.Row="1" Style="{StaticResource FrameBorderStyle}">
+            <Border Grid.Row="1" Style="{StaticResource FrameBorderStyle}" >
                 <Grid>
-                    <TextBlock Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToHash}" />
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToHash}">
+                        <TextBlock.Style>
+                            <Style BasedOn="{StaticResource WaterMarkText}" TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Hidden" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=HashedFiles.Count}" Value="0" >
+                                        <DataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
                     <ScrollViewer x:Name="ScrollViewer" customControls:DropFilesBehaviorExtension.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <customControls:ItemsControlEx ItemsSource="{Binding Path=HashedFiles}" ItemsChanged="OnItemsChanged">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="hashing:HashedFileViewModel">
-                                    <hashing:HashedFileView />
+                                    <hashing:HashedFileView Margin="1" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </customControls:ItemsControlEx>
@@ -62,8 +76,6 @@
                 <Button Style="{StaticResource BrowseButton}" Width="30" Grid.Column="1" Content="..." Command="{Binding Path=SelectFilesToHashCommand}" HorizontalAlignment="Right" />
 
             </Grid>
-
-
 
         </Grid>
 

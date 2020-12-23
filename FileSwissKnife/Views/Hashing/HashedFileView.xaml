@@ -7,45 +7,51 @@
              xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
              xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
-             d:DesignWidth="400" d:DesignHeight="100" d:DataContext="{d:DesignInstance hashing:HashedFileViewModel}">
+             d:DesignWidth="400" d:DataContext="{d:DesignInstance hashing:HashedFileViewModel}">
 
     <Border Style="{StaticResource FrameBorderStyle}">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="3"/>
+                <!-- Spacer row -->
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0" IsReadOnly="True" MinHeight="40" Text="{Binding Path=TextResult, Mode=OneWay}"
+            <TextBox Grid.Row="0" IsReadOnly="True" MinHeight="50" Text="{Binding Path=TextResult, Mode=OneWay}"
                      HorizontalScrollBarVisibility="Auto"
                      FontFamily="Courier New" />
 
-            <Grid Grid.Row="1" Grid.Column="0">
-                <customControls:ProgressBarExt Visibility="{Binding Path=ProgressBarVisibility}"
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <customControls:ProgressBarExt Grid.Column="0"
+                                               Visibility="{Binding Path=ProgressBarVisibility}"
                                                Text="{Binding Path=ProgressBarText}"
-                                               Value="{Binding Path=ProgressBarValue}" Margin="0,3,0,0" />
+                                               Value="{Binding Path=ProgressBarValue}" />
+
+                <Rectangle Grid.Column="1" Style="{StaticResource VerticalSeparator}" />
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <error:ErrorButton Margin="0,0,3,0"
+                                       Errors="{Binding Path=Errors}" 
+                                       NoErrorVisibility="Collapsed" />
+
+                    <customControls:PlayStopButton PlayStopButtonState="{Binding State}"
+                                                   Command="{Binding Path=HashOrCancelCommand}" />
+                </StackPanel>
             </Grid>
 
-
-            <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Grid.RowSpan="2">
-                <Button
-                    Margin="0" Style="{StaticResource CloseButton}"
-                    Command="{Binding Path=CloseCommand}"
-                    />
-                <customControls:PlayStopButton
-                    Margin="0,5,0,0" PlayStopButtonState="{Binding State}"
-                    Command="{Binding Path=HashOrCancelCommand}"
-                    />
-                <error:ErrorButton 
-                    Margin="0,5,0,0"
-                    Errors="{Binding Path=Errors}"
-                    />
-            </StackPanel>
-
+            <Button Grid.Row="0"
+                    Style="{StaticResource CloseButton}"
+                    Command="{Binding Path=CloseCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
         </Grid>
     </Border>
 </UserControl>

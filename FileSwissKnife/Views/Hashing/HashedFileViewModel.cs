@@ -21,7 +21,6 @@ namespace FileSwissKnife.Views.Hashing
         private double _progressBarValue;
         private CancellationTokenSource? _cancellationTokenSource;
         private readonly int _displayLength;
-        private Visibility _progressBarVisibility = Visibility.Collapsed;
         private PlayStopButtonState _state;
         private bool _canceled = false;
 
@@ -88,16 +87,6 @@ namespace FileSwissKnife.Views.Hashing
 
         public ICommand CloseCommand { get; }
 
-        public Visibility ProgressBarVisibility
-        {
-            get => _progressBarVisibility;
-            private set
-            {
-                _progressBarVisibility = value;
-                NotifyPropertyChanged();
-            }
-        }
-
         private async void HashOrCancel()
         {
             if (_cancellationTokenSource != null)
@@ -118,7 +107,6 @@ namespace FileSwissKnife.Views.Hashing
                 _canceled = false;
                 _cancellationTokenSource = new CancellationTokenSource();
 
-                ProgressBarVisibility = Visibility.Visible;
                 State = PlayStopButtonState.Stop;
 
                 UpdateDisplay();
@@ -145,7 +133,6 @@ namespace FileSwissKnife.Views.Hashing
                 _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = null;
 
-                ProgressBarVisibility = Visibility.Collapsed;
                 State = PlayStopButtonState.Play;
                 UpdateDisplay();
             }

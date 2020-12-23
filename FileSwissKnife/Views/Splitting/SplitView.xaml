@@ -22,12 +22,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="3" />
+                <!-- Spacer row -->
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitInputFile}" Style="{StaticResource Title}"/>
 
@@ -41,11 +41,6 @@
                 <Button Grid.Column="1" Style="{StaticResource BrowseButton}" Command="{Binding Path=BrowseInputFileCommand}" />
             </Grid>
 
-            <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Style="{StaticResource VerticalSeparator}" />
-            <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" VerticalAlignment="Center" >
-                <customControls:PlayStopButton VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" PlayStopButtonState="{Binding Path=State}" />
-                <error:ErrorButton Margin="0,5,0,0" NoErrorVisibility="Collapsed" Errors="{Binding Path=Errors}" />
-            </StackPanel>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -79,21 +74,33 @@
 
             </Grid>
 
-            <customControls:ProgressBarExt Grid.Row="4" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" Text="{Binding Path=ProgressBarText, FallbackValue=File.001}" />
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"  />
+                    <ColumnDefinition Width="Auto"  />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <customControls:ProgressBarExt Grid.Column="0" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" Text="{Binding Path=ProgressBarText, FallbackValue=File.001}" />
+                <Rectangle Grid.Column="1" Style="{StaticResource VerticalSeparator}" />
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <error:ErrorButton Margin="0,0,3,0" NoErrorVisibility="Collapsed" Errors="{Binding Path=Errors}" />
+                    <customControls:PlayStopButton VerticalAlignment="Center" Command="{Binding Path=SplitOrCancelCommand}" PlayStopButtonState="{Binding Path=State}" />
+                </StackPanel>
+            </Grid>
+
         </Grid>
 
         <Expander x:Name="Expander" Grid.Row="1" Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingOptions}" Background="Transparent" >
 
 
-            <Grid VerticalAlignment="Top" Margin="5">
+            <Grid VerticalAlignment="Top" Margin="3" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="224*"/>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="152*"/>
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.ColumnSpan="3" Margin="0,0,7,0">
+                <Grid Grid.Column="0" Margin="0,0,7,0">
                     <Grid.Resources>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource Title}">
                             <Setter Property="HorizontalAlignment" Value="Right" />
@@ -129,22 +136,21 @@
                     <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Path=NumSuffix, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingNumPos}" HorizontalAlignment="Right" />
-                    <ComboBox Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Path=NumPositions, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
+                    <ComboBox Grid.Row="4" Grid.Column="2" MinWidth="118" ItemsSource="{Binding Path=NumPositions, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
 
                 </Grid>
 
-                <Rectangle Grid.Row="0" Grid.Column="2" Style="{StaticResource VerticalSeparator}" Margin="3,3,3,3" />
+                <Border Grid.Column="1" Style="{StaticResource FrameBorderStyle}" Padding="3" MinWidth="140">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                <Grid Grid.Column="3">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingPreview}" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding Path=NamePreview, FallbackValue=MyMovie.mp4.part001}" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-                </Grid>
-
+                        <TextBlock Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingPreview}" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Path=NamePreview, FallbackValue=MyMovie.mp4.part001}" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
             </Grid>
 
         </Expander>
@@ -160,7 +166,7 @@
 
                 </Style>
             </TextBlock.Style>
-            
+
 
         </TextBlock>
     </Grid>
