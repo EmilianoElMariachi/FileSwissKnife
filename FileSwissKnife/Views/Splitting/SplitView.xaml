@@ -79,11 +79,10 @@
 
             </Grid>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFileToSplit}" />
             <customControls:ProgressBarExt Grid.Row="4" Value="{Binding Path=ProgressBarValue, FallbackValue=90}" Text="{Binding Path=ProgressBarText, FallbackValue=File.001}" />
         </Grid>
 
-        <Expander Grid.Row="1" Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingOptions}" Background="Transparent" >
+        <Expander x:Name="Expander" Grid.Row="1" Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingOptions}" Background="Transparent" >
 
 
             <Grid VerticalAlignment="Top" Margin="5">
@@ -149,6 +148,21 @@
             </Grid>
 
         </Expander>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFileToSplit}">
+            <TextBlock.Style>
+                <Style BasedOn="{StaticResource WaterMarkText}" TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=Expander, Path=IsExpanded}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+
+                </Style>
+            </TextBlock.Style>
+            
+
+        </TextBlock>
     </Grid>
 
 </UserControl>
