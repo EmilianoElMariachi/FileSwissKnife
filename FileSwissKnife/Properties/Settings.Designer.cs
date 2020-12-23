@@ -141,5 +141,17 @@ namespace FileSwissKnife.Properties {
                 this["SplitNumSuffix"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string JoinLastDir {
+            get {
+                return ((string)(this["JoinLastDir"]));
+            }
+            set {
+                this["JoinLastDir"] = value;
+            }
+        }
     }
 }

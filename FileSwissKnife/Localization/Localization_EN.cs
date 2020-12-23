@@ -118,5 +118,8 @@
 
         public string SplitNamingNumPos => "Number position:";
 
+        public string BrowseJoinOutputFileTitle => "Output file location";
+
+        public string BrowseJoinInputFilesTitle => "Input file selection";
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -7,7 +8,9 @@ using ElMariachi.FS.Tools.Joining;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.CustomControls.Error;
 using FileSwissKnife.Localization;
+using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FileSwissKnife.Views.Joining
 {
@@ -27,7 +30,8 @@ namespace FileSwissKnife.Views.Joining
         public JoinViewModel()
         {
             JoinOrCancelCommand = new RelayCommand(JoinOrCancel);
-
+            BrowseOutputFileCommand = new RelayCommand(BrowseOutputFile);
+            BrowseInputFilesCommand = new RelayCommand(BrowseInputFiles);
             _fileJoiner = new FileJoiner();
 
             _fileJoiner.OnProgress += (sender, args) =>
@@ -37,7 +41,6 @@ namespace FileSwissKnife.Views.Joining
                 this.ProgressBarText = percent.ToString("0.00");
             };
         }
-
 
         public override string DisplayName => Localizer.Instance.TabNameJoin;
 
@@ -107,6 +110,10 @@ namespace FileSwissKnife.Views.Joining
             }
         }
 
+        public ICommand BrowseOutputFileCommand { get; }
+
+        public ICommand BrowseInputFilesCommand { get; }
+
         private async void JoinOrCancel()
         {
             if (IsTaskRunning)
@@ -159,6 +166,42 @@ namespace FileSwissKnife.Views.Joining
                 State = PlayStopButtonState.Play;
                 IsTaskRunning = false;
             }
+        }
+
+        private void BrowseInputFiles()
+        {
+            var dialog = new CommonOpenFileDialog
+            {
+                InitialDirectory = Settings.Default.JoinLastDir,
+                Multiselect = true,
+                IsFolderPicker = false,
+                Title = Localizer.Instance.BrowseJoinInputFilesTitle
+            };
+            if (dialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)
+                return;
+
+            var selectedFiles = dialog.FileNames.ToArray();
+
+            var firstSelectedFile = selectedFiles.FirstOrDefault();
+            if(firstSelectedFile != null)
+                Settings.Default.JoinLastDir = Path.GetDirectoryName(firstSelectedFile);
+
+            InputFiles = string.Join(Environment.NewLine, selectedFiles);
+        }
+
+        private void BrowseOutputFile()
+        {
+            var dialog = new CommonOpenFileDialog
+            {
+                InitialDirectory = Settings.Default.JoinLastDir,
+                IsFolderPicker = false,
+                Title = Localizer.Instance.BrowseJoinOutputFileTitle
+            };
+            if (dialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)
+                return;
+
+            Settings.Default.JoinLastDir = Path.GetDirectoryName(dialog.FileName);
+            OutputFile = dialog.FileName;
         }
 
         public void OnFilesDropped(string[] files)

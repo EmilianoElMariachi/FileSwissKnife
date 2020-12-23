@@ -116,5 +116,9 @@
 
         string SplitNamingNumPos { get; }
 
+        string BrowseJoinOutputFileTitle { get; }
+
+        string BrowseJoinInputFilesTitle { get; }
+
     }
 }
