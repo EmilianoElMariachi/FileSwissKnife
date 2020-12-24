@@ -33,7 +33,6 @@
                 </Grid.ColumnDefinitions>
 
                 <customControls:ProgressBarExt Grid.Column="0"
-                                               Visibility="{Binding Path=ProgressBarVisibility}"
                                                Text="{Binding Path=ProgressBarText}"
                                                Value="{Binding Path=ProgressBarValue}" />
 

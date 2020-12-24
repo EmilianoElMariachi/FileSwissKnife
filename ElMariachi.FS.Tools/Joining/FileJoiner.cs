@@ -26,6 +26,14 @@ namespace ElMariachi.FS.Tools.Joining
 
         public int BufferSize { get; } = DefaultBufferSize;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputFiles"></param>
+        /// <param name="outputFile"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        /// <exception cref="OperationCanceledException" />
         public Task Run(string[] inputFiles, string outputFile, CancellationToken ct)
         {
             if (inputFiles == null)
@@ -74,7 +82,7 @@ namespace ElMariachi.FS.Tools.Joining
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     try
                     {
@@ -83,9 +91,7 @@ namespace ElMariachi.FS.Tools.Joining
                     catch
                     {
                     }
-
-                    if (!(ex is OperationCanceledException))
-                        throw;
+                    throw;
                 }
             }, ct);
         }

@@ -62,7 +62,6 @@ namespace FileSwissKnife.Views.Hashing
             }
         }
 
-
         public string? ProgressBarText
         {
             get => _progressBarText;
@@ -113,13 +112,19 @@ namespace FileSwissKnife.Views.Hashing
 
                 var fileHasher = new FileHasher();
 
-                fileHasher.OnProgress += (sender, args) => { this.ProgressBarValue = args.Percent; };
+                fileHasher.OnProgress += (sender, args) =>
+                {
+                    this.ProgressBarValue = args.Percent;
+                    this.ProgressBarText = $"{args.Percent:F2}%";
+                };
 
                 await fileHasher.ComputeAsync(_fileToHash, _hashes, _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
                 _canceled = true;
+                this.ProgressBarValue = 0;
+                this.ProgressBarText = Localizer.Instance.OperationCanceled;
             }
             catch (Exception ex)
             {

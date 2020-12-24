@@ -21,7 +21,6 @@ namespace FileSwissKnife.Views.Joining
         private double _progressBarValue;
         private CancellationTokenSource? _cancellationTokenSource;
         private string? _progressBarText;
-        private readonly FileJoiner _fileJoiner;
 
         private string _inputFiles = "";
         private string _outputFile = "";
@@ -32,14 +31,6 @@ namespace FileSwissKnife.Views.Joining
             JoinOrCancelCommand = new RelayCommand(JoinOrCancel);
             BrowseOutputFileCommand = new RelayCommand(BrowseOutputFile);
             BrowseInputFilesCommand = new RelayCommand(BrowseInputFiles);
-            _fileJoiner = new FileJoiner();
-
-            _fileJoiner.OnProgress += (sender, args) =>
-            {
-                var percent = args.Percent;
-                this.ProgressBarValue = percent;
-                this.ProgressBarText = percent.ToString("0.00");
-            };
         }
 
         public override string DisplayName => Localizer.Instance.TabNameJoin;
@@ -147,9 +138,22 @@ namespace FileSwissKnife.Views.Joining
 
                 var startDateTime = DateTime.Now;
 
-                await _fileJoiner.Run(inputFiles, outputFile, _cancellationTokenSource.Token);
+                var fileJoiner = new FileJoiner();
 
-                ProgressBarText = _cancellationTokenSource.IsCancellationRequested ? Localizer.Instance.OperationCanceled : string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDateTime));
+                fileJoiner.OnProgress += (sender, args) =>
+                {
+                    var percent = args.Percent;
+                    this.ProgressBarValue = percent;
+                    this.ProgressBarText = $"{percent:F2}%";
+                };
+
+                await fileJoiner.Run(inputFiles, outputFile, _cancellationTokenSource.Token);
+                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDateTime));
+            }
+            catch (OperationCanceledException)
+            {
+                ProgressBarText = Localizer.Instance.OperationCanceled;
+                ProgressBarValue = 0;
             }
             catch (Exception ex)
             {
@@ -183,7 +187,7 @@ namespace FileSwissKnife.Views.Joining
             var selectedFiles = dialog.FileNames.ToArray();
 
             var firstSelectedFile = selectedFiles.FirstOrDefault();
-            if(firstSelectedFile != null)
+            if (firstSelectedFile != null)
                 Settings.Default.JoinLastDir = Path.GetDirectoryName(firstSelectedFile);
 
             InputFiles = string.Join(Environment.NewLine, selectedFiles);

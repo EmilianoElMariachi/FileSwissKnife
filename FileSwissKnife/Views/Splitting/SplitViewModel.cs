@@ -351,7 +351,7 @@ namespace FileSwissKnife.Views.Splitting
                 fileSplitter.OnProgress += (sender, args) =>
                 {
                     ProgressBarValue = args.Percent;
-                    ProgressBarText = args.Message;
+                    ProgressBarText = $"{args.Percent:F2}% ({args.Message})";
                 };
 
                 var namingOptions = new NamingOptions
@@ -364,6 +364,11 @@ namespace FileSwissKnife.Views.Splitting
                 };
 
                 await fileSplitter.Split(inputFile, OutputDir, splitSizeBytes, namingOptions, _cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                ProgressBarValue = 0;
+                ProgressBarText = Localizer.Instance.OperationCanceled;
             }
             catch (Exception ex)
             {
