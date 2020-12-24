@@ -10,6 +10,7 @@ using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
 using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FileSwissKnife.Views.Hashing
 {
@@ -57,15 +58,13 @@ namespace FileSwissKnife.Views.Hashing
 
         private void OnSelectFilesToHash()
         {
-            var openFileDialog = new OpenFileDialog
+            var openFileDialog = new CommonOpenFileDialog
             {
-                Filter = $"{Localizer.Instance.AllFiles} (*.*)|*.*",
                 Multiselect = true,
                 Title = Localizer.Instance.BrowseFilesToHashTitle,
             };
 
-            var result = openFileDialog.ShowDialog(Application.Current.MainWindow);
-            if (result == null || !result.Value)
+            if (openFileDialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)
                 return;
 
             HashFiles(openFileDialog.FileNames);

@@ -131,8 +131,6 @@ namespace FileSwissKnife.Localization
 
         public string SplitUnitShouldBeSelected => Current.SplitUnitShouldBeSelected;
 
-        public string AllFiles => Current.AllFiles;
-
         public string BrowseFilesToHashTitle => Current.BrowseFilesToHashTitle;
 
         public string CopyErrors => Current.CopyErrors;

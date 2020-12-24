@@ -76,8 +76,6 @@
 
         public string SplitUnitShouldBeSelected => "Please select a split unit.";
 
-        public string AllFiles => "All files";
-
         public string BrowseFilesToHashTitle => "Input files selection";
 
         public string CopyErrors => "Copy error messages";

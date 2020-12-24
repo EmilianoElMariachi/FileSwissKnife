@@ -282,15 +282,13 @@ namespace FileSwissKnife.Views.Splitting
 
         private void BrowseInputFile()
         {
-            var openFileDialog = new OpenFileDialog // TODO: remplacer par l'autre lib?
+            var openFileDialog = new CommonOpenFileDialog
             {
-                Filter = $"{Localizer.Instance.AllFiles} (*.*)|*.*",
                 Multiselect = false,
                 Title = Localizer.Instance.BrowseFileToSplitTitle,
             };
 
-            var result = openFileDialog.ShowDialog(Application.Current.MainWindow);
-            if (result == null || !result.Value)
+            if (openFileDialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)
                 return;
 
             InputFile = openFileDialog.FileName;

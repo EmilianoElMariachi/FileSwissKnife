@@ -76,8 +76,6 @@
 
         public string SplitUnitShouldBeSelected => "Veuillez sélectionner une unité de séparation.";
 
-        public string AllFiles => "Tous les fichiers";
-
         public string BrowseFilesToHashTitle => "Sélection des fichiers d'entrée";
 
         public string CopyErrors => "Copier le(s) message(s) d'erreur";

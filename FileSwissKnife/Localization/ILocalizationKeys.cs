@@ -74,8 +74,6 @@
 
         string SplitUnitShouldBeSelected { get; }
 
-        string AllFiles { get; }
-
         string BrowseFilesToHashTitle { get; }
 
         string CopyErrors { get; }

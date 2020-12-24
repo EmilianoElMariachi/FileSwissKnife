@@ -48,8 +48,12 @@
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinOutputFile}" Style="{StaticResource Title}"/>
 
             <Grid Grid.Row="1" >
-                <TextBox Text="{Binding Path=OutputFile, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}" />
-                <Button Style="{StaticResource BrowseButton}" HorizontalAlignment="Right" Command="{Binding BrowseOutputFileCommand}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding Path=OutputFile, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}" />
+                <Button Grid.Column="1" Style="{StaticResource BrowseButton}" HorizontalAlignment="Right" Command="{Binding BrowseOutputFileCommand}"/>
             </Grid>
         </Grid>
 
