@@ -363,7 +363,11 @@ namespace FileSwissKnife.Views.Splitting
                     PadWithZeros = PadWithZeros,
                 };
 
+                var startDate = DateTime.Now; 
+
                 await fileSplitter.Split(inputFile, OutputDir, splitSizeBytes, namingOptions, _cancellationTokenSource.Token);
+
+                this.ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTimeString());
             }
             catch (OperationCanceledException)
             {

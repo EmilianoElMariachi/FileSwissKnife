@@ -9,6 +9,7 @@ using FileSwissKnife.CustomControls;
 using FileSwissKnife.CustomControls.Error;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
+using FileSwissKnife.Utils.UnitsManagement;
 
 namespace FileSwissKnife.Views.Hashing
 {
@@ -118,7 +119,11 @@ namespace FileSwissKnife.Views.Hashing
                     this.ProgressBarText = $"{args.Percent:F2}%";
                 };
 
+                var startDate = DateTime.Now;
+
                 await fileHasher.ComputeAsync(_fileToHash, _hashes, _cancellationTokenSource.Token);
+
+                this.ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTimeString());
             }
             catch (OperationCanceledException)
             {

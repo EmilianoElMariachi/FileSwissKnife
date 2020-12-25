@@ -10,6 +10,7 @@ using FileSwissKnife.CustomControls.Error;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
+using FileSwissKnife.Utils.UnitsManagement;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FileSwissKnife.Views.Joining
@@ -136,7 +137,6 @@ namespace FileSwissKnife.Views.Joining
                 State = PlayStopButtonState.Stop;
                 _cancellationTokenSource = new CancellationTokenSource();
 
-                var startDateTime = DateTime.Now;
 
                 var fileJoiner = new FileJoiner();
 
@@ -147,8 +147,11 @@ namespace FileSwissKnife.Views.Joining
                     this.ProgressBarText = $"{percent:F2}%";
                 };
 
+                var startDate = DateTime.Now;
+
                 await fileJoiner.Run(inputFiles, outputFile, _cancellationTokenSource.Token);
-                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDateTime));
+
+                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTimeString());
             }
             catch (OperationCanceledException)
             {
