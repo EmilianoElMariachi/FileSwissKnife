@@ -42,14 +42,17 @@ namespace ElMariachi.FS.Tools.Splitting
                     var totalBytesRemaining = totalBytes;
 
                     NotifyProgressChanged(0);
-
+                    var partNum = 1;
                     foreach (var part in parts)
                     {
                         ct.ThrowIfCancellationRequested();
 
+                        var partText = $"{partNum++}/{parts.Count}";
+
                         using var outputFile = File.Create(part.FilePath);
 
                         var remainingBytes = part.FileSize;
+                        // Create one file part
                         do
                         {
                             ct.ThrowIfCancellationRequested();
@@ -57,14 +60,14 @@ namespace ElMariachi.FS.Tools.Splitting
                             var nbBytesToRead = (int)Math.Min(remainingBytes, buffer.Length);
                             var nbBytesRead = parts.InputStream.Read(buffer, 0, nbBytesToRead);
                             if (nbBytesRead != nbBytesToRead)
-                                throw new Exception("Aïe! Lé où l'problème?");
+                                throw new Exception($"Internal error: the number of read bytes was not supposed to be different from the number of bytes to read (has input file «{inputFile}» changed during read operation?).");
 
                             outputFile.Write(buffer, 0, nbBytesRead);
 
                             totalBytesRemaining -= nbBytesRead;
                             remainingBytes -= nbBytesRead;
                             var percentage = (double)((totalBytes - totalBytesRemaining) / (decimal)totalBytes * 100);
-                            NotifyProgressChanged(percentage, part.FileName);
+                            NotifyProgressChanged(percentage, partText);
                         } while (remainingBytes > 0);
                     }
                 }

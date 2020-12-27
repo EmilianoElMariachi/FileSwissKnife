@@ -6,7 +6,6 @@ using FileSwissKnife.Properties;
 // TODO: faire une icône pour l'application
 // TODO: faire le thème sombre
 // TODO: améliorer la routine de détection des fichiers à joindre
-// TODO: remettre les barres de progression à 0 quand tout est terminé
 namespace FileSwissKnife
 {
     /// <summary>

@@ -12,8 +12,6 @@
 
         public string CancellingHash => "cancelling...";
 
-        public string ProgressBarTextCancelling => "Cancelling...";
-
         public string CancelJoin => "Cancel";
 
         public string ConfirmCloseCancelHash => "Do you really want to close and cancel?";

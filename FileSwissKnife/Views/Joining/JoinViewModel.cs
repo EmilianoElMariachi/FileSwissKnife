@@ -115,7 +115,7 @@ namespace FileSwissKnife.Views.Joining
                     return;
 
                 _cancellationTokenSource.Cancel();
-                ProgressBarText = Localizer.Instance.ProgressBarTextCancelling;
+                State = PlayStopButtonState.Cancelling;
                 return;
             }
 

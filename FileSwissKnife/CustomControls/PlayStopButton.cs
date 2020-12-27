@@ -19,5 +19,6 @@ namespace FileSwissKnife.CustomControls
     {
         Play,
         Stop,
+        Cancelling
     }
 }

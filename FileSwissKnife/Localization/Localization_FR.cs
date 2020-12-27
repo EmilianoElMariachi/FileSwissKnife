@@ -12,8 +12,6 @@
 
         public string CancellingHash => "annulation";
 
-        public string ProgressBarTextCancelling => "Annulation...";
-
         public string CancelJoin => "Annuler";
 
         public string ConfirmCloseCancelHash => "Voulez-vous vraiment fermer et annuler ?";

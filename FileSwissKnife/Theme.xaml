@@ -123,6 +123,11 @@
                                 <Setter TargetName="PlayIcon" Property="Visibility" Value="Hidden" />
                                 <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
                             </Trigger>
+                            <Trigger Property="PlayStopButtonState" Value="Cancelling">
+                                <Setter TargetName="PlayIcon" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="StopIcon" Property="Fill" Value="Yellow" />
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
