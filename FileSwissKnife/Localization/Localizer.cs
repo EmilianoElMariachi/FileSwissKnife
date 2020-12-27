@@ -52,7 +52,7 @@ namespace FileSwissKnife.Localization
             {
                 NotifyPropertyChanged(propertyInfo.Name);
             }
-            LocalizationChanged?.Invoke(this, new LocalizationChangedHandlerArgs(this.Current));
+            LocalizationChanged?.Invoke(this, new LocalizationChangedHandlerArgs(Current));
         }
         private void NotifyPropertyChanged(string propertyName)
         {

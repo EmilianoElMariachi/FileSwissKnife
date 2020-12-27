@@ -135,28 +135,27 @@ namespace FileSwissKnife.Views.Joining
 
                 IsTaskRunning = true;
                 State = PlayStopButtonState.Stop;
-                _cancellationTokenSource = new CancellationTokenSource();
-
 
                 var fileJoiner = new FileJoiner();
-
+                ProgressBarValue = 0;
+                ProgressBarText = "";
                 fileJoiner.OnProgress += (sender, args) =>
                 {
                     var percent = args.Percent;
-                    this.ProgressBarValue = percent;
-                    this.ProgressBarText = $"{percent:F2}%";
+                    ProgressBarValue = percent;
+                    ProgressBarText = $"{percent:F2}%";
                 };
 
+                _cancellationTokenSource = new CancellationTokenSource();
                 var startDate = DateTime.Now;
-
                 await fileJoiner.Run(inputFiles, outputFile, _cancellationTokenSource.Token);
 
                 ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {
-                ProgressBarText = Localizer.Instance.OperationCanceled;
                 ProgressBarValue = 0;
+                ProgressBarText = Localizer.Instance.OperationCanceled;
             }
             catch (Exception ex)
             {

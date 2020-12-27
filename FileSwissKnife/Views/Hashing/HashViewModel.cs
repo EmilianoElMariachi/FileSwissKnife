@@ -9,7 +9,6 @@ using FileSwissKnife.CustomControls;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
-using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FileSwissKnife.Views.Hashing

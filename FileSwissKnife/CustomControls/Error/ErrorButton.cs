@@ -58,13 +58,13 @@ namespace FileSwissKnife.CustomControls.Error
             if (DesignerProperties.GetIsInDesignMode(this))
                 return;
 
-            Visibility = (this.Errors == null) ? NoErrorVisibility : Visibility.Visible;
+            Visibility = (Errors == null) ? NoErrorVisibility : Visibility.Visible;
 
             var errors = Errors;
             if (errors != null && errors.Count > 0)
-                this.Visibility = Visibility.Visible;
+                Visibility = Visibility.Visible;
             else
-                this.Visibility = NoErrorVisibility;
+                Visibility = NoErrorVisibility;
         }
 
         private void OnErrorsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

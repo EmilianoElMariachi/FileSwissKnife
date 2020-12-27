@@ -14,7 +14,7 @@
         public void Show(string newMessage)
         {
             _errors.Add(this);
-            this.Message = newMessage;
+            Message = newMessage;
         }        
         
         public void Show()

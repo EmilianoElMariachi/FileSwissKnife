@@ -6,7 +6,7 @@ namespace FileSwissKnife.CustomControls.Error
     {
         protected override void InsertItem(int index, ErrorViewModel item)
         {
-            if (this.Contains(item))
+            if (Contains(item))
                 return;
             base.InsertItem(index, item);
         }

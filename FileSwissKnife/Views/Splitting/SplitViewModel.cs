@@ -60,7 +60,7 @@ namespace FileSwissKnife.Views.Splitting
 
             SelectedNumPos = NumPositions.FirstOrDefault(vm => vm.NumPos == Settings.Default.SplitNumPos);
 
-            this.PropertyChanged += OnPropertyChanged;
+            PropertyChanged += OnPropertyChanged;
 
             UpdateNamingPreview();
         }
@@ -242,7 +242,7 @@ namespace FileSwissKnife.Views.Splitting
             if (!_startNumberValidator.TryGetStartNumber(out var startNumber))
                 return;
 
-            var selectedNumPos = this.SelectedNumPos;
+            var selectedNumPos = SelectedNumPos;
             if (selectedNumPos == null)
             {
                 _noSelectedNumPosError.Show();
@@ -276,7 +276,7 @@ namespace FileSwissKnife.Views.Splitting
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 Settings.Default.SplitLastDir = dialog.FileName;
-                this.OutputDir = dialog.FileName;
+                OutputDir = dialog.FileName;
             }
         }
 
@@ -336,7 +336,7 @@ namespace FileSwissKnife.Views.Splitting
                 return;
             }
 
-            var selectedNumPos = this.SelectedNumPos;
+            var selectedNumPos = SelectedNumPos;
             if (selectedNumPos == null)
             {
                 _noSelectedNumPosError.Show();
@@ -346,8 +346,10 @@ namespace FileSwissKnife.Views.Splitting
             try
             {
                 State = PlayStopButtonState.Stop;
+
                 var fileSplitter = new FileSplitter();
-                _cancellationTokenSource = new CancellationTokenSource();
+                ProgressBarValue = 0;
+                ProgressBarText = "";
                 fileSplitter.OnProgress += (sender, args) =>
                 {
                     ProgressBarValue = args.Percent;
@@ -363,11 +365,11 @@ namespace FileSwissKnife.Views.Splitting
                     PadWithZeros = PadWithZeros,
                 };
 
-                var startDate = DateTime.Now; 
-
+                _cancellationTokenSource = new CancellationTokenSource();
+                var startDate = DateTime.Now;
                 await fileSplitter.Split(inputFile, OutputDir, splitSizeBytes, namingOptions, _cancellationTokenSource.Token);
 
-                this.ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
+                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {
@@ -376,6 +378,8 @@ namespace FileSwissKnife.Views.Splitting
             }
             catch (Exception ex)
             {
+                ProgressBarText = Localizer.Instance.OperationError;
+
                 errors.Add(new ErrorViewModel
                 {
                     Message = ex.Message
@@ -423,7 +427,7 @@ namespace FileSwissKnife.Views.Splitting
                 return;
 
             var dir = Path.GetDirectoryName(file);
-            this.OutputDir = dir;
+            OutputDir = dir;
 
             InputFile = file;
         }

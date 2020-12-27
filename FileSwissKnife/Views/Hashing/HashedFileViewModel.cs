@@ -105,34 +105,37 @@ namespace FileSwissKnife.Views.Hashing
                 errors.Clear();
 
                 _canceled = false;
-                _cancellationTokenSource = new CancellationTokenSource();
 
                 State = PlayStopButtonState.Stop;
 
                 UpdateDisplay();
 
                 var fileHasher = new FileHasher();
-
+                ProgressBarValue = 0;
+                ProgressBarText = "";
                 fileHasher.OnProgress += (sender, args) =>
                 {
-                    this.ProgressBarValue = args.Percent;
-                    this.ProgressBarText = $"{args.Percent:F2}%";
+                    ProgressBarValue = args.Percent;
+                    ProgressBarText = $"{args.Percent:F2}%";
                 };
 
                 var startDate = DateTime.Now;
 
+                _cancellationTokenSource = new CancellationTokenSource();
                 await fileHasher.ComputeAsync(_fileToHash, _hashes, _cancellationTokenSource.Token);
 
-                this.ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
+                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {
                 _canceled = true;
-                this.ProgressBarValue = 0;
-                this.ProgressBarText = Localizer.Instance.OperationCanceled;
+                ProgressBarValue = 0;
+                ProgressBarText = Localizer.Instance.OperationCanceled;
             }
             catch (Exception ex)
             {
+                ProgressBarText = Localizer.Instance.OperationError;
+
                 errors.Add(new ErrorViewModel
                 {
                     Message = ex.Message

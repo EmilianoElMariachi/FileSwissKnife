@@ -24,7 +24,7 @@ namespace FileSwissKnife.CustomControls
         {
             base.OnTextChanged(e);
 
-            var watermarkVisibility = string.IsNullOrEmpty(this.Text) ? Visibility.Visible : Visibility.Hidden;
+            var watermarkVisibility = string.IsNullOrEmpty(Text) ? Visibility.Visible : Visibility.Hidden;
 
             SetValue(WatermarkVisibilityProperty, watermarkVisibility);
         }

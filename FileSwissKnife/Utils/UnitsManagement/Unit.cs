@@ -17,7 +17,7 @@
 
         public long ToNbBytes(long nbUnits)
         {
-            return this.BytesFactor * nbUnits;
+            return BytesFactor * nbUnits;
         }
 
     }
