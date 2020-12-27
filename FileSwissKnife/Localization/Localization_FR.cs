@@ -12,7 +12,7 @@
 
         public string CancellingHash => "annulation";
 
-        public string CancellingJoin => "Annulation...";
+        public string ProgressBarTextCancelling => "Annulation...";
 
         public string CancelJoin => "Annuler";
 

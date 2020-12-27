@@ -14,7 +14,6 @@ using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
 using FileSwissKnife.Utils.UnitsManagement;
 using FileSwissKnife.Views.Splitting.Validators;
-using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FileSwissKnife.Views.Splitting
@@ -233,6 +232,12 @@ namespace FileSwissKnife.Views.Splitting
                 || e.PropertyName == nameof(PadWithZeros)
                 )
                 UpdateNamingPreview();
+
+            if (_cancellationTokenSource == null && e.PropertyName != nameof(ProgressBarText) && e.PropertyName != nameof(ProgressBarValue))
+            {
+                this.ProgressBarText = "";
+                this.ProgressBarValue = 0;
+            }
         }
 
         private void UpdateNamingPreview()
@@ -298,7 +303,11 @@ namespace FileSwissKnife.Views.Splitting
         {
             if (_cancellationTokenSource != null)
             {
+                if (_cancellationTokenSource.IsCancellationRequested)
+                    return;
+
                 _cancellationTokenSource.Cancel();
+                ProgressBarText = Localizer.Instance.ProgressBarTextCancelling;
                 return;
             }
 
@@ -388,6 +397,7 @@ namespace FileSwissKnife.Views.Splitting
             finally
             {
                 State = PlayStopButtonState.Play;
+                _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = null;
             }
         }

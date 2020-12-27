@@ -10,7 +10,7 @@
 
         string CancellingHash { get; }
 
-        string CancellingJoin { get; }
+        string ProgressBarTextCancelling { get; }
 
         string CancelJoin { get; }
 

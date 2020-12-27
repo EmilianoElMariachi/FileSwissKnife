@@ -67,7 +67,7 @@ namespace FileSwissKnife.Localization
 
         public string CancellingHash => Current.CancellingHash;
 
-        public string CancellingJoin => Current.CancellingJoin;
+        public string ProgressBarTextCancelling => Current.ProgressBarTextCancelling;
 
         public string CancelJoin => Current.CancelJoin;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -18,7 +19,6 @@ namespace FileSwissKnife.Views.Joining
     public class JoinViewModel : TabViewModelBase, IFilesDropped
     {
 
-        private bool _isTaskRunning;
         private double _progressBarValue;
         private CancellationTokenSource? _cancellationTokenSource;
         private string? _progressBarText;
@@ -32,6 +32,8 @@ namespace FileSwissKnife.Views.Joining
             JoinOrCancelCommand = new RelayCommand(JoinOrCancel);
             BrowseOutputFileCommand = new RelayCommand(BrowseOutputFile);
             BrowseInputFilesCommand = new RelayCommand(BrowseInputFiles);
+
+            this.PropertyChanged += OnPropertyChanged;
         }
 
         public override string DisplayName => Localizer.Instance.TabNameJoin;
@@ -54,16 +56,6 @@ namespace FileSwissKnife.Views.Joining
             set
             {
                 _inputFiles = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public bool IsTaskRunning
-        {
-            get => _isTaskRunning;
-            set
-            {
-                _isTaskRunning = value;
                 NotifyPropertyChanged();
             }
         }
@@ -106,11 +98,24 @@ namespace FileSwissKnife.Views.Joining
 
         public ICommand BrowseInputFilesCommand { get; }
 
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (_cancellationTokenSource == null && e.PropertyName != nameof(ProgressBarText) && e.PropertyName != nameof(ProgressBarValue))
+            {
+                this.ProgressBarText = "";
+                this.ProgressBarValue = 0;
+            }
+        }
+
         private async void JoinOrCancel()
         {
-            if (IsTaskRunning)
+            if (_cancellationTokenSource != null)
             {
-                CancelTask();
+                if (_cancellationTokenSource.IsCancellationRequested) 
+                    return;
+
+                _cancellationTokenSource.Cancel();
+                ProgressBarText = Localizer.Instance.ProgressBarTextCancelling;
                 return;
             }
 
@@ -133,7 +138,6 @@ namespace FileSwissKnife.Views.Joining
                         throw new InvalidOperationException(string.Format(Localizer.Instance.YouChooseNotToOverride, outputFile));
                 }
 
-                IsTaskRunning = true;
                 State = PlayStopButtonState.Stop;
 
                 var fileJoiner = new FileJoiner();
@@ -168,9 +172,9 @@ namespace FileSwissKnife.Views.Joining
             }
             finally
             {
+                _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = null;
                 State = PlayStopButtonState.Play;
-                IsTaskRunning = false;
             }
         }
 
@@ -235,15 +239,6 @@ namespace FileSwissKnife.Views.Joining
             else
             {
                 InputFiles = string.Join(Environment.NewLine, files);
-            }
-        }
-
-        private void CancelTask()
-        {
-            if (_cancellationTokenSource != null && !_cancellationTokenSource.IsCancellationRequested)
-            {
-                _cancellationTokenSource.Cancel();
-                ProgressBarText = Localizer.Instance.CancellingJoin;
             }
         }
 
