@@ -151,7 +151,7 @@ namespace FileSwissKnife.Views.Joining
 
                 await fileJoiner.Run(inputFiles, outputFile, _cancellationTokenSource.Token);
 
-                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTimeString());
+                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {

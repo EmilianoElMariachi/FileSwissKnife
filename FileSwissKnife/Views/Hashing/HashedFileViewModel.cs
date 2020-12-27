@@ -123,7 +123,7 @@ namespace FileSwissKnife.Views.Hashing
 
                 await fileHasher.ComputeAsync(_fileToHash, _hashes, _cancellationTokenSource.Token);
 
-                this.ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTimeString());
+                this.ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {
