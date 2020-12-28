@@ -176,7 +176,7 @@ namespace FileSwissKnife.Views.Hashing
             {
                 sb.Append(hash.AlgorithmName + new string(' ', _displayLength - hash.AlgorithmName.Length));
                 sb.Append(": ");
-                sb.Append(staticText ?? hash.ComputedValue);
+                sb.Append(staticText ?? hash.HexValue);
                 sb.Append(Environment.NewLine);
             }
 

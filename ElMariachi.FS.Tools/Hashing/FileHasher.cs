@@ -64,7 +64,8 @@ namespace ElMariachi.FS.Tools.Hashing
                             ct.ThrowIfCancellationRequested();
 
                             hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
-                            hash.ComputedValue = ToHexString(hashAlgorithm.Hash);
+                            hash.HexValue = ToHexString(hashAlgorithm.Hash);
+                            hash.Value = hashAlgorithm.Hash;
                         }
 
                         NotifyProgressChanged(100);

@@ -11,6 +11,8 @@ namespace ElMariachi.FS.Tools.Hashing
 
         public string AlgorithmName { get; }
 
-        public string ComputedValue { get; set; }
+        public string HexValue { get; set; }
+
+        public byte[] Value { get; set; }
     }
 }
