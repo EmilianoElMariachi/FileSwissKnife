@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -32,8 +31,6 @@ namespace FileSwissKnife.Views.Joining
             JoinOrCancelCommand = new RelayCommand(JoinOrCancel);
             BrowseOutputFileCommand = new RelayCommand(BrowseOutputFile);
             BrowseInputFilesCommand = new RelayCommand(BrowseInputFiles);
-
-            this.PropertyChanged += OnPropertyChanged;
         }
 
         public override string DisplayName => Localizer.Instance.TabNameJoin;
@@ -98,20 +95,11 @@ namespace FileSwissKnife.Views.Joining
 
         public ICommand BrowseInputFilesCommand { get; }
 
-        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (_cancellationTokenSource == null && e.PropertyName != nameof(ProgressBarText) && e.PropertyName != nameof(ProgressBarValue))
-            {
-                this.ProgressBarText = "";
-                this.ProgressBarValue = 0;
-            }
-        }
-
         private async void JoinOrCancel()
         {
             if (_cancellationTokenSource != null)
             {
-                if (_cancellationTokenSource.IsCancellationRequested) 
+                if (_cancellationTokenSource.IsCancellationRequested)
                     return;
 
                 _cancellationTokenSource.Cancel();
@@ -216,29 +204,40 @@ namespace FileSwissKnife.Views.Joining
 
         public void OnFilesDropped(string[] files)
         {
-            if (files.Length == 1)
+            try
             {
-                var file = files[0];
-                if (File.Exists(file))
+                if (files.Length == 1)
                 {
-                    if (FileJoiner.TryGuessFilesToJoin(file, out var inputFiles, out var outputFile))
+                    var file = files[0];
+                    if (File.Exists(file))
                     {
-                        InputFiles = string.Join(Environment.NewLine, inputFiles);
-                        OutputFile = outputFile;
+                        if (FileJoiner.TryGuessFilesToJoin(file, out var inputFiles, out var outputFile))
+                        {
+                            InputFiles = string.Join(Environment.NewLine, inputFiles);
+                            OutputFile = outputFile;
+                        }
+                        else
+                        {
+                            InputFiles = string.Join(Environment.NewLine, files);
+                        }
                     }
-                    else
+                    else if (Directory.Exists(file))
                     {
-                        InputFiles = string.Join(Environment.NewLine, files);
+                        InputFiles = string.Join(Environment.NewLine, Directory.GetFiles(file));
+                        OutputFile = Path.Combine(file, Path.GetFileName(file));
                     }
                 }
-                else if (Directory.Exists(file))
+                else
                 {
-                    // TODO: à implémenter
+                    InputFiles = string.Join(Environment.NewLine, files);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                InputFiles = string.Join(Environment.NewLine, files);
+                Errors.Add(new ErrorViewModel
+                {
+                    Message = ex.Message
+                });
             }
         }
 

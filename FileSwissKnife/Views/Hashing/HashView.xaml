@@ -6,6 +6,7 @@
              xmlns:loc="clr-namespace:FileSwissKnife.Localization"
              xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
              xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
+             xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="450" d:DataContext="{d:DesignInstance hashing:HashViewModel }">
     <Grid>
@@ -57,6 +58,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <ItemsControl Grid.Column="0" ItemsSource="{Binding Path=AvailableHashes}" HorizontalAlignment="Center" >
                     <ItemsControl.ItemTemplate>
@@ -73,7 +75,8 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
 
-                <Button Style="{StaticResource BrowseButton}" Width="30" Grid.Column="1" Content="..." Command="{Binding Path=SelectFilesToHashCommand}" HorizontalAlignment="Right" />
+                <error:ErrorButton Grid.Column="1" Errors="{Binding Path=Errors}" NoErrorVisibility="Collapsed" />
+                <Button Style="{StaticResource BrowseButton}" Width="30" Grid.Column="2" Content="..." Command="{Binding Path=SelectFilesToHashCommand}" HorizontalAlignment="Right" />
 
             </Grid>
 

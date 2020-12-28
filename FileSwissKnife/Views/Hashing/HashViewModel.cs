@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using FileSwissKnife.CustomControls;
+using FileSwissKnife.CustomControls.Error;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
@@ -55,6 +57,8 @@ namespace FileSwissKnife.Views.Hashing
 
         public ICommand SelectFilesToHashCommand { get; }
 
+        public ErrorsCollection Errors { get; } = new ErrorsCollection();
+
         private void OnSelectFilesToHash()
         {
             var openFileDialog = new CommonOpenFileDialog
@@ -71,15 +75,25 @@ namespace FileSwissKnife.Views.Hashing
 
         private void HashFiles(IEnumerable<string> filesToHash)
         {
-            var selectedHashes = GetSelectedHashes();
-
-            foreach (var fileToHash in filesToHash)
+            try
             {
-                var hashedFileViewModel = new HashedFileViewModel(fileToHash, selectedHashes);
-                hashedFileViewModel.QueryClose += OnCloseHashedFile;
+                var selectedHashes = GetSelectedHashes();
 
-                hashedFileViewModel.HashOrCancelCommand.Execute(null);
-                _hashedFiles.Add(hashedFileViewModel);
+                foreach (var fileToHash in filesToHash)
+                {
+                    var hashedFileViewModel = new HashedFileViewModel(fileToHash, selectedHashes);
+                    hashedFileViewModel.QueryClose += OnCloseHashedFile;
+
+                    hashedFileViewModel.HashOrCancelCommand.Execute(null);
+                    _hashedFiles.Add(hashedFileViewModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                Errors.Add(new ErrorViewModel
+                {
+                    Message = ex.Message
+                });
             }
         }
 
@@ -93,11 +107,27 @@ namespace FileSwissKnife.Views.Hashing
             return AvailableHashes.Where(model => model.IsComputed).Select(model => model.HashName).ToArray();
         }
 
-
         public void OnFilesDropped(string[] files)
         {
-            HashFiles(files);
+            try
+            {
+                var filesToHash = new List<string>();
+                foreach (var file in files)
+                {
+                    if (File.Exists(file))
+                        filesToHash.Add(file);
+                    else if (Directory.Exists(file))
+                        filesToHash.AddRange(Directory.GetFiles(file));
+                }
+                HashFiles(filesToHash);
+            }
+            catch (Exception ex)
+            {
+                Errors.Add(new ErrorViewModel
+                {
+                    Message = ex.Message
+                });
+            }
         }
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -40,8 +39,6 @@ namespace FileSwissKnife.Views.Hashing
             HashOrCancelCommand = new RelayCommand(HashOrCancel);
             CloseCommand = new RelayCommand(Close);
             UpdateDisplay();
-
-            PropertyChanged += OnPropertyChanged;
         }
 
         public ErrorsCollection Errors { get; } = new ErrorsCollection();
@@ -89,15 +86,6 @@ namespace FileSwissKnife.Views.Hashing
         public ICommand HashOrCancelCommand { get; }
 
         public ICommand CloseCommand { get; }
-
-        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (_cancellationTokenSource == null && e.PropertyName != nameof(ProgressBarText) && e.PropertyName != nameof(ProgressBarValue))
-            {
-                this.ProgressBarText = "";
-                this.ProgressBarValue = 0;
-            }
-        }
 
         private async void HashOrCancel()
         {

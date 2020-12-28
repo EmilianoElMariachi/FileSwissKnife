@@ -232,12 +232,6 @@ namespace FileSwissKnife.Views.Splitting
                 || e.PropertyName == nameof(PadWithZeros)
                 )
                 UpdateNamingPreview();
-
-            if (_cancellationTokenSource == null && e.PropertyName != nameof(ProgressBarText) && e.PropertyName != nameof(ProgressBarValue))
-            {
-                this.ProgressBarText = "";
-                this.ProgressBarValue = 0;
-            }
         }
 
         private void UpdateNamingPreview()
@@ -430,16 +424,26 @@ namespace FileSwissKnife.Views.Splitting
 
         public void OnFilesDropped(string[] files)
         {
-            if (files.Length <= 0)
-                return;
-            var file = files[0];
-            if (!File.Exists(file))
-                return;
+            try
+            {
+                if (files.Length <= 0)
+                    return;
+                var file = files[0];
+                if (!File.Exists(file))
+                    return;
 
-            var dir = Path.GetDirectoryName(file);
-            OutputDir = dir;
+                var dir = Path.GetDirectoryName(file);
+                OutputDir = dir;
 
-            InputFile = file;
+                InputFile = file;
+            }
+            catch (Exception ex)
+            {
+                Errors.Add(new ErrorViewModel
+                {
+                    Message = ex.Message
+                });
+            }
         }
     }
 }
