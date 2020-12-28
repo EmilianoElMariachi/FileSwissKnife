@@ -10,7 +10,5 @@
             InitializeComponent();
             DataContext = new MainWindowViewModel();
         }
-
-
     }
 }

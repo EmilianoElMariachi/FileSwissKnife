@@ -1,9 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:FileSwissKnife.Views">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-
-    <Viewbox x:Key="SettingsIcon"> <!-- TODO: à utiliser -->
+    <Viewbox x:Key="SettingsIcon">
         <Canvas Width="24" Height="24">
             <Path Fill="Black" 
                   Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,
@@ -20,6 +18,5 @@
                   18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
         </Canvas>
     </Viewbox>
-
 
 </ResourceDictionary>

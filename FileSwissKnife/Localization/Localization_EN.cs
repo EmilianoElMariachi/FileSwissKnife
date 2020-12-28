@@ -117,5 +117,7 @@
         public string BrowseJoinOutputFileTitle => "Output file location";
 
         public string BrowseJoinInputFilesTitle => "Input file selection";
+
+        public string TabNameSettings => "Settings";
     }
 }

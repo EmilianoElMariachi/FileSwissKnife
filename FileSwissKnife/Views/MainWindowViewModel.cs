@@ -11,16 +11,26 @@ namespace FileSwissKnife.Views
     public class MainWindowViewModel : ViewModelBase
     {
         private TabViewModelBase? _selectedTab;
+        private TabViewModelBase[] _toolsTab;
 
 
         public MainWindowViewModel()
         {
-            Tabs = new TabViewModelBase[] { new JoinViewModel(), new SplitViewModel(), new HashViewModel() };
+            JoinViewModel = new JoinViewModel();
+            SplitViewModel = new SplitViewModel();
+            HashViewModel = new HashViewModel();
+            AppSettingsViewModel = new AppSettingsViewModel();
+
+            // All tools tab except settings
 
 
-            var tabToSelect = Tabs.FirstOrDefault(tab => string.Equals(tab.TechName, Settings.Default.ActiveTabTechName, StringComparison.OrdinalIgnoreCase));
 
-            SelectedTab = tabToSelect ?? Tabs[0];
+            _toolsTab = new TabViewModelBase[] { JoinViewModel, SplitViewModel, HashViewModel };
+
+
+            var tabToSelect = _toolsTab.FirstOrDefault(tab => string.Equals(tab.TechName, Settings.Default.ActiveTabTechName, StringComparison.OrdinalIgnoreCase));
+
+            SelectedTab = tabToSelect ?? _toolsTab[0];
         }
 
         public TabViewModelBase? SelectedTab
@@ -29,12 +39,18 @@ namespace FileSwissKnife.Views
             set
             {
                 _selectedTab = value;
-                if (_selectedTab != null)
+                if (_selectedTab != null && _toolsTab.Contains(_selectedTab) )
                     Settings.Default.ActiveTabTechName = _selectedTab.TechName;
                 NotifyPropertyChanged();
             }
         }
 
-        public TabViewModelBase[] Tabs { get; }
+        public JoinViewModel JoinViewModel { get; }
+
+        public SplitViewModel SplitViewModel { get; }
+
+        public HashViewModel HashViewModel { get; }
+
+        public AppSettingsViewModel AppSettingsViewModel { get; }
     }
 }

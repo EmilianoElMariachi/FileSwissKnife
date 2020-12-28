@@ -172,6 +172,8 @@ namespace FileSwissKnife.Localization
         public string BrowseJoinOutputFileTitle => Current.BrowseJoinOutputFileTitle;
 
         public string BrowseJoinInputFilesTitle => Current.BrowseJoinInputFilesTitle;
+
+        public string TabNameSettings => Current.TabNameSettings;
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

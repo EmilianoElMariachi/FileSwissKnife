@@ -116,5 +116,7 @@
 
         string BrowseJoinInputFilesTitle { get; }
 
+        string TabNameSettings { get; }
+
     }
 }

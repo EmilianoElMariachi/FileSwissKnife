@@ -4,19 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:FileSwissKnife.Views"
+        xmlns:joining="clr-namespace:FileSwissKnife.Views.Joining"
+        xmlns:splitting="clr-namespace:FileSwissKnife.Views.Splitting"
+        xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
+        xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
         mc:Ignorable="d"
         Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance views:MainWindowViewModel}">
     <Window.Resources>
     </Window.Resources>
     <Grid Margin="5">
-        <TabControl SelectedValue="{Binding Path=SelectedTab}"
-                    ItemsSource="{Binding Path=Tabs}"
-                    ContentTemplateSelector="{StaticResource TabDataTemplateSelector}">
-            <TabControl.ItemContainerStyle>
-                <Style TargetType="TabItem">
-                    <Setter Property="Header" Value="{Binding DisplayName}"/>
-                </Style>
-            </TabControl.ItemContainerStyle>
+        <TabControl SelectedValuePath="DataContext" IsSynchronizedWithCurrentItem="True">
+            <TabItem DataContext="{Binding Path=JoinViewModel}" Header="{Binding DisplayName}">
+                <joining:JoinView />
+            </TabItem>
+            <TabItem DataContext="{Binding Path=SplitViewModel}" Header="{Binding DisplayName}">
+                <splitting:SplitView />
+            </TabItem>      
+            <TabItem DataContext="{Binding Path=HashViewModel}" Header="{Binding DisplayName}">
+                <hashing:HashView />
+            </TabItem>
+            <TabItem DataContext="{Binding Path=AppSettingsViewModel}">
+                <TabItem.Header>
+                    <ContentControl Content="{StaticResource SettingsIcon}" Height="16" Width="16" />
+                </TabItem.Header>
+                <appSettings:AppSettingsView />
+            </TabItem>
+
+
+            <!-- NOTE: it is important to bind the SelectedValue after initializing tab items in order to restore the last used tab at startup -->
+            <TabControl.SelectedValue>
+                <Binding Path="SelectedTab" Mode="TwoWay"></Binding>
+            </TabControl.SelectedValue>
         </TabControl>
     </Grid>
 </Window>
