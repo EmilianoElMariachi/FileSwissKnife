@@ -33,8 +33,6 @@ namespace FileSwissKnife.Views.Joining
             BrowseInputFilesCommand = new RelayCommand(BrowseInputFiles);
         }
 
-        public override string DisplayName => Localizer.Instance.TabNameJoin;
-
         public override string TechName => "Join";
 
         public string OutputFile

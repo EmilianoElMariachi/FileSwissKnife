@@ -8,24 +8,25 @@
         xmlns:splitting="clr-namespace:FileSwissKnife.Views.Splitting"
         xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
         xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
+        xmlns:localization="clr-namespace:FileSwissKnife.Localization"
         mc:Ignorable="d"
         Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance views:MainWindowViewModel}">
     <Window.Resources>
     </Window.Resources>
     <Grid Margin="5">
         <TabControl SelectedValuePath="DataContext" IsSynchronizedWithCurrentItem="True">
-            <TabItem DataContext="{Binding Path=JoinViewModel}" Header="{Binding DisplayName}">
+            <TabItem DataContext="{Binding Path=JoinViewModel}" Header="{Binding Source={x:Static localization:Localizer.Instance}, Path=TabNameJoin}">
                 <joining:JoinView />
             </TabItem>
-            <TabItem DataContext="{Binding Path=SplitViewModel}" Header="{Binding DisplayName}">
+            <TabItem DataContext="{Binding Path=SplitViewModel}" Header="{Binding Source={x:Static localization:Localizer.Instance}, Path=TabNameSplit}">
                 <splitting:SplitView />
-            </TabItem>      
-            <TabItem DataContext="{Binding Path=HashViewModel}" Header="{Binding DisplayName}">
+            </TabItem>
+            <TabItem DataContext="{Binding Path=HashViewModel}" Header="{Binding Source={x:Static localization:Localizer.Instance}, Path=TabNameHash}">
                 <hashing:HashView />
             </TabItem>
             <TabItem DataContext="{Binding Path=AppSettingsViewModel}">
                 <TabItem.Header>
-                    <ContentControl Content="{StaticResource SettingsIcon}" Height="16" Width="16" />
+                    <ContentControl Content="{StaticResource SettingsIcon}" Height="18" Width="18" />
                 </TabItem.Header>
                 <appSettings:AppSettingsView />
             </TabItem>

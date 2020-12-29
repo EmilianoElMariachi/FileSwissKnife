@@ -2,6 +2,7 @@
 using System.Linq;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
+using FileSwissKnife.Views.AppSettings;
 using FileSwissKnife.Views.Hashing;
 using FileSwissKnife.Views.Joining;
 using FileSwissKnife.Views.Splitting;

@@ -2,6 +2,8 @@
 {
     public class Localization_FR : ILocalization
     {
+        public string Name => "Français";
+
         public string CultureName => "fr-FR";
 
         public string DragMeSomeFilesToJoin => "Glisse moi un ou plusieurs fichiers à joindre par ici :)";
@@ -119,5 +121,7 @@
         public string BrowseJoinInputFilesTitle => "Sélection des fichiers d'entrée";
 
         public string TabNameSettings => "Paramètres";
+
+        public string Language => "Langue";
     }
 }

@@ -118,5 +118,6 @@
 
         string TabNameSettings { get; }
 
+        string Language { get; }
     }
 }

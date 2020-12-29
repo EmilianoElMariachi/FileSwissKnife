@@ -2,6 +2,8 @@
 {
     internal class Localization_EN : ILocalization
     {
+        public string Name => "English";
+
         public string CultureName => "en-US";
 
         public string DragMeSomeFilesToJoin => "Drag me one or more files to join here :)";
@@ -119,5 +121,7 @@
         public string BrowseJoinInputFilesTitle => "Input file selection";
 
         public string TabNameSettings => "Settings";
+
+        public string Language => "Language";
     }
 }
