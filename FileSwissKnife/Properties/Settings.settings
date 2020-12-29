@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FileSwissKnife.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ActiveTabTechName" Type="System.String" Scope="User">
+    <Setting Name="ActiveTabId" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SplitSize" Type="System.Int64" Scope="User">
@@ -33,6 +33,9 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="JoinLastDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ForcedLanguage" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

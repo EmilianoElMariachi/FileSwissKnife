@@ -14,6 +14,6 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=Language, FallbackValue=Language}" />
-        <ComboBox Grid.Row="1" ItemsSource="{Binding Path=AvailableLocalizations}" DisplayMemberPath="Name" SelectedValue="{Binding Path=SelectedLocalization}"/>
+        <ComboBox Grid.Row="1" ItemsSource="{Binding Path=AvailableLanguages}" DisplayMemberPath="Name" SelectedValue="{Binding Path=SelectedLanguage}"/>
     </Grid>
 </UserControl>

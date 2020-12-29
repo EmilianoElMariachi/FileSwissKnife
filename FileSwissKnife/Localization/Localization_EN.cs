@@ -2,7 +2,7 @@
 {
     internal class Localization_EN : ILocalization
     {
-        public string Name => "English";
+        public string DisplayName => "English";
 
         public string CultureName => "en-US";
 

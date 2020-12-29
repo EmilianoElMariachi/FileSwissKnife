@@ -70,7 +70,7 @@ namespace FileSwissKnife.Views.Splitting
 
         public RelayCommand SplitOrCancelCommand { get; }
 
-        public override string TechName => "Split";
+        public override string TabId => "Split";
 
         public Units Units => Units.All;
 

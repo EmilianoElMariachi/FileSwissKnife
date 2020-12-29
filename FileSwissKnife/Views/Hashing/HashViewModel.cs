@@ -46,7 +46,7 @@ namespace FileSwissKnife.Views.Hashing
             SelectFilesToHashCommand = new RelayCommand(OnSelectFilesToHash);
         }
 
-        public override string TechName => "Hash";
+        public override string TabId => "Hash";
 
         public ObservableCollection<HashedFileViewModel> HashedFiles => _hashedFiles;
 

@@ -26,12 +26,12 @@ namespace FileSwissKnife.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ActiveTabTechName {
+        public string ActiveTabId {
             get {
-                return ((string)(this["ActiveTabTechName"]));
+                return ((string)(this["ActiveTabId"]));
             }
             set {
-                this["ActiveTabTechName"] = value;
+                this["ActiveTabId"] = value;
             }
         }
         
@@ -151,6 +151,18 @@ namespace FileSwissKnife.Properties {
             }
             set {
                 this["JoinLastDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ForcedLanguage {
+            get {
+                return ((string)(this["ForcedLanguage"]));
+            }
+            set {
+                this["ForcedLanguage"] = value;
             }
         }
     }

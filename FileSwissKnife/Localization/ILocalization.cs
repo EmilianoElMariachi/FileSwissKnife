@@ -2,7 +2,7 @@
 {
     public interface ILocalization : ILocalizationKeys
     {
-        string Name { get; }
+        string DisplayName { get; }
 
         string CultureName { get; }
     }

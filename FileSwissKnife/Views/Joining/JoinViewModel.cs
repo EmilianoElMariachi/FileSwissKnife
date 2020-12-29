@@ -33,7 +33,7 @@ namespace FileSwissKnife.Views.Joining
             BrowseInputFilesCommand = new RelayCommand(BrowseInputFiles);
         }
 
-        public override string TechName => "Join";
+        public override string TabId => "Join";
 
         public string OutputFile
         {

@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
+using FileSwissKnife.Properties;
 
 namespace FileSwissKnife.Localization
 {
     public class Localizer : ILocalizationKeys, INotifyPropertyChanged
     {
+
         /// <summary>
         /// Singleton
         /// </summary>
         public static Localizer Instance { get; } = new Localizer();
+        private static readonly string _defaultSystemCultureName = Thread.CurrentThread.CurrentUICulture.Name;
 
 
         private readonly Localization_EN _defaultLocalization = new Localization_EN();
@@ -27,33 +31,61 @@ namespace FileSwissKnife.Localization
                 new Localization_FR()
             });
 
-            var initialLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == System.Threading.Thread.CurrentThread.CurrentUICulture.Name);
+            _current = GetInitialLocalization();
+        }
 
-            _current = initialLocalization ?? _defaultLocalization;
+        private ILocalization GetInitialLocalization()
+        {
+            var forcedLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == Settings.Default.ForcedLanguage);
+            return forcedLocalization ?? GetLocalizationAuto();
+        }
+
+        private ILocalization GetLocalizationAuto()
+        {
+            var systemLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == _defaultSystemCultureName);
+            return systemLocalization ?? _defaultLocalization;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public IEnumerable<ILocalization> AvailableLocalizations => _localizations;
 
+        public LocalizationMode Mode => string.IsNullOrWhiteSpace(Settings.Default.ForcedLanguage) ? LocalizationMode.Auto : LocalizationMode.Forced;
+
         public ILocalization Current
         {
             get => _current;
-            set
+            private set
             {
                 _current = value ?? throw new ArgumentNullException(nameof(Current));
                 NotifyLocalizationChanged();
             }
         }
 
+        public void SetForcedLocalization(string cultureName)
+        {
+            var forcedLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == cultureName);
+
+            if (forcedLocalization != null)
+                Current = forcedLocalization;
+
+            Settings.Default.ForcedLanguage = cultureName;
+        }
+
+        public void SetLocalizationAuto()
+        {
+            Current = GetLocalizationAuto();
+            Settings.Default.ForcedLanguage = "";
+        }
+
         private void NotifyLocalizationChanged()
         {
             foreach (var propertyInfo in typeof(ILocalizationKeys).GetProperties())
-            {
                 NotifyPropertyChanged(propertyInfo.Name);
-            }
+
             LocalizationChanged?.Invoke(this, new LocalizationChangedHandlerArgs(Current));
         }
+
         private void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -176,6 +208,12 @@ namespace FileSwissKnife.Localization
         public string TabNameSettings => Current.TabNameSettings;
 
         public string Language => Current.Language;
+    }
+
+    public enum LocalizationMode
+    {
+        Auto,
+        Forced
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

@@ -2,7 +2,7 @@
 {
     public class Localization_FR : ILocalization
     {
-        public string Name => "Français";
+        public string DisplayName => "Français";
 
         public string CultureName => "fr-FR";
 
