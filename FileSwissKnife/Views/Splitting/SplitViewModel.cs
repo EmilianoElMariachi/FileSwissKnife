@@ -379,8 +379,6 @@ namespace FileSwissKnife.Views.Splitting
             }
             catch (Exception ex)
             {
-                ProgressBarText = Localizer.Instance.OperationError;
-
                 errors.Add(new ErrorViewModel
                 {
                     Message = ex.Message

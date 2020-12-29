@@ -135,8 +135,6 @@ namespace FileSwissKnife.Views.Hashing
             }
             catch (Exception ex)
             {
-                ProgressBarText = Localizer.Instance.OperationError;
-
                 errors.Add(new ErrorViewModel
                 {
                     Message = ex.Message

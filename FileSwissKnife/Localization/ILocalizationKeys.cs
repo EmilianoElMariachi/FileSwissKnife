@@ -24,8 +24,6 @@
 
         string OperationFinishedIn { get; }
 
-        string OperationError { get; }
-
         string JoinInputFiles { get; }
 
         string JoinOutputFile { get; }

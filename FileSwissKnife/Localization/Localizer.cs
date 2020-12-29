@@ -111,8 +111,6 @@ namespace FileSwissKnife.Localization
 
         public string OperationFinishedIn => Current.OperationFinishedIn;
 
-        public string OperationError => Current.OperationError;
-
         public string JoinInputFiles => Current.JoinInputFiles;
 
         public string SplitInputFile => Current.SplitInputFile;

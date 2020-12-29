@@ -28,8 +28,6 @@
 
         public string OperationFinishedIn => "Finished in {0}";
 
-        public string OperationError => "Error!";
-
         public string JoinInputFiles => "Files to join:";
 
         public string JoinOutputFile => "Output file:";
