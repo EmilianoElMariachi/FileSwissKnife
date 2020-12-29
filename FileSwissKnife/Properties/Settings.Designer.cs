@@ -165,5 +165,41 @@ namespace FileSwissKnife.Properties {
                 this["ForcedLanguage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4194304")]
+        public int JoinBufferSize {
+            get {
+                return ((int)(this["JoinBufferSize"]));
+            }
+            set {
+                this["JoinBufferSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4194304")]
+        public int SplitBufferSize {
+            get {
+                return ((int)(this["SplitBufferSize"]));
+            }
+            set {
+                this["SplitBufferSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4194304")]
+        public int HashBufferSize {
+            get {
+                return ((int)(this["HashBufferSize"]));
+            }
+            set {
+                this["HashBufferSize"] = value;
+            }
+        }
     }
 }

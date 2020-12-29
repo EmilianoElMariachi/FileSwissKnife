@@ -104,15 +104,15 @@
 
         public string SplitNamingPreview => "Aperçu";
 
-        public string SplitNamingNumPrefix => "Préfixe du numéro :";
+        public string SplitNamingNumPrefix => "Préfixe du numéro:";
 
-        public string SplitNamingStartNum => "Numéro de départ :";
+        public string SplitNamingStartNum => "Numéro de départ:";
 
-        public string SplitNamingPadWithZeros => "Remplir avec des 0 :";
+        public string SplitNamingPadWithZeros => "Remplir avec des 0:";
 
-        public string SplitNamingNumSuffix => "Suffixe du numéro :";
+        public string SplitNamingNumSuffix => "Suffixe du numéro:";
 
-        public string SplitNamingNumPos => "Position du numéro :";
+        public string SplitNamingNumPos => "Position du numéro:";
 
         public string BrowseJoinOutputFileTitle => "Emplacement du fichier de sortie";
 
@@ -120,6 +120,14 @@
 
         public string TabNameSettings => "Paramètres";
 
-        public string Language => "Langue";
+        public string Language => "Langue:";
+
+        public string BuffersSize => "Taille des buffers:";
+
+        public string JoinBufferSize => "Joindre";
+
+        public string SplitBufferSize => "Séparer";
+
+        public string HashBufferSize => "Hacher";
     }
 }

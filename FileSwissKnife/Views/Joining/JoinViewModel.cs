@@ -126,7 +126,7 @@ namespace FileSwissKnife.Views.Joining
 
                 State = PlayStopButtonState.Stop;
 
-                var fileJoiner = new FileJoiner();
+                var fileJoiner = new FileJoiner(Settings.Default.JoinBufferSize);
                 ProgressBarValue = 0;
                 ProgressBarText = "";
                 fileJoiner.OnProgress += (sender, args) =>

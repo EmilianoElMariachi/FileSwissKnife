@@ -117,5 +117,13 @@
         string TabNameSettings { get; }
 
         string Language { get; }
+
+        string BuffersSize { get; }
+
+        string JoinBufferSize { get; }
+
+        string SplitBufferSize { get; }
+
+        string HashBufferSize { get; }
     }
 }

@@ -38,5 +38,14 @@
     <Setting Name="ForcedLanguage" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="JoinBufferSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4194304</Value>
+    </Setting>
+    <Setting Name="SplitBufferSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4194304</Value>
+    </Setting>
+    <Setting Name="HashBufferSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4194304</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

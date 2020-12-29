@@ -120,6 +120,14 @@
 
         public string TabNameSettings => "Settings";
 
-        public string Language => "Language";
+        public string Language => "Language:";
+
+        public string BuffersSize => "Buffers size:";
+
+        public string JoinBufferSize => "Join";
+
+        public string SplitBufferSize => "Split";
+
+        public string HashBufferSize => "Hash";
     }
 }

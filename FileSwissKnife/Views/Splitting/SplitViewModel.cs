@@ -348,7 +348,7 @@ namespace FileSwissKnife.Views.Splitting
             {
                 State = PlayStopButtonState.Stop;
 
-                var fileSplitter = new FileSplitter();
+                var fileSplitter = new FileSplitter(Settings.Default.SplitBufferSize);
                 ProgressBarValue = 0;
                 ProgressBarText = "";
                 fileSplitter.OnProgress += (sender, args) =>

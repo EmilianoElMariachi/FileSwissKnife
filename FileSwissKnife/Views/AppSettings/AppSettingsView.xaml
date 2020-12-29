@@ -11,8 +11,31 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=Language, FallbackValue=Language}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=Language}" />
         <ComboBox Grid.Row="1" ItemsSource="{Binding Path=AvailableLanguages}" DisplayMemberPath="Name" SelectedValue="{Binding Path=SelectedLanguage}" MinWidth="140" HorizontalAlignment="Left"/>
+
+        <TextBlock Grid.Row="2" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=BuffersSize}" />
+        <Grid Grid.Row="3" Margin="10,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="3" /><!-- Spacer Column -->
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=JoinBufferSize}" HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="0" Grid.Column="2" MinWidth="100" Text="{Binding Path=JoinBufferSize}" TextAlignment="Center" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=SplitBufferSize}" HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="1" Grid.Column="2" MinWidth="100" Text="{Binding Path=SplitBufferSize}" TextAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=HashBufferSize}" HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="2" Grid.Column="2" MinWidth="100" Text="{Binding Path=HashBufferSize}" TextAlignment="Center"/>
+        </Grid>
+
     </Grid>
 </UserControl>

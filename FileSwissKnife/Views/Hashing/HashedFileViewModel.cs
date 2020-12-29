@@ -8,6 +8,7 @@ using ElMariachi.FS.Tools.Hashing;
 using FileSwissKnife.CustomControls;
 using FileSwissKnife.CustomControls.Error;
 using FileSwissKnife.Localization;
+using FileSwissKnife.Properties;
 using FileSwissKnife.Utils.MVVM;
 using FileSwissKnife.Utils.UnitsManagement;
 
@@ -111,7 +112,7 @@ namespace FileSwissKnife.Views.Hashing
 
                 UpdateDisplay();
 
-                var fileHasher = new FileHasher();
+                var fileHasher = new FileHasher(Settings.Default.HashBufferSize);
                 ProgressBarValue = 0;
                 ProgressBarText = "";
                 fileHasher.OnProgress += (sender, args) =>

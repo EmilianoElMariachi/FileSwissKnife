@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FileSwissKnife.Localization;
+using FileSwissKnife.Properties;
 
 namespace FileSwissKnife.Views.AppSettings
 {
@@ -53,5 +54,34 @@ namespace FileSwissKnife.Views.AppSettings
             }
         }
 
+        public int JoinBufferSize
+        {
+            get => Settings.Default.JoinBufferSize;
+            set
+            {
+                Settings.Default.JoinBufferSize = value;
+                NotifyPropertyChanged();
+            }
+        }     
+        
+        public int SplitBufferSize
+        {
+            get => Settings.Default.SplitBufferSize;
+            set
+            {
+                Settings.Default.SplitBufferSize = value;
+                NotifyPropertyChanged();
+            }
+        }       
+        
+        public int HashBufferSize
+        {
+            get => Settings.Default.HashBufferSize;
+            set
+            {
+                Settings.Default.HashBufferSize = value;
+                NotifyPropertyChanged();
+            }
+        }
     }
 }

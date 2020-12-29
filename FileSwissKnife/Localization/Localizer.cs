@@ -206,6 +206,14 @@ namespace FileSwissKnife.Localization
         public string TabNameSettings => Current.TabNameSettings;
 
         public string Language => Current.Language;
+
+        public string BuffersSize => Current.BuffersSize;
+
+        public string JoinBufferSize => Current.JoinBufferSize;
+
+        public string SplitBufferSize => Current.SplitBufferSize;
+
+        public string HashBufferSize => Current.HashBufferSize;
     }
 
     public enum LocalizationMode
