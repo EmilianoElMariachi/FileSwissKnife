@@ -10,11 +10,12 @@
         xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
         xmlns:localization="clr-namespace:FileSwissKnife.Localization"
         mc:Ignorable="d"
-        Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance views:MainWindowViewModel}">
+        Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance views:MainWindowViewModel}" Icon="/Views/App.ico">
     <Window.Resources>
     </Window.Resources>
     <Grid Margin="5">
         <TabControl SelectedValuePath="DataContext" IsSynchronizedWithCurrentItem="True">
+
             <TabItem DataContext="{Binding Path=JoinViewModel}" Header="{Binding Source={x:Static localization:Localizer.Instance}, Path=TabNameJoin}">
                 <joining:JoinView />
             </TabItem>
@@ -30,7 +31,6 @@
                 </TabItem.Header>
                 <appSettings:AppSettingsView />
             </TabItem>
-
 
             <!-- NOTE: it is important to bind the SelectedValue after initializing tab items in order to restore the last used tab at startup -->
             <TabControl.SelectedValue>

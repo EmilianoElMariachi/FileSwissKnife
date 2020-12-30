@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using FileSwissKnife.Properties;
 
-// TODO: faire la page des settings et exposer la taille des buffers, la langue
-// TODO: faire une icône pour l'application
 // TODO: faire le thème sombre
 // TODO: améliorer la routine de détection des fichiers à joindre
 namespace FileSwissKnife
