@@ -7,6 +7,7 @@
              xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="450" d:DataContext="{d:DesignInstance appSettings:AppSettingsViewModel}">
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -35,7 +36,7 @@
         <TextBox Grid.Row="5" Grid.Column="2" MinWidth="100" Text="{Binding Path=HashBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=Theme}" />
-        <ComboBox Grid.Row="7" Grid.Column="2" ItemsSource="{Binding Path=AvailableThemes}" SelectedValue="{Binding Path=SelectedTheme}" MinWidth="120" HorizontalAlignment="Left"/>
+        <ComboBox Grid.Row="7" Grid.Column="2" ItemsSource="{Binding Path=AvailableThemes}" DisplayMemberPath="Name" SelectedValue="{Binding Path=SelectedTheme}" MinWidth="120" HorizontalAlignment="Left"/>
 
     </Grid>
 </UserControl>

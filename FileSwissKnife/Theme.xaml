@@ -16,13 +16,12 @@
     <Color x:Key="HighlightBackgroundColor">#AEAEAE</Color>
     <Color x:Key="MainColorDark">#1575AD</Color>
     <Color x:Key="MainColorLight">#7AC0FE</Color>
-    <Color x:Key="FrameBorderColor">#827DFF</Color>
+
 
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
     <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="{StaticResource HighlightBackgroundColor}" />
     <SolidColorBrush x:Key="MainColorBrushDark" Color="{StaticResource MainColorDark}" />
     <SolidColorBrush x:Key="MainColorBrushLight" Color="{StaticResource MainColorLight}" />
-    <SolidColorBrush x:Key="FrameBorderBrush" Color="{StaticResource FrameBorderColor}" />
 
     <system:Double x:Key="DefaultButtonHeight">26</system:Double>
 
@@ -232,7 +231,7 @@
 
     <Style x:Key="FrameBorderStyle" TargetType="Border">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{StaticResource FrameBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource FrameBorderBrush}" />
     </Style>
 
     <Style TargetType="customControls:TextBoxExt" x:Key="TextBoxDragWatermark">

@@ -47,5 +47,8 @@
     <Setting Name="HashBufferSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4194304</Value>
     </Setting>
+    <Setting Name="ActiveTheme" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -2,13 +2,13 @@
 using System.Linq;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
+using FileSwissKnife.Themes;
 
 namespace FileSwissKnife.Views.AppSettings
 {
     public class AppSettingsViewModel : TabViewModelBase
     {
         private Language? _selectedLanguage;
-        private string _selectedTheme;
 
         public AppSettingsViewModel()
         {
@@ -55,15 +55,16 @@ namespace FileSwissKnife.Views.AppSettings
             }
         }
 
-        public IEnumerable<string> AvailableThemes { get; }
+        public IEnumerable<Theme> AvailableThemes => ThemeManager.AvailableThemes;
 
-        public string SelectedTheme
+        public Theme? SelectedTheme
         {
-            get => _selectedTheme;
+            get => ThemeManager.CurrentTheme;
             set
             {
-                _selectedTheme = value;
                 NotifyPropertyChanged();
+                if (value != null) 
+                    ThemeManager.SetTheme(value);
             }
         }
 

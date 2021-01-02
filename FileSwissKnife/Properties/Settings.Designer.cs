@@ -201,5 +201,17 @@ namespace FileSwissKnife.Properties {
                 this["HashBufferSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ActiveTheme {
+            get {
+                return ((string)(this["ActiveTheme"]));
+            }
+            set {
+                this["ActiveTheme"] = value;
+            }
+        }
     }
 }
