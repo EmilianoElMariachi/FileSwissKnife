@@ -129,5 +129,7 @@
         public string SplitBufferSize => "Séparer";
 
         public string HashBufferSize => "Hacher";
+
+        public string Theme => "Thème";
     }
 }

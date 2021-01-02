@@ -8,6 +8,7 @@ namespace FileSwissKnife.Views.AppSettings
     public class AppSettingsViewModel : TabViewModelBase
     {
         private Language? _selectedLanguage;
+        private string _selectedTheme;
 
         public AppSettingsViewModel()
         {
@@ -50,6 +51,18 @@ namespace FileSwissKnife.Views.AppSettings
                             break;
                     }
                 }
+                NotifyPropertyChanged();
+            }
+        }
+
+        public IEnumerable<string> AvailableThemes { get; }
+
+        public string SelectedTheme
+        {
+            get => _selectedTheme;
+            set
+            {
+                _selectedTheme = value;
                 NotifyPropertyChanged();
             }
         }

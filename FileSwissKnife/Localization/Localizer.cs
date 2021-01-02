@@ -214,6 +214,8 @@ namespace FileSwissKnife.Localization
         public string SplitBufferSize => Current.SplitBufferSize;
 
         public string HashBufferSize => Current.HashBufferSize;
+
+        public string Theme => Current.Theme;
     }
 
     public enum LocalizationMode

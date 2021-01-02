@@ -125,5 +125,7 @@
         string SplitBufferSize { get; }
 
         string HashBufferSize { get; }
+
+        string Theme { get; }
     }
 }
