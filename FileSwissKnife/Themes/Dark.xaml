@@ -12,7 +12,7 @@
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource ControlBackgroundColor}" />
     <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="Black" />
 
-    <SolidColorBrush x:Key="FrameBorderBrush" Color="Red" />
+    <SolidColorBrush x:Key="FrameBorderBrush" Color="#827DFF" />
     <SolidColorBrush x:Key="BorderMediumBrush" Color="#FF888888" />
     <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="{StaticResource HighlightBackgroundColor}" />
     <SolidColorBrush x:Key="MainColorBrushDark" Color="#1575AD" />

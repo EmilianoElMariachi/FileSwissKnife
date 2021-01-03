@@ -12,6 +12,8 @@
                 <ResourceDictionary Source="Styling/ComboBox.xaml" />
                 <ResourceDictionary Source="Styling/ProgressBar.xaml" />
                 <ResourceDictionary Source="Styling/Icons.xaml" />
+                <ResourceDictionary Source="Themes/Dark.xaml" />
+                <ResourceDictionary Source="Themes/Light.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
