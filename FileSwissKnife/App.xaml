@@ -7,8 +7,11 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme.xaml" />
-                <ResourceDictionary Source="Icons.xaml" />
+                <ResourceDictionary Source="Styling/SimpleStyles.xaml" />
+                <ResourceDictionary Source="Styling/TabItem.xaml" />
+                <ResourceDictionary Source="Styling/ComboBox.xaml" />
+                <ResourceDictionary Source="Styling/ProgressBar.xaml" />
+                <ResourceDictionary Source="Styling/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

@@ -6,7 +6,8 @@
              xmlns:localization="clr-namespace:FileSwissKnife.Localization"
              xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="450" d:DataContext="{d:DesignInstance appSettings:AppSettingsViewModel}">
+             d:DesignHeight="300" d:DesignWidth="450" d:DataContext="{d:DesignInstance appSettings:AppSettingsViewModel}"
+             Style="{StaticResource UserControl}">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>

@@ -8,7 +8,8 @@
              xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
              xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="450" d:DataContext="{d:DesignInstance hashing:HashViewModel }">
+             d:DesignHeight="250" d:DesignWidth="450" d:DataContext="{d:DesignInstance hashing:HashViewModel}"
+             Style="{StaticResource UserControl}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

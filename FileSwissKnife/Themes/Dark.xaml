@@ -1,6 +1,21 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="FrameBorderColor">Red</Color>
-    <SolidColorBrush x:Key="FrameBorderBrush" Color="{DynamicResource FrameBorderColor}" />
+
+    <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="#6B6B6B" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#2D2D30" />
+    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="#FF333337" />
+    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="Black" />
+
+    <SolidColorBrush x:Key="FrameBorderBrush" Color="Red" />
+    <SolidColorBrush x:Key="BorderMediumBrush" Color="#FF888888" />
+    <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="#AEAEAE" />
+    <SolidColorBrush x:Key="MainColorBrushDark" Color="#1575AD" />
+    <SolidColorBrush x:Key="MainColorBrushLight" Color="#7AC0FE" />
+
+    <SolidColorBrush x:Key="FontBrush" Color="White" />
+
+    <SolidColorBrush x:Key="InteractiveBackgroundBrush" Color="#686868" />
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightSlateGray" />
 
 </ResourceDictionary>

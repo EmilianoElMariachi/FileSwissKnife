@@ -10,9 +10,10 @@
         xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
         xmlns:localization="clr-namespace:FileSwissKnife.Localization"
         mc:Ignorable="d"
-        Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance views:MainWindowViewModel}" Icon="/Views/App.ico">
-    <Window.Resources>
-    </Window.Resources>
+        Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance views:MainWindowViewModel}"
+        Style="{StaticResource Window}"
+        Icon="/Views/App.ico">
+
     <Grid Margin="5">
         <TabControl SelectedValuePath="DataContext" IsSynchronizedWithCurrentItem="True">
 

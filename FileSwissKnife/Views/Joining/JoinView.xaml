@@ -8,7 +8,8 @@
              xmlns:joining="clr-namespace:FileSwissKnife.Views.Joining"
              xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="350" d:DataContext="{d:DesignInstance joining:JoinViewModel}">
+             d:DesignHeight="250" d:DesignWidth="350" d:DataContext="{d:DesignInstance joining:JoinViewModel}"
+             Style="{StaticResource UserControl}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

@@ -1,30 +1,47 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
-                    xmlns:views="clr-namespace:FileSwissKnife.Views"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime"
                     xmlns:localization="clr-namespace:FileSwissKnife.Localization"
                     xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error">
 
-    <SolidColorBrush x:Key="ControlLightBrush" Color="White" />
-    <SolidColorBrush x:Key="BorderMediumBrush" Color="#FF888888" />
-
-    <SolidColorBrush x:Key="BackgroundBrush" Color="#686868" />
-    <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="#AEAEAE" />
-    <SolidColorBrush x:Key="MainColorBrushDark" Color="#1575AD" />
-    <SolidColorBrush x:Key="MainColorBrushLight" Color="#7AC0FE" />
-
     <system:Double x:Key="DefaultButtonHeight">26</system:Double>
 
-    <Style TargetType="UserControl">
-        <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+    <Style x:Key="Window" TargetType="Window">
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+    </Style>
+
+    <Style TargetType="TabControl">
+        <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+    </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource FontBrush}"/>
+    </Style>
+
+    <Style x:Key="Title" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{DynamicResource FontBrush}" />
+    </Style>
+
+    <Style x:Key="WaterMarkText" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="DarkGray" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="UserControl" TargetType="UserControl">
+        <Setter Property="Background" Value="{DynamicResource BackgroundBrush}" />
     </Style>
 
     <Style x:Key="VerticalSeparator" TargetType="Rectangle">
         <Setter Property="Width" Value="1" />
         <Setter Property="Margin" Value="3" />
 
-        <Setter Property="Fill" Value="{StaticResource MainColorBrushDark}" />
+        <Setter Property="Fill" Value="{DynamicResource MainColorBrushDark}" />
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
     </Style>
@@ -33,7 +50,7 @@
         <Setter Property="Height" Value="1" />
         <Setter Property="Margin" Value="3" />
 
-        <Setter Property="Fill" Value="{StaticResource MainColorBrushDark}" />
+        <Setter Property="Fill" Value="{DynamicResource MainColorBrushDark}" />
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
     </Style>
@@ -54,7 +71,7 @@
 
                             <Viewbox>
                                 <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
-                                    <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{StaticResource BackgroundBrush}" />
+                                    <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{DynamicResource InteractiveBackgroundBrush}" />
                                     <Path Fill="Red" Data="M 40,12 60,12 55,60 45,60"></Path>
                                     <Rectangle Width="12" Height="12" Fill="Red" VerticalAlignment="Bottom" Margin="0,0,0,15"/>
                                 </Grid>
@@ -100,10 +117,10 @@
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource HighlightBackgroundBrush}" />
+                                <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource HighlightBackgroundBrush}" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="False">
-                                <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource BackgroundBrush}" />
+                                <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource InteractiveBackgroundBrush}" />
                             </Trigger>
                             <Trigger Property="PlayStopButtonState" Value="Play">
                                 <Setter TargetName="PlayIcon" Property="Visibility" Value="Visible" />
@@ -138,12 +155,12 @@
                         <Viewbox>
                             <Grid Width="100" Height="100" Background="Transparent">
                                 <Ellipse x:Name="Ellipse" Width="100" Height="100" />
-                                <Rectangle Width="{StaticResource LineWidth}" Height="{StaticResource LineHeight}" Fill="{StaticResource MainColorBrushLight}" RadiusX="{StaticResource LineRadius}" RadiusY="{StaticResource LineRadius}" >
+                                <Rectangle Width="{StaticResource LineWidth}" Height="{StaticResource LineHeight}" Fill="{DynamicResource MainColorBrushLight}" RadiusX="{StaticResource LineRadius}" RadiusY="{StaticResource LineRadius}" >
                                     <Rectangle.LayoutTransform>
                                         <RotateTransform Angle="-45"/>
                                     </Rectangle.LayoutTransform>
                                 </Rectangle>
-                                <Rectangle Width="{StaticResource LineWidth}" Height="{StaticResource LineHeight}" Fill="{StaticResource MainColorBrushLight}" RadiusX="{StaticResource LineRadius}" RadiusY="{StaticResource LineRadius}" >
+                                <Rectangle Width="{StaticResource LineWidth}" Height="{StaticResource LineHeight}" Fill="{DynamicResource MainColorBrushLight}" RadiusX="{StaticResource LineRadius}" RadiusY="{StaticResource LineRadius}" >
                                     <Rectangle.LayoutTransform>
                                         <RotateTransform Angle="45"/>
                                     </Rectangle.LayoutTransform>
@@ -153,10 +170,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource HighlightBackgroundBrush}" />
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource HighlightBackgroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource BackgroundBrush}" />
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource InteractiveBackgroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -188,10 +205,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Grid" Property="Background" Value="{StaticResource HighlightBackgroundBrush}" />
+                            <Setter TargetName="Grid" Property="Background" Value="{DynamicResource HighlightBackgroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="Grid" Property="Background" Value="{StaticResource BackgroundBrush}" />
+                            <Setter TargetName="Grid" Property="Background" Value="{DynamicResource InteractiveBackgroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -200,7 +217,7 @@
 
     </Style>
 
-    <Style TargetType="CheckBox" x:Key="LeftTextCheckBox">
+    <Style x:Key="LeftTextCheckBox" TargetType="CheckBox">
         <Setter Property="FlowDirection" Value="RightToLeft" />
         <Setter Property="ContentTemplate">
             <Setter.Value>
@@ -211,26 +228,22 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WaterMarkText" TargetType="TextBlock">
-        <Style.Setters>
-            <Setter Property="Foreground" Value="DarkGray" />
-            <Setter Property="FontStyle" Value="Italic" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-        </Style.Setters>
-    </Style>
-
     <Style x:Key="FrameBorderStyle" TargetType="Border">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource FrameBorderBrush}" />
     </Style>
 
-    <Style TargetType="customControls:TextBoxExt" x:Key="TextBoxDragWatermark">
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource FontBrush}" />
+    </Style>
+
+    <Style TargetType="customControls:TextBoxExt" x:Key="TextBoxDragWatermark" BasedOn="{StaticResource {x:Type TextBox}}">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type customControls:TextBoxExt}">
-                        <Border Name="Border" CornerRadius="2" Padding="2" BorderThickness="1" Background="{DynamicResource ControlLightBrush}" BorderBrush="{DynamicResource BorderMediumBrush}">
+                        <Border Name="Border" CornerRadius="2" Padding="2" BorderThickness="1" Background="{DynamicResource ControlBackgroundBrush}" BorderBrush="{DynamicResource BorderMediumBrush}">
                             <Grid>
                                 <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                                 <Grid IsHitTestVisible="False" Visibility="{TemplateBinding WatermarkVisibility}">
@@ -245,75 +258,10 @@
         </Style.Setters>
     </Style>
 
-    <Style x:Key="Title" TargetType="TextBlock">
-        <Setter Property="FontWeight" Value="Bold" />
-    </Style>
-
-    <Style TargetType="views:MainWindow">
-        <Setter Property="Background" Value="#FFA0A0A0" />
-    </Style>
-
-    <!-- GLASS EFFECT -->
-    <LinearGradientBrush x:Key="GlassFX" StartPoint=".5,0" EndPoint=".5,.5">
-        <GradientStop Offset="1" Color="#33DDDDDD"></GradientStop>
-        <GradientStop Offset="1" Color="#33000000"></GradientStop>
-    </LinearGradientBrush>
-
-    <!-- GLOW EFFECT -->
-    <LinearGradientBrush x:Key="GlowFXProgress">
-        <GradientStop Offset="0" Color="#9919148F" />
-        <GradientStop Offset="0.5" Color="#660099FF" />
-        <GradientStop Offset="1" Color="#9945DE6F" />
-    </LinearGradientBrush>
-
-    <!-- PROGRESSBAR -->
-    <CornerRadius x:Key="ProgressBarCornerRadius" BottomLeft="5" BottomRight="5" TopLeft="5" TopRight="5" />
-
-    <Style TargetType="{x:Type customControls:ProgressBarExt}">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type customControls:ProgressBarExt}">
-                    <Grid MinWidth="20" x:Name="Grid" Height="18">
-                        <Border x:Name="BackgroundRectangle" 
-                                Background="{StaticResource BackgroundBrush}" 
-                                CornerRadius="{StaticResource ProgressBarCornerRadius}" />
-                        <Border x:Name="GlassRectangle" 
-                                Background="{StaticResource GlassFX}"
-                                CornerRadius="{StaticResource ProgressBarCornerRadius}" />
-                        <Border x:Name="PART_Indicator" 
-                                CornerRadius="{StaticResource ProgressBarCornerRadius}" 
-                                HorizontalAlignment="Left" Background="Transparent">
-                            <Border Background="{StaticResource GlowFXProgress}"
-                                    CornerRadius="{StaticResource ProgressBarCornerRadius}" 
-                                    Width="{Binding ElementName=Grid, Path=ActualWidth}" />
-                        </Border>
-                        <Border x:Name="PART_Track" 
-                                BorderThickness="1" 
-                                CornerRadius="{StaticResource ProgressBarCornerRadius}"
-                                BorderBrush="Black" />
-                        <TextBlock x:Name="Progress" 
-                               VerticalAlignment="Stretch" 
-                               HorizontalAlignment="Center" 
-                               FontWeight="Bold"
-                               Foreground="White"
-                               Opacity=".7" 
-                               Text="{TemplateBinding Text}" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value=".5" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="SingleLineTextBox" TargetType="TextBox">
+    <Style x:Key="SingleLineTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Height" Value="22" />
         <Setter Property="AcceptsReturn" Value="False" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
+
 </ResourceDictionary>
