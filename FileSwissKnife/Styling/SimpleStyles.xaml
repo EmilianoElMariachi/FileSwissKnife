@@ -94,6 +94,14 @@
                                 </ToolTip>
                             </Border.ToolTip>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource HighlightBackgroundBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource InteractiveBackgroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

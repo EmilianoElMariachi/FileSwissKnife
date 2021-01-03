@@ -1,10 +1,8 @@
-﻿using System;
-using System.Reflection;
-using System.Windows;
+﻿using System.Windows;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
 
-// TODO: faire le thème sombre
+// TODO: faire le thème sombre (fixer l'arrière plan du tooltip d'erreur)
 // TODO: améliorer la routine de détection des fichiers à joindre
 namespace FileSwissKnife
 {
@@ -18,7 +16,6 @@ namespace FileSwissKnife
             base.OnStartup(e);
             ThemeManager.Initialize();
         }
-
 
         protected override void OnExit(ExitEventArgs e)
         {

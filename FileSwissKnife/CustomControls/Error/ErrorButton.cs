@@ -14,6 +14,9 @@ namespace FileSwissKnife.CustomControls.Error
         public static readonly DependencyProperty CopyErrorMessageCommandProperty = DependencyProperty.Register(
             "CopyErrorMessageCommand", typeof(ICommand), typeof(ErrorButton), new PropertyMetadata(default(ICommand)));
 
+        /// <summary>
+        /// The command in charge of copying the error messages in the Clipboard
+        /// </summary>
         public ICommand CopyErrorMessageCommand
         {
             get => (ICommand)GetValue(CopyErrorMessageCommandProperty);
@@ -28,6 +31,9 @@ namespace FileSwissKnife.CustomControls.Error
             ((ErrorButton)d).UpdateDisplay();
         }
 
+        /// <summary>
+        /// The button visibility when no errors
+        /// </summary>
         public Visibility NoErrorVisibility
         {
             get => (Visibility)GetValue(NoErrorVisibilityProperty);
@@ -72,6 +78,9 @@ namespace FileSwissKnife.CustomControls.Error
             UpdateDisplay();
         }
 
+        /// <summary>
+        /// The list of errors
+        /// </summary>
         public ErrorsCollection? Errors
         {
             get => (ErrorsCollection)GetValue(ErrorsProperty);
