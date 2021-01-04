@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styling/Window.xaml" />
                 <ResourceDictionary Source="Styling/UserControl.xaml" />
+                <ResourceDictionary Source="Styling/Border.xaml" />
                 <ResourceDictionary Source="Styling/TextBlock.xaml" />
                 <ResourceDictionary Source="Styling/Separator.xaml" />
                 <ResourceDictionary Source="Styling/TabControl.xaml" />

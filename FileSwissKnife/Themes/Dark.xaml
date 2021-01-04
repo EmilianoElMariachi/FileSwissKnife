@@ -30,7 +30,7 @@
 
     <SolidColorBrush x:Key="Separator.Static.Background" Color="#1575AD" />
 
-    <SolidColorBrush x:Key="FrameBorderBrush" Color="#827DFF" />
+    <SolidColorBrush x:Key="Border.Frame.Outline" Color="#827DFF" />
     <SolidColorBrush x:Key="BorderMediumBrush" Color="#FF888888" />
     <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="{StaticResource HighlightBackgroundColor}" />
 
