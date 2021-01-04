@@ -5,10 +5,6 @@
 
     <system:Double x:Key="DefaultButtonHeight">26</system:Double>
 
-    <Style x:Key="Window" TargetType="Window">
-        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
-    </Style>
-
     <Style TargetType="TabControl">
         <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
     </Style>

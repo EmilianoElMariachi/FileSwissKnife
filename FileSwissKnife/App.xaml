@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styling/SimpleStyles.xaml" />
+                <ResourceDictionary Source="Styling/Window.xaml" />
                 <ResourceDictionary Source="Styling/TabItem.xaml" />
                 <ResourceDictionary Source="Styling/ComboBox.xaml" />
                 <ResourceDictionary Source="Styling/ProgressBar.xaml" />
