@@ -7,6 +7,8 @@
 
     <SolidColorBrush x:Key="HighlightBrush" Color="#51EBAB" />
 
+    <SolidColorBrush x:Key="TabControl.Static.Background" Color="White" />
+
     <SolidColorBrush x:Key="Window.Static.Background" Color="#FFA0A0A0" />
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource ControlBackgroundColor}" />

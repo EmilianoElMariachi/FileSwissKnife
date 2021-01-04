@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Styling/Window.xaml" />
                 <ResourceDictionary Source="Styling/TextBlock.xaml" />
                 <ResourceDictionary Source="Styling/Separator.xaml" />
+                <ResourceDictionary Source="Styling/TabControl.xaml" />
                 <ResourceDictionary Source="Styling/TabItem.xaml" />
                 <ResourceDictionary Source="Styling/ComboBox.xaml" />
                 <ResourceDictionary Source="Styling/CheckBox.xaml" />
