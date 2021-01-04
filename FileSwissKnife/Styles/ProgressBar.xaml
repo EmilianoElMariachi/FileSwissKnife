@@ -4,15 +4,8 @@
 
     <!-- GLASS EFFECT -->
     <LinearGradientBrush x:Key="GlassFX" StartPoint=".5,0" EndPoint=".5,.5">
-        <GradientStop Offset="1" Color="#33DDDDDD"></GradientStop>
-        <GradientStop Offset="1" Color="#33000000"></GradientStop>
-    </LinearGradientBrush>
-
-    <!-- GLOW EFFECT -->
-    <LinearGradientBrush x:Key="GlowFXProgress">
-        <GradientStop Offset="0" Color="#9919148F" />
-        <GradientStop Offset="0.5" Color="#660099FF" />
-        <GradientStop Offset="1" Color="#9945DE6F" />
+        <GradientStop Offset="1" Color="#33DDDDDD" />
+        <GradientStop Offset="1" Color="#33000000" />
     </LinearGradientBrush>
 
     <CornerRadius x:Key="ProgressBarCornerRadius" BottomLeft="5" BottomRight="5" TopLeft="5" TopRight="5" />
@@ -24,23 +17,28 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type customControls:ProgressBarExt}">
                     <Grid MinWidth="20" x:Name="Grid" Height="18">
+
                         <Border x:Name="BackgroundRectangle" 
                                 Background="{DynamicResource ProgressBar.Static.Background}" 
                                 CornerRadius="{StaticResource ProgressBarCornerRadius}" />
+
                         <Border x:Name="GlassRectangle" 
                                 Background="{StaticResource GlassFX}"
                                 CornerRadius="{StaticResource ProgressBarCornerRadius}" />
+
                         <Border x:Name="PART_Indicator" 
                                 CornerRadius="{StaticResource ProgressBarCornerRadius}" 
                                 HorizontalAlignment="Left" Background="Transparent">
-                            <Border Background="{StaticResource GlowFXProgress}"
+                            <Border Background="{DynamicResource ProgressBar.Progress.Foreground}"
                                     CornerRadius="{StaticResource ProgressBarCornerRadius}" 
                                     Width="{Binding ElementName=Grid, Path=ActualWidth}" />
                         </Border>
+
                         <Border x:Name="PART_Track" 
                                 BorderThickness="1" 
                                 CornerRadius="{StaticResource ProgressBarCornerRadius}"
                                 BorderBrush="Black" />
+
                         <TextBlock x:Name="Progress" 
                                VerticalAlignment="Stretch" 
                                HorizontalAlignment="Center" 

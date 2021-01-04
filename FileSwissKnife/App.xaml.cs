@@ -2,7 +2,7 @@
 using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
 
-// TODO: faire le thème sombre (fixer l'arrière plan du tooltip d'erreur)
+// TODO: revoir la watermark en supprimant le TextBoxExt
 // TODO: améliorer la routine de détection des fichiers à joindre
 // TODO: afficher la version dans la barre des titres
 namespace FileSwissKnife
