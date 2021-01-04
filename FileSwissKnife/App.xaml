@@ -7,14 +7,15 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styling/SimpleStyles.xaml" />
                 <ResourceDictionary Source="Styling/Window.xaml" />
+                <ResourceDictionary Source="Styling/TextBlock.xaml" />
                 <ResourceDictionary Source="Styling/Separator.xaml" />
                 <ResourceDictionary Source="Styling/TabItem.xaml" />
                 <ResourceDictionary Source="Styling/ComboBox.xaml" />
                 <ResourceDictionary Source="Styling/ProgressBar.xaml" />
                 <ResourceDictionary Source="Styling/Icons.xaml" />
                 <ResourceDictionary Source="Styling/Button.xaml" />
+                <ResourceDictionary Source="Styling/SimpleStyles.xaml" />
                 <ResourceDictionary Source="Themes/Dark.xaml" />
                 <ResourceDictionary Source="Themes/Light.xaml" />
             </ResourceDictionary.MergedDictionaries>

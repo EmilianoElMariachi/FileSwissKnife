@@ -11,6 +11,12 @@
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource ControlBackgroundColor}" />
 
+
+    <SolidColorBrush x:Key="TextBlock.Static.Foreground" Color="Black" />
+    <SolidColorBrush x:Key="TextBlock.Title.Foreground" Color="Black" />
+    <SolidColorBrush x:Key="TextBlock.WaterMark.Foreground" Color="DarkGray" />
+
+
     <SolidColorBrush x:Key="Button.Static.Background" Color="#686868" />
     <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#AEAEAE" />
     <SolidColorBrush x:Key="PlayStopButton.Play.Icon" Color="#51EBAB" />

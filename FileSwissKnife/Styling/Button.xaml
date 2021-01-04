@@ -5,6 +5,8 @@
                     xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
                     xmlns:localization="clr-namespace:FileSwissKnife.Localization">
 
+    <system:Double x:Key="DefaultButtonHeight">26</system:Double>
+
     <Style TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource Button.Static.Background}"/>
     </Style>

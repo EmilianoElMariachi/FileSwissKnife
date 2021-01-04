@@ -3,28 +3,8 @@
                     xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
-    <system:Double x:Key="DefaultButtonHeight">26</system:Double>
-
     <Style TargetType="TabControl">
         <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
-    </Style>
-
-    <Style TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource FontBrush}"/>
-    </Style>
-
-    <Style x:Key="Title" TargetType="TextBlock">
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="{DynamicResource FontBrush}" />
-    </Style>
-
-    <Style x:Key="WaterMarkText" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Style.Setters>
-            <Setter Property="Foreground" Value="DarkGray" />
-            <Setter Property="FontStyle" Value="Italic" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-        </Style.Setters>
     </Style>
 
     <Style x:Key="UserControl" TargetType="UserControl">
