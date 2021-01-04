@@ -63,6 +63,9 @@
     <!-- ProgressBar -->
     <SolidColorBrush x:Key="ProgressBar.Static.Background" Color="#686868" />
 
+    <!-- ToolTip -->
+    <SolidColorBrush x:Key="ToolTip.Static.Background" Color="{StaticResource ControlBackgroundColor}" />
+
     <!-- SettingsIcon -->
     <SolidColorBrush x:Key="Settings.Static.Icon" Color="{StaticResource DefaultTextColor}" />
 
