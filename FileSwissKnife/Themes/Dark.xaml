@@ -10,7 +10,13 @@
     <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="#6B6B6B" />
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource ControlBackgroundColor}" />
-    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="Black" />
+    <SolidColorBrush x:Key="Button.Static.Background" Color="#686868" />
+    <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#8D8D99" />
+    <SolidColorBrush x:Key="PlayStopButton.Play.Icon" Color="#51EBAB" />
+    <SolidColorBrush x:Key="PlayStopButton.Stop.Icon" Color="#DC7D7D" />
+    <SolidColorBrush x:Key="PlayStopButton.Cancelling.Icon" Color="Yellow" />
+    <SolidColorBrush x:Key="BrowseButton.Static.Icon" Color="#51EBAB" />
+    <SolidColorBrush x:Key="CloseButton.Static.Icon" Color="#7AC0FE" />
 
     <SolidColorBrush x:Key="FrameBorderBrush" Color="#827DFF" />
     <SolidColorBrush x:Key="BorderMediumBrush" Color="#FF888888" />
