@@ -7,8 +7,7 @@
              xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
              xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
-             d:DesignWidth="400" d:DataContext="{d:DesignInstance hashing:HashedFileViewModel}"
-             Style="{StaticResource UserControl}">
+             d:DesignWidth="400" d:DataContext="{d:DesignInstance hashing:HashedFileViewModel}">
 
     <Border Style="{StaticResource FrameBorderStyle}">
         <Grid Margin="5">

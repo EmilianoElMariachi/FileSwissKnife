@@ -8,8 +8,7 @@
              xmlns:splitting="clr-namespace:FileSwissKnife.Views.Splitting"
              xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
              mc:Ignorable="d" 
-             d:DesignHeight="260" d:DesignWidth="400" d:DataContext="{d:DesignInstance splitting:SplitViewModel}"
-             Style="{StaticResource UserControl}">
+             d:DesignHeight="260" d:DesignWidth="400" d:DataContext="{d:DesignInstance splitting:SplitViewModel}">
 
     <Grid customControls:DropFilesBehaviorExtension.IsEnabled="True">
         <Grid.RowDefinitions>

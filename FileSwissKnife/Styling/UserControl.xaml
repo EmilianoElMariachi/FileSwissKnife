@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
+                    xmlns:hashing="clr-namespace:FileSwissKnife.Views.Hashing"
+                    xmlns:joining="clr-namespace:FileSwissKnife.Views.Joining"
+                    xmlns:splitting="clr-namespace:FileSwissKnife.Views.Splitting">
+
+    <Style TargetType="UserControl">
+        <Setter Property="Background" Value="{DynamicResource UserControl.Static.Background}" />
+    </Style>
+
+    <Style TargetType="appSettings:AppSettingsView" BasedOn="{StaticResource {x:Type UserControl}}">
+    </Style>
+
+    <Style TargetType="hashing:HashedFileView" BasedOn="{StaticResource {x:Type UserControl}}">
+    </Style>
+
+    <Style TargetType="hashing:HashView" BasedOn="{StaticResource {x:Type UserControl}}">
+    </Style>
+
+    <Style TargetType="joining:JoinView" BasedOn="{StaticResource {x:Type UserControl}}">
+    </Style>
+
+    <Style TargetType="splitting:SplitView" BasedOn="{StaticResource {x:Type UserControl}}">
+    </Style>
+
+</ResourceDictionary>
