@@ -19,10 +19,11 @@
     <SolidColorBrush x:Key="BrowseButton.Static.Icon" Color="#51EBAB" />
     <SolidColorBrush x:Key="CloseButton.Static.Icon" Color="#7AC0FE" />
 
+    <SolidColorBrush x:Key="Separator.Static.Background" Color="#1575AD" />
+
     <SolidColorBrush x:Key="FrameBorderBrush" Color="#827DFF" />
     <SolidColorBrush x:Key="BorderMediumBrush" Color="#FF888888" />
     <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="{StaticResource HighlightBackgroundColor}" />
-    <SolidColorBrush x:Key="MainColorBrushDark" Color="#1575AD" />
 
 
     <SolidColorBrush x:Key="FontBrush" Color="Black" />

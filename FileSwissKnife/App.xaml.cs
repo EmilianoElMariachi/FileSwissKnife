@@ -4,6 +4,7 @@ using FileSwissKnife.Themes;
 
 // TODO: faire le thème sombre (fixer l'arrière plan du tooltip d'erreur)
 // TODO: améliorer la routine de détection des fichiers à joindre
+// TODO: afficher la version dans la barre des titres
 namespace FileSwissKnife
 {
     /// <summary>
