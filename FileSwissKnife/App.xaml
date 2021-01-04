@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Styling/Separator.xaml" />
                 <ResourceDictionary Source="Styling/TabItem.xaml" />
                 <ResourceDictionary Source="Styling/ComboBox.xaml" />
+                <ResourceDictionary Source="Styling/CheckBox.xaml" />
                 <ResourceDictionary Source="Styling/ProgressBar.xaml" />
                 <ResourceDictionary Source="Styling/Icons.xaml" />
                 <ResourceDictionary Source="Styling/Button.xaml" />
