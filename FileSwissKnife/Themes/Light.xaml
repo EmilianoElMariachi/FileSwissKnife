@@ -4,6 +4,7 @@
     <Color x:Key="TabBackgroundColor">White</Color>
     <Color x:Key="ControlBackgroundColor">#F4F4F4</Color>
     <Color x:Key="HighlightBackgroundColor">#AEAEAE</Color>
+    <Color x:Key="DefaultTextColor">#121212</Color>
 
     <!-- Window -->
     <SolidColorBrush x:Key="Window.Static.Background" Color="#FFA0A0A0" />
@@ -35,13 +36,13 @@
     <SolidColorBrush x:Key="ComboBox.Arrow.Icon" Color="#51EBAB" />
 
     <!-- TextBlock -->
-    <SolidColorBrush x:Key="TextBlock.Static.Foreground" Color="Black" />
-    <SolidColorBrush x:Key="TextBlock.Title.Foreground" Color="Black" />
+    <SolidColorBrush x:Key="TextBlock.Static.Foreground" Color="{StaticResource DefaultTextColor}" />
+    <SolidColorBrush x:Key="TextBlock.Title.Foreground" Color="{StaticResource DefaultTextColor}" />
     <SolidColorBrush x:Key="TextBlock.WaterMark.Foreground" Color="DarkGray" />
 
     <!-- TextBox -->
     <SolidColorBrush x:Key="TextBox.Static.Background" Color="{StaticResource ControlBackgroundColor}" />
-    <SolidColorBrush x:Key="TextBox.Static.Foreground" Color="Black" />
+    <SolidColorBrush x:Key="TextBox.Static.Foreground" Color="{StaticResource DefaultTextColor}" />
     <SolidColorBrush x:Key="TextBox.WaterMark.Frame.Outline" Color="#FF888888" />
 
     <!-- Button -->
@@ -59,6 +60,10 @@
     <!-- Border -->
     <SolidColorBrush x:Key="Border.Frame.Outline" Color="#827DFF" />
 
+    <!-- ProgressBar -->
     <SolidColorBrush x:Key="ProgressBar.Static.Background" Color="#686868" />
+
+    <!-- SettingsIcon -->
+    <SolidColorBrush x:Key="Settings.Static.Icon" Color="{StaticResource DefaultTextColor}" />
 
 </ResourceDictionary>

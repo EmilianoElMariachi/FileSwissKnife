@@ -3,7 +3,7 @@
 
     <Viewbox x:Key="SettingsIcon">
         <Canvas Width="24" Height="24">
-            <Path Fill="Black" 
+            <Path Fill="{DynamicResource Settings.Static.Icon}" 
                   Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,
                   3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,
                   12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,
