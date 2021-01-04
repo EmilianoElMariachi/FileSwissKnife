@@ -25,7 +25,7 @@
                 <ControlTemplate TargetType="{x:Type customControls:ProgressBarExt}">
                     <Grid MinWidth="20" x:Name="Grid" Height="18">
                         <Border x:Name="BackgroundRectangle" 
-                                Background="{DynamicResource InteractiveBackgroundBrush}" 
+                                Background="{DynamicResource ProgressBar.Static.Background}" 
                                 CornerRadius="{StaticResource ProgressBarCornerRadius}" />
                         <Border x:Name="GlassRectangle" 
                                 Background="{StaticResource GlassFX}"

@@ -1,25 +1,50 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="BackgroundColor">White</Color>
+    <Color x:Key="TabBackgroundColor">White</Color>
     <Color x:Key="ControlBackgroundColor">#F4F4F4</Color>
     <Color x:Key="HighlightBackgroundColor">#AEAEAE</Color>
 
-    <SolidColorBrush x:Key="HighlightBrush" Color="#51EBAB" />
-
-    <SolidColorBrush x:Key="UserControl.Static.Background" Color="White" />
-    <SolidColorBrush x:Key="TabControl.Static.Background" Color="White" />
-
+    <!-- Window -->
     <SolidColorBrush x:Key="Window.Static.Background" Color="#FFA0A0A0" />
-    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
-    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource ControlBackgroundColor}" />
 
+    <!-- UserControl -->
+    <SolidColorBrush x:Key="UserControl.Static.Background" Color="{StaticResource TabBackgroundColor}" />
 
+    <!-- TabControl/TabItem -->
+    <SolidColorBrush x:Key="TabControl.Static.Background" Color="{StaticResource TabBackgroundColor}" />
+    <LinearGradientBrush x:Key="TabItem.Static.Background" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="1.0"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItem.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource HighlightBackgroundColor}" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <!-- ComboBox -->
+    <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="1.0"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ComboBox.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource HighlightBackgroundColor}" Offset="1.0"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ComboBox.Popup.Background" Color="{StaticResource ControlBackgroundColor}" />
+    <SolidColorBrush x:Key="ComboBox.Arrow.Icon" Color="#51EBAB" />
+
+    <!-- TextBlock -->
     <SolidColorBrush x:Key="TextBlock.Static.Foreground" Color="Black" />
     <SolidColorBrush x:Key="TextBlock.Title.Foreground" Color="Black" />
     <SolidColorBrush x:Key="TextBlock.WaterMark.Foreground" Color="DarkGray" />
 
+    <!-- TextBox -->
+    <SolidColorBrush x:Key="TextBox.Static.Background" Color="{StaticResource ControlBackgroundColor}" />
+    <SolidColorBrush x:Key="TextBox.Static.Foreground" Color="Black" />
+    <SolidColorBrush x:Key="TextBox.WaterMark.Frame.Outline" Color="#FF888888" />
 
+    <!-- Button -->
     <SolidColorBrush x:Key="Button.Static.Background" Color="#686868" />
     <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#AEAEAE" />
     <SolidColorBrush x:Key="PlayStopButton.Play.Icon" Color="#51EBAB" />
@@ -28,25 +53,12 @@
     <SolidColorBrush x:Key="BrowseButton.Static.Icon" Color="#51EBAB" />
     <SolidColorBrush x:Key="CloseButton.Static.Icon" Color="#7AC0FE" />
 
+    <!-- Separator -->
     <SolidColorBrush x:Key="Separator.Static.Background" Color="#1575AD" />
 
+    <!-- Border -->
     <SolidColorBrush x:Key="Border.Frame.Outline" Color="#827DFF" />
-    <SolidColorBrush x:Key="BorderMediumBrush" Color="#FF888888" />
-    <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="{StaticResource HighlightBackgroundColor}" />
 
-
-    <SolidColorBrush x:Key="FontBrush" Color="Black" />
-
-    <SolidColorBrush x:Key="InteractiveBackgroundBrush" Color="#686868" />
-
-    <LinearGradientBrush x:Key="GradientBackgroundBrush" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="0.0"/>
-        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="1.0"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="MouseOverGradientBackgroundBrush" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="0.0"/>
-        <GradientStop Color="{StaticResource HighlightBackgroundColor}" Offset="1.0"/>
-    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ProgressBar.Static.Background" Color="#686868" />
 
 </ResourceDictionary>
