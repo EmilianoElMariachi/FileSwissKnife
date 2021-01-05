@@ -3,7 +3,6 @@ using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
 
 // TODO: améliorer la routine de détection des fichiers à joindre
-// TODO: afficher la version dans la barre des titres
 namespace FileSwissKnife
 {
     /// <summary>

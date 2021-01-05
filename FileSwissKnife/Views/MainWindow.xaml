@@ -10,7 +10,9 @@
         xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
         xmlns:localization="clr-namespace:FileSwissKnife.Localization"
         mc:Ignorable="d"
-        Title="File Swiss Knife" Height="350" Width="500" AllowDrop="True" d:DataContext="{d:DesignInstance views:MainWindowViewModel}"
+        Height="350" Width="500" AllowDrop="True" 
+        d:DataContext="{d:DesignInstance views:MainWindowViewModel}"
+        Title="{Binding Path=Title}" 
         Icon="/Views/App.ico">
 
     <Grid Margin="5">

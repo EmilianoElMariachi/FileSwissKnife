@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FileSwissKnife.Properties;
+using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
 using FileSwissKnife.Views.AppSettings;
 using FileSwissKnife.Views.Hashing;
@@ -17,6 +18,7 @@ namespace FileSwissKnife.Views
 
         public MainWindowViewModel()
         {
+            Title = $"{AppInfo.ProductName} v{AppInfo.DisplayVersion}";
             JoinViewModel = new JoinViewModel();
             SplitViewModel = new SplitViewModel();
             HashViewModel = new HashViewModel();
@@ -29,6 +31,8 @@ namespace FileSwissKnife.Views
 
             SelectedTab = tabToSelect ?? _toolsTab[0];
         }
+
+        public string Title { get; }
 
         public TabViewModelBase? SelectedTab
         {
@@ -49,5 +53,6 @@ namespace FileSwissKnife.Views
         public HashViewModel HashViewModel { get; }
 
         public AppSettingsViewModel AppSettingsViewModel { get; }
+
     }
 }

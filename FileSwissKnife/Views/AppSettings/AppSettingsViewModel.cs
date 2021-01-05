@@ -3,6 +3,7 @@ using System.Linq;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
+using FileSwissKnife.Utils;
 
 namespace FileSwissKnife.Views.AppSettings
 {
@@ -97,5 +98,7 @@ namespace FileSwissKnife.Views.AppSettings
                 NotifyPropertyChanged();
             }
         }
+
+        public string Branding => $"By {AppInfo.Company}";
     }
 }

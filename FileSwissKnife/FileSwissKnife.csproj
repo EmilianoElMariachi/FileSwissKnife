@@ -6,6 +6,8 @@
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ApplicationIcon>App.ico</ApplicationIcon>
+    <Authors>ElMariachi</Authors>
+    <Product>File Swiss Knife</Product>
   </PropertyGroup>
 
   <ItemGroup>
