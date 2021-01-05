@@ -2,7 +2,6 @@
 using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
 
-// TODO: revoir la watermark en supprimant le TextBoxExt
 // TODO: améliorer la routine de détection des fichiers à joindre
 // TODO: afficher la version dans la barre des titres
 namespace FileSwissKnife

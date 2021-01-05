@@ -44,7 +44,6 @@
     <!-- TextBox -->
     <SolidColorBrush x:Key="TextBox.Static.Background" Color="{StaticResource ControlBackgroundColor}" />
     <SolidColorBrush x:Key="TextBox.Static.Foreground" Color="{StaticResource DefaultTextColor}" />
-    <SolidColorBrush x:Key="TextBox.WaterMark.Frame.Outline" Color="#FF888888" />
 
     <!-- Button -->
     <SolidColorBrush x:Key="Button.Static.Background" Color="#686868" />

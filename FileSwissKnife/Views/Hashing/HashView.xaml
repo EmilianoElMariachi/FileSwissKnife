@@ -27,12 +27,12 @@
 
             <Border Grid.Row="1" Style="{StaticResource FrameBorderStyle}" >
                 <Grid>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToHash}">
+                    <TextBlock Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToHash}">
                         <TextBlock.Style>
                             <Style BasedOn="{StaticResource WaterMarkText}" TargetType="TextBlock">
                                 <Setter Property="Visibility" Value="Hidden" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=HashedFiles.Count}" Value="0" >
+                                    <DataTrigger Binding="{Binding Path=HashedFiles.Count, FallbackValue=0}" Value="0" >
                                         <DataTrigger.Setters>
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger.Setters>

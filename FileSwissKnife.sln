@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSwissKnife", "FileSwiss
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElMariachi.FS.Tools", "ElMariachi.FS.Tools\ElMariachi.FS.Tools.csproj", "{E79AF1FE-183B-41CF-8346-087A31A19F50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSwissKnife.Test", "FileSwissKnife.Test\FileSwissKnife.Test.csproj", "{E361867D-6390-44D6-8159-B009B1CC3DAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSwissKnife.Test", "FileSwissKnife.Test\FileSwissKnife.Test.csproj", "{E361867D-6390-44D6-8159-B009B1CC3DAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

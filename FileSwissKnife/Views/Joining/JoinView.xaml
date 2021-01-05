@@ -13,7 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="3" /> <!-- Spacer Row-->
+            <RowDefinition Height="3" /><!-- Spacer Row-->
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -26,14 +26,30 @@
             <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinInputFiles}" Style="{StaticResource Title}"/>
 
             <Grid Grid.Row="1" >
-                <customControls:TextBoxExt customControls:DropFilesBehaviorExtension.IsEnabled ="True"
-                                           Style="{StaticResource TextBoxDragWatermark}" 
-                                           Text="{Binding Path=InputFiles, UpdateSourceTrigger=PropertyChanged}"
-                                           AllowDrop="True" 
-                                           HorizontalScrollBarVisibility="Auto"
-                                           VerticalScrollBarVisibility="Auto" 
-                                           AcceptsReturn="True"
-                                           WatermarkText="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToJoin}"/>
+                <TextBox x:Name="InputFilesTextBox" 
+                         customControls:DropFilesBehaviorExtension.IsEnabled ="True"
+                         Text="{Binding Path=InputFiles, UpdateSourceTrigger=PropertyChanged}"
+                         AllowDrop="True" 
+                         HorizontalScrollBarVisibility="Auto"
+                         VerticalScrollBarVisibility="Auto" 
+                         AcceptsReturn="True"/>
+
+                <TextBlock Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToJoin}" 
+                           IsHitTestVisible="False">
+                    <TextBlock.Style>
+                        <Style BasedOn="{StaticResource WaterMarkText}" TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=InputFilesTextBox, Path=Text}" Value="" >
+                                    <DataTrigger.Setters>
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger.Setters>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
                 <Button Style="{StaticResource BrowseButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding Path=BrowseInputFilesCommand}" />
             </Grid>
 
@@ -56,7 +72,6 @@
                 <Button Grid.Column="1" Style="{StaticResource BrowseButton}" HorizontalAlignment="Right" Command="{Binding BrowseOutputFileCommand}"/>
             </Grid>
         </Grid>
-
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
