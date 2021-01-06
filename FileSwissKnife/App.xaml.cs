@@ -2,7 +2,7 @@
 using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
 
-// TODO: améliorer la routine de détection des fichiers à joindre
+// TODO: améliorer la routine de détection des fichiers à joindre, régler le problème des .part lors de la reconstitution du nom du fichier de sortie
 namespace FileSwissKnife
 {
     /// <summary>
