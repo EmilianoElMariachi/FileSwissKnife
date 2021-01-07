@@ -2,10 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ElMariachi.FS.Tools.Utils;
 
 namespace ElMariachi.FS.Tools.Joining
 {
-    public static class JoiningFilesGuesser
+    public static class JoinFilesGuesser
     {
         /// <summary>
         /// Try to guess the list of files to join according to the given file example
@@ -13,11 +14,20 @@ namespace ElMariachi.FS.Tools.Joining
         /// <param name="exampleFile"></param>
         /// <param name="inputFiles"></param>
         /// <param name="outputFile"></param>
+        /// <param name="guessMissingFiles"></param>
         /// <returns></returns>
-        public static bool TryGuessFilesToJoin(string exampleFile, out string[] inputFiles, out string outputFile)
+        public static bool TryGuessFilesToJoin(string exampleFile, out string[] inputFiles, out string outputFile, bool guessMissingFiles = true)
         {
             var exampleFileInfo = new FileInfo(exampleFile);
-            var allFiles = exampleFileInfo.Directory?.GetFiles() ?? new FileInfo[0];
+            var exampleFileDirectory = exampleFileInfo.Directory;
+            if (exampleFileDirectory == null || !exampleFileDirectory.Exists)
+            {
+                inputFiles = new string[0];
+                outputFile = "";
+                return false;
+            }
+
+            var allFiles = exampleFileDirectory.GetFiles();
 
             var regex = new Regex("\\d+");
 
@@ -30,7 +40,7 @@ namespace ElMariachi.FS.Tools.Joining
                 var suffixTmp = exampleFileName.Substring(numberMatch.Index + numberMatch.Length);
                 var refNumber = numberMatch.Value;
                 var matchingFiles = ListMatchingFiles(prefixTmp, refNumber, suffixTmp, allFiles, out var refNumberSeemsPadded);
-                if (matchingFiles.Count <= 0)
+                if (matchingFiles.Count < 2) // NOTE: At least 2 files needed (the current matching file + another)
                     continue;
 
                 if (bestMatchInfo == null || matchingFiles.Count > bestMatchInfo.MatchingFiles.Count)
@@ -44,42 +54,89 @@ namespace ElMariachi.FS.Tools.Joining
                 return false;
             }
 
-            inputFiles = EnrichWithMissingFiles(bestMatchInfo).MatchingFiles.Select(m => m.FileInfo.FullName).ToArray();
-            outputFile = BuildOutputFile(bestMatchInfo.Prefix, bestMatchInfo.Suffix, exampleFileInfo);
+            if (guessMissingFiles)
+                EnrichWithMissingFiles(bestMatchInfo, exampleFileDirectory.FullName);
+
+            inputFiles = bestMatchInfo.MatchingFiles.Select(m => m.FileInfo.FullName).ToArray();
+            outputFile = Path.Combine(exampleFileDirectory.FullName, BuildOutputFileName(bestMatchInfo.Prefix, bestMatchInfo.Suffix, exampleFileDirectory.FullName));
             return true;
         }
 
-        private static BestMatchInfo EnrichWithMissingFiles(BestMatchInfo bestMatchInfo)
+        private static void EnrichWithMissingFiles(BestMatchInfo bestMatchInfo, string outputDirPath)
         {
-            //TODO: finir la fonction d'enrichissement des fichiers manquant
-            return bestMatchInfo;
+            var a = bestMatchInfo.MatchingFiles.First(); // NOTE: there are at least 2 files in the list (see previous note)
+
+            for (var i = 1; i < bestMatchInfo.MatchingFiles.Count; i++)
+            {
+                var b = bestMatchInfo.MatchingFiles[i];
+
+                var nbMissingNumbers = b.Number - a.Number - 1;
+
+                var missingNum = a.Number;
+                while ((nbMissingNumbers--) > 0)
+                {
+                    missingNum++;
+
+                    var missingNumStr = bestMatchInfo.RefNumberSeemsPadded ? missingNum.ToPaddedString(bestMatchInfo.RefNumberStr.Length) : missingNum.ToString();
+                    var missingFileName = bestMatchInfo.Prefix + missingNumStr + bestMatchInfo.Suffix;
+                    var missingFilePath = Path.Combine(outputDirPath, missingFileName);
+
+                    var missingMatchingFile = new MatchingFile(new FileInfo(missingFilePath), missingNumStr, missingNum);
+                    bestMatchInfo.MatchingFiles.Insert(i++, missingMatchingFile);
+                }
+
+                a = b;
+            }
         }
 
-        private static string BuildOutputFile(string prefix, string suffix, FileInfo exampleFileInfo)
+        private static string BuildOutputFileName(string prefix, string suffix, string outputDirPath)
         {
             string outputFileName;
-            if (prefix == "" && suffix == "") // Case 123 => Parent dir name
+
+            if (prefix == "" && suffix == "") // Case 123 => Parent dir name : the file names are only composed of numbers, we take the parent directory name as file name
             {
-                outputFileName = Path.GetFileName(exampleFileInfo.DirectoryName);
+                outputFileName = Path.GetFileName(outputDirPath);
+                return outputFileName;
             }
-            else if (prefix.EndsWith(".") && suffix.StartsWith(".")) // Case AAA.123.BBB => AAA.BBB
+
+            if (string.IsNullOrWhiteSpace(suffix))
             {
+                // Case <prefix>123<empty>: when no suffix, the file names are ending with a number,
+                // therefore we might have extra extension like MyMovie.mp4.part001 or MyMovie.mp4.001
+
+                var parts = prefix.Split('.');
+
+                if (parts.Length >= 3)
+                {
+                    // Here, we have at least 2 '.'  in the name
+                    outputFileName = string.Join('.', parts, 0, parts.Length - 1);
+                    return outputFileName;
+                }
+            }
+
+            if (prefix.EndsWith(".") && suffix.StartsWith("."))
+            {
+                // Case <prefix>.123.<suffix> => XXX.YYY
                 outputFileName = prefix + suffix.Substring(1);
             }
-            else if (prefix == "" && suffix.StartsWith(".")) // Case 123.AAA => AAA
+            else if (prefix == "" && suffix.StartsWith("."))
             {
+                // Case <empty>123.<suffix> => YYY
                 outputFileName = suffix.Substring(1);
             }
-            else if (suffix == "" && prefix.EndsWith(".")) // Case AAA.123 => AAA
+            else if (suffix == "" && prefix.EndsWith("."))
             {
+                // Case <prefix>.123<empty> => XXX
                 outputFileName = prefix.Substring(0, prefix.Length - 1);
             }
             else
             {
+                // Case <prefix>.123<suffix>
+                // or   <prefix>123.<suffix>
                 outputFileName = prefix + suffix;
             }
 
-            return Path.Combine(exampleFileInfo.DirectoryName, outputFileName);
+            return outputFileName;
         }
 
         private class BestMatchInfo
@@ -93,6 +150,9 @@ namespace ElMariachi.FS.Tools.Joining
                 RefNumberSeemsPadded = refNumberSeemsPadded;
             }
 
+            /// <summary>
+            /// The list is sorted by file number
+            /// </summary>
             public List<MatchingFile> MatchingFiles { get; }
 
             public string Prefix { get; }
@@ -118,7 +178,7 @@ namespace ElMariachi.FS.Tools.Joining
                     continue;
 
                 var fileNumStr = match.Groups[1].Value;
-                if(!long.TryParse(fileNumStr, out var fileNum))
+                if (!long.TryParse(fileNumStr, out var fileNum))
                     continue;
 
                 var matchingFile = new MatchingFile(file, fileNumStr, fileNum);

@@ -17,7 +17,7 @@ namespace FileSwissKnife.Views.Splitting.Validators
             _error.IsFixed = true;
         }
 
-        public bool TryGetStartNumber(out int startNumber)
+        public bool TryGetStartNumber(out long startNumber)
         {
             if (_error.IsFixed)
             {

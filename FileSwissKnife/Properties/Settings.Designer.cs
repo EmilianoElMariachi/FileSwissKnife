@@ -109,9 +109,9 @@ namespace FileSwissKnife.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int SplitStartNumber {
+        public long SplitStartNumber {
             get {
-                return ((int)(this["SplitStartNumber"]));
+                return ((long)(this["SplitStartNumber"]));
             }
             set {
                 this["SplitStartNumber"] = value;

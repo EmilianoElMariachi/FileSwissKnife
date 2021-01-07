@@ -8,7 +8,7 @@
 
         public string? NumPrefix { get; set; }
 
-        public int StartNumber { get; set; }
+        public long StartNumber { get; set; }
 
         public bool PadWithZeros { get; set; }
     }

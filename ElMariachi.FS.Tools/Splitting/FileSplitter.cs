@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ElMariachi.FS.Tools.Progression;
+using ElMariachi.FS.Tools.Utils;
 
 namespace ElMariachi.FS.Tools.Splitting
 {
@@ -152,15 +153,11 @@ namespace ElMariachi.FS.Tools.Splitting
             return parts;
         }
 
-        public static string BuildFileName(string baseName, string extension, NamingOptions namingOptions, int fileNum, int padding)
+        public static string BuildFileName(string baseName, string extension, NamingOptions namingOptions, long fileNum, int padding)
         {
-            var fileNumStr = fileNum.ToString();
-
-            if (namingOptions.PadWithZeros)
-            {
-                var nbMissingZeros = Math.Max(0, padding - fileNumStr.Length);
-                fileNumStr = new string('0', nbMissingZeros) + fileNumStr;
-            }
+            var fileNumStr = namingOptions.PadWithZeros ?
+                fileNum.ToPaddedString(padding) :
+                fileNum.ToString();
 
             var fileNumFull = $"{namingOptions.NumPrefix}{fileNumStr}{namingOptions.NumSuffix}";
 
