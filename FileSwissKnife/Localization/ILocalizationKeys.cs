@@ -118,14 +118,19 @@
 
         string Language { get; }
 
-        string BuffersSize { get; }
+        string Theme { get; }
+
+        string JoinSettings { get; }
 
         string JoinBufferSize { get; }
 
+        string SplitSettings { get; }
+
         string SplitBufferSize { get; }
+
+        string HashSettings { get; }
 
         string HashBufferSize { get; }
 
-        string Theme { get; }
     }
 }

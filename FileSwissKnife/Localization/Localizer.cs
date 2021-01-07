@@ -207,15 +207,20 @@ namespace FileSwissKnife.Localization
 
         public string Language => Current.Language;
 
-        public string BuffersSize => Current.BuffersSize;
+        public string Theme => Current.Theme;
+
+        public string JoinSettings => Current.JoinSettings;
 
         public string JoinBufferSize => Current.JoinBufferSize;
 
+        public string SplitSettings => Current.SplitSettings;
+
         public string SplitBufferSize => Current.SplitBufferSize;
+
+        public string HashSettings => Current.HashSettings;
 
         public string HashBufferSize => Current.HashBufferSize;
 
-        public string Theme => Current.Theme;
     }
 
     public enum LocalizationMode

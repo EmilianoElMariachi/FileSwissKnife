@@ -122,14 +122,19 @@
 
         public string Language => "Language:";
 
-        public string BuffersSize => "Buffers size:";
+        public string Theme => "Theme:";
 
-        public string JoinBufferSize => "Join";
+        public string JoinSettings => "Join:";
 
-        public string SplitBufferSize => "Split";
+        public string JoinBufferSize => "Buffer size";
 
-        public string HashBufferSize => "Hash";
+        public string SplitSettings => "Split:";
 
-        public string Theme => "Theme";
+        public string SplitBufferSize => "Buffer size";
+
+        public string HashSettings => "Hash:";
+
+        public string HashBufferSize => "Buffer size";
+
     }
 }
