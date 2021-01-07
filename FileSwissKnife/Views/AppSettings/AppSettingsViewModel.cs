@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Windows.Input;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
 using FileSwissKnife.Utils;
+using FileSwissKnife.Utils.MVVM;
 
 namespace FileSwissKnife.Views.AppSettings
 {
@@ -28,6 +32,8 @@ namespace FileSwissKnife.Views.AppSettings
                 SelectedLanguage = autoLanguage;
             else
                 SelectedLanguage = availableLanguages.FirstOrDefault(language => language.Localization == Localizer.Instance.Current);
+
+            OpenRepositoryCommand = new RelayCommand(OpenRepository);
         }
 
         public override string TabId => "Settings";
@@ -110,5 +116,22 @@ namespace FileSwissKnife.Views.AppSettings
         }
 
         public string Branding => $"By {AppInfo.Company}";
+
+        public ICommand OpenRepositoryCommand { get; }
+
+
+        private void OpenRepository()
+        {
+
+            try
+            {
+                Process.Start(new ProcessStartInfo("https://github.com/EmilianoElMariachi/FileSwissKnife/releases"){UseShellExecute = true});
+            }
+            catch
+            {
+
+            }
+
+        }
     }
 }

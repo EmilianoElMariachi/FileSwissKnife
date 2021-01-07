@@ -12,9 +12,50 @@
         <Style x:Key="SubTitle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
             <Setter Property="Margin" Value="20,0,0,0"></Setter>
         </Style>
+
+        <Style x:Key="Branding" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="Transparent" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)"
+                                                To="#C4B8A1FF" 
+                                                Duration="0:0:0.5"
+                                                BeginTime="0:0:0" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)"
+                                                To="Transparent" 
+                                                Duration="0:0:0.5"
+                                                BeginTime="0:0:0" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid Margin="10">
-        <TextBlock HorizontalAlignment="Right" Text="{Binding Branding, FallbackValue=By ElMariachi}" FontStyle="Italic" FontSize="10" VerticalAlignment="Bottom" />
+        <TextBlock Text="{Binding Branding, FallbackValue=By ElMariachi}" Style="{StaticResource Branding}">
+            <TextBlock.InputBindings>
+                <MouseBinding Command="{Binding Path=OpenRepositoryCommand}" MouseAction="LeftClick" />
+            </TextBlock.InputBindings>
+        </TextBlock>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
