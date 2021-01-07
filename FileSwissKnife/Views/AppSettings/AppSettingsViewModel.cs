@@ -64,7 +64,7 @@ namespace FileSwissKnife.Views.AppSettings
             set
             {
                 NotifyPropertyChanged();
-                if (value != null) 
+                if (value != null)
                     ThemeManager.SetTheme(value);
             }
         }
@@ -77,8 +77,18 @@ namespace FileSwissKnife.Views.AppSettings
                 Settings.Default.JoinBufferSize = value;
                 NotifyPropertyChanged();
             }
-        }     
-        
+        }
+
+        public bool JoinGuessMissingFiles
+        {
+            get => Settings.Default.JoinGuessMissingFiles;
+            set
+            {
+                Settings.Default.JoinGuessMissingFiles = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public int SplitBufferSize
         {
             get => Settings.Default.SplitBufferSize;
@@ -87,8 +97,8 @@ namespace FileSwissKnife.Views.AppSettings
                 Settings.Default.SplitBufferSize = value;
                 NotifyPropertyChanged();
             }
-        }       
-        
+        }
+
         public int HashBufferSize
         {
             get => Settings.Default.HashBufferSize;

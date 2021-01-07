@@ -213,5 +213,17 @@ namespace FileSwissKnife.Properties {
                 this["ActiveTheme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool JoinGuessMissingFiles {
+            get {
+                return ((bool)(this["JoinGuessMissingFiles"]));
+            }
+            set {
+                this["JoinGuessMissingFiles"] = value;
+            }
+        }
     }
 }

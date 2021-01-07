@@ -128,7 +128,9 @@
 
         public string JoinBufferSize => "Taille du buffer";
 
-        public string SplitSettings => "Séparer";
+        public string JoinGuessMissingFiles => "Deviner les fichiers manquants";
+
+        public string SplitSettings => "Séparer:";
 
         public string SplitBufferSize => "Taille du buffer";
 

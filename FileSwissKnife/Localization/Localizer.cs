@@ -213,6 +213,8 @@ namespace FileSwissKnife.Localization
 
         public string JoinBufferSize => Current.JoinBufferSize;
 
+        public string JoinGuessMissingFiles => Current.JoinGuessMissingFiles;
+
         public string SplitSettings => Current.SplitSettings;
 
         public string SplitBufferSize => Current.SplitBufferSize;

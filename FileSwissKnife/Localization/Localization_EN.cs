@@ -128,6 +128,8 @@
 
         public string JoinBufferSize => "Buffer size";
 
+        public string JoinGuessMissingFiles => "Guess missing files";
+
         public string SplitSettings => "Split:";
 
         public string SplitBufferSize => "Buffer size";

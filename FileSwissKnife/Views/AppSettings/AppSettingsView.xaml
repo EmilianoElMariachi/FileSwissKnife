@@ -8,9 +8,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="450" d:DataContext="{d:DesignInstance appSettings:AppSettingsViewModel}">
 
+    <UserControl.Resources>
+        <Style x:Key="SubTitle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="Margin" Value="20,0,0,0"></Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid Margin="10">
         <TextBlock HorizontalAlignment="Right" Text="{Binding Branding, FallbackValue=By ElMariachi}" FontStyle="Italic" FontSize="10" VerticalAlignment="Bottom" />
-        <Grid >
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -37,19 +42,20 @@
             <ComboBox Grid.Row="3" Grid.Column="2" ItemsSource="{Binding Path=AvailableThemes}" DisplayMemberPath="Name" SelectedValue="{Binding Path=SelectedTheme}" MinWidth="120" HorizontalAlignment="Left"/>
 
             <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=JoinSettings}" />
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=JoinBufferSize}" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=JoinBufferSize}" HorizontalAlignment="Right"/>
             <TextBox Grid.Row="5" Grid.Column="2" MinWidth="100" Text="{Binding Path=JoinBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=JoinGuessMissingFiles}" HorizontalAlignment="Right"/>
+            <CheckBox Grid.Row="6" Grid.Column="2" IsChecked="{Binding Path=JoinGuessMissingFiles}" />
 
-            <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=SplitSettings}" />
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=SplitBufferSize}" HorizontalAlignment="Right"/>
-            <TextBox Grid.Row="7" Grid.Column="2" MinWidth="100" Text="{Binding Path=SplitBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=SplitSettings}" />
+            <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=SplitBufferSize}" HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="8" Grid.Column="2" MinWidth="100" Text="{Binding Path=SplitBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
 
-            <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=HashSettings}" />
-            <TextBlock Grid.Row="9" Grid.Column="0" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=HashBufferSize}" HorizontalAlignment="Right"/>
-            <TextBox Grid.Row="9" Grid.Column="2" MinWidth="100" Text="{Binding Path=HashBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=HashSettings}" />
+            <TextBlock Grid.Row="10" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=HashBufferSize}" HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="10" Grid.Column="2" MinWidth="100" Text="{Binding Path=HashBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
 
         </Grid>
     </Grid>
-
 
 </UserControl>

@@ -124,6 +124,8 @@
 
         string JoinBufferSize { get; }
 
+        string JoinGuessMissingFiles { get; }
+
         string SplitSettings { get; }
 
         string SplitBufferSize { get; }

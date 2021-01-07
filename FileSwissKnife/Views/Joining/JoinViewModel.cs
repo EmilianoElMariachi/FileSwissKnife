@@ -207,8 +207,7 @@ namespace FileSwissKnife.Views.Joining
                     var file = files[0];
                     if (File.Exists(file))
                     {
-                        var guessMissingFiles = true; //TODO: exposer dans les settings
-                        if (JoinFilesGuesser.TryGuessFilesToJoin(file, out var inputFiles, out var outputFile, guessMissingFiles))
+                        if (JoinFilesGuesser.TryGuessFilesToJoin(file, out var inputFiles, out var outputFile, Settings.Default.JoinGuessMissingFiles))
                         {
                             InputFiles = string.Join(Environment.NewLine, inputFiles);
                             OutputFile = outputFile;
