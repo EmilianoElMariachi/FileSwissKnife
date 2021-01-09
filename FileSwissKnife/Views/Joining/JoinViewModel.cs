@@ -114,14 +114,14 @@ namespace FileSwissKnife.Views.Joining
                 var outputFile = OutputFile;
 
                 if (string.IsNullOrEmpty(outputFile))
-                    throw new ArgumentException(Localizer.Instance.OutputFileCantBeUndefined);
+                    throw new ArgumentException(Localization.Localizer.Instance.OutputFileCantBeUndefined);
 
                 if (File.Exists(outputFile))
                 {
                     var currentMainWindow = Application.Current.MainWindow;
-                    var messageBoxResult = MessageBox.Show(currentMainWindow, string.Format(Localizer.Instance.CanOverrideOutputFile, outputFile), Localizer.Instance.Override, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                    var messageBoxResult = MessageBox.Show(currentMainWindow, string.Format(Localization.Localizer.Instance.CanOverrideOutputFile, outputFile), Localization.Localizer.Instance.Override, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
                     if (messageBoxResult != MessageBoxResult.Yes)
-                        throw new InvalidOperationException(string.Format(Localizer.Instance.YouChooseNotToOverride, outputFile));
+                        throw new InvalidOperationException(string.Format(Localization.Localizer.Instance.YouChooseNotToOverride, outputFile));
                 }
 
                 State = PlayStopButtonState.Stop;
@@ -140,12 +140,12 @@ namespace FileSwissKnife.Views.Joining
                 var startDate = DateTime.Now;
                 await fileJoiner.Run(inputFiles, outputFile, _cancellationTokenSource.Token);
 
-                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
+                ProgressBarText = string.Format(Localization.Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {
                 ProgressBarValue = 0;
-                ProgressBarText = Localizer.Instance.OperationCanceled;
+                ProgressBarText = Localization.Localizer.Instance.OperationCanceled;
             }
             catch (Exception ex)
             {
@@ -169,7 +169,7 @@ namespace FileSwissKnife.Views.Joining
                 InitialDirectory = Settings.Default.JoinLastDir,
                 Multiselect = true,
                 IsFolderPicker = false,
-                Title = Localizer.Instance.BrowseJoinInputFilesTitle
+                Title = Localization.Localizer.Instance.BrowseJoinInputFilesTitle
             };
             if (dialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)
                 return;
@@ -189,7 +189,7 @@ namespace FileSwissKnife.Views.Joining
             {
                 InitialDirectory = Settings.Default.JoinLastDir,
                 IsFolderPicker = false,
-                Title = Localizer.Instance.BrowseJoinOutputFileTitle
+                Title = Localization.Localizer.Instance.BrowseJoinOutputFileTitle
             };
             if (dialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)
                 return;

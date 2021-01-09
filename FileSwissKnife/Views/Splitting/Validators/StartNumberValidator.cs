@@ -42,13 +42,13 @@ namespace FileSwissKnife.Views.Splitting.Validators
 
                 if (string.IsNullOrWhiteSpace(_editedValue))
                 {
-                    _error.Show(Localizer.Instance.SplitStartNumberShouldBeDefined);
+                    _error.Show(Localization.Localizer.Instance.SplitStartNumberShouldBeDefined);
                     return;
                 }
 
                 if (!int.TryParse(_editedValue, out var startNumber))
                 {
-                    _error.Show(string.Format(Localizer.Instance.SplitStartNumberInvalid, _editedValue));
+                    _error.Show(string.Format(Localization.Localizer.Instance.SplitStartNumberInvalid, _editedValue));
                     return;
                 }
 

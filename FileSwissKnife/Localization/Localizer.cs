@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -14,10 +13,9 @@ namespace FileSwissKnife.Localization
         /// Singleton
         /// </summary>
         public static Localizer Instance { get; } = new Localizer();
-        private static readonly string _defaultSystemCultureName = Thread.CurrentThread.CurrentUICulture.Name;
+        private readonly string _defaultSystemCultureName = Thread.CurrentThread.CurrentUICulture.Name;
 
-
-        private readonly Localization_EN _defaultLocalization = new Localization_EN();
+        private readonly ILocalization _fallbackLocalization;
         private readonly List<ILocalization> _localizations = new List<ILocalization>();
         private ILocalization _current;
 
@@ -25,57 +23,69 @@ namespace FileSwissKnife.Localization
 
         private Localizer()
         {
-            _localizations.AddRange(new ILocalization[]
+            _fallbackLocalization = new AvailableLocalization(new Localization_EN());
+            var availableLocalization = new AvailableLocalization(new Localization_FR());
+
+            var availableLocalizations = new List<ILocalization>
             {
-                _defaultLocalization,
-                new Localization_FR()
-            });
+                _fallbackLocalization,
+                availableLocalization,
+            };
 
-            _current = GetInitialLocalization();
+            var localizationAuto = BuildLocalizationAuto(availableLocalizations, _fallbackLocalization);
+            _localizations.Add(localizationAuto);
+            _localizations.AddRange(availableLocalizations);
+
+            _current = InitializeFromSettings();
+
+            Settings.Default.PropertyChanged += OnSettingsChanged;
         }
 
-        private ILocalization GetInitialLocalization()
+        private void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            var forcedLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == Settings.Default.ForcedLanguage);
-            return forcedLocalization ?? GetLocalizationAuto();
+            if (e.PropertyName == nameof(Settings.Default.SelectedLanguage))
+                SetLocalizationInternal(InitializeFromSettings());
         }
 
-        private ILocalization GetLocalizationAuto()
+        private ILocalization InitializeFromSettings()
         {
-            var systemLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == _defaultSystemCultureName);
-            return systemLocalization ?? _defaultLocalization;
+            var localization = _localizations.FirstOrDefault(localization => localization.CultureName == Settings.Default.SelectedLanguage);
+            return localization ?? _fallbackLocalization;
+        }
+
+        private ILocalization BuildLocalizationAuto(IEnumerable<ILocalization> availableLocalizations, ILocalization fallbackLocalization)
+        {
+            var localizationMatchingSystemCulture = availableLocalizations.FirstOrDefault(localization => localization.CultureName == _defaultSystemCultureName);
+            if (localizationMatchingSystemCulture != null)
+                return new AutoLocalization(localizationMatchingSystemCulture.Keys);
+
+            return new AutoLocalization(fallbackLocalization.Keys);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public IEnumerable<ILocalization> AvailableLocalizations => _localizations;
 
-        public LocalizationMode Mode => string.IsNullOrWhiteSpace(Settings.Default.ForcedLanguage) ? LocalizationMode.Auto : LocalizationMode.Forced;
+        public ILocalization Current => _current;
 
-        public ILocalization Current
+        public void SetLocalization(string cultureName)
         {
-            get => _current;
-            private set
-            {
-                _current = value ?? throw new ArgumentNullException(nameof(Current));
-                NotifyLocalizationChanged();
-            }
+            var localization = _localizations.FirstOrDefault(localization => localization.CultureName == cultureName);
+
+            if (localization != null)
+                SetLocalizationInternal(localization);
         }
 
-        public void SetForcedLocalization(string cultureName)
+        private void SetLocalizationInternal(ILocalization localization)
         {
-            var forcedLocalization = _localizations.FirstOrDefault(localization => localization.CultureName == cultureName);
+            if (_current.CultureName == localization.CultureName)
+                return;
 
-            if (forcedLocalization != null)
-                Current = forcedLocalization;
+            _current = localization;
 
-            Settings.Default.ForcedLanguage = cultureName;
-        }
+            Settings.Default.SelectedLanguage = localization.CultureName;
 
-        public void SetLocalizationAuto()
-        {
-            Current = GetLocalizationAuto();
-            Settings.Default.ForcedLanguage = "";
+            NotifyLocalizationChanged();
         }
 
         private void NotifyLocalizationChanged()
@@ -91,144 +101,144 @@ namespace FileSwissKnife.Localization
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string DragMeSomeFilesToJoin => Current.DragMeSomeFilesToJoin;
+        public string DisplayName => Current.DisplayName;
 
-        public string DragMeSomeFilesToHash => Current.DragMeSomeFilesToHash;
+        public string CultureName => Current.CultureName;
 
-        public string DragMeSomeFileToSplit => Current.DragMeSomeFileToSplit;
+        public string DragMeSomeFilesToJoin => Current.Keys.DragMeSomeFilesToJoin;
 
-        public string CancellingHash => Current.CancellingHash;
+        public string DragMeSomeFilesToHash => Current.Keys.DragMeSomeFilesToHash;
 
-        public string CancelJoin => Current.CancelJoin;
+        public string DragMeSomeFileToSplit => Current.Keys.DragMeSomeFileToSplit;
 
-        public string ConfirmCloseCancelHashTitle => Current.ConfirmCloseCancelHashTitle;
+        public string CancellingHash => Current.Keys.CancellingHash;
 
-        public string HashInProgress => Current.HashInProgress;
+        public string CancelJoin => Current.Keys.CancelJoin;
 
-        public string HashCanceled => Current.HashCanceled;
+        public string ConfirmCloseCancelHashTitle => Current.Keys.ConfirmCloseCancelHashTitle;
 
-        public string OperationCanceled => Current.OperationCanceled;
+        public string HashInProgress => Current.Keys.HashInProgress;
 
-        public string OperationFinishedIn => Current.OperationFinishedIn;
+        public string HashCanceled => Current.Keys.HashCanceled;
 
-        public string JoinInputFiles => Current.JoinInputFiles;
+        public string OperationCanceled => Current.Keys.OperationCanceled;
 
-        public string SplitInputFile => Current.SplitInputFile;
+        public string OperationFinishedIn => Current.Keys.OperationFinishedIn;
 
-        public string SplitOutputDir => Current.SplitOutputDir;
+        public string JoinInputFiles => Current.Keys.JoinInputFiles;
 
-        public string SplitSize => Current.SplitSize;
+        public string SplitInputFile => Current.Keys.SplitInputFile;
 
-        public string JoinOutputFile => Current.JoinOutputFile;
+        public string SplitOutputDir => Current.Keys.SplitOutputDir;
 
-        public string TabNameJoin => Current.TabNameJoin;
+        public string SplitSize => Current.Keys.SplitSize;
 
-        public string TabNameSplit => Current.TabNameSplit;
+        public string JoinOutputFile => Current.Keys.JoinOutputFile;
 
-        public string TabNameHash => Current.TabNameHash;
+        public string TabNameJoin => Current.Keys.TabNameJoin;
 
-        public string OutputFileCantBeUndefined => Current.OutputFileCantBeUndefined;
+        public string TabNameSplit => Current.Keys.TabNameSplit;
 
-        public string CanOverrideOutputFile => Current.CanOverrideOutputFile;
+        public string TabNameHash => Current.Keys.TabNameHash;
 
-        public string YouChooseNotToOverride => Current.YouChooseNotToOverride;
+        public string OutputFileCantBeUndefined => Current.Keys.OutputFileCantBeUndefined;
 
-        public string Override => Current.Override;
+        public string CanOverrideOutputFile => Current.Keys.CanOverrideOutputFile;
 
-        public string HashInputFiles => Current.HashInputFiles;
+        public string YouChooseNotToOverride => Current.Keys.YouChooseNotToOverride;
 
-        public string ConfirmCloseCancelHash => Current.ConfirmCloseCancelHash;
+        public string Override => Current.Keys.Override;
 
-        public string UnitB => Current.UnitB;
+        public string HashInputFiles => Current.Keys.HashInputFiles;
 
-        public string UnitKB => Current.UnitKB;
+        public string ConfirmCloseCancelHash => Current.Keys.ConfirmCloseCancelHash;
 
-        public string UnitKiB => Current.UnitKiB;
+        public string UnitB => Current.Keys.UnitB;
 
-        public string UnitMB => Current.UnitMB;
+        public string UnitKB => Current.Keys.UnitKB;
 
-        public string UnitMiB => Current.UnitMiB;
+        public string UnitKiB => Current.Keys.UnitKiB;
 
-        public string UnitGB => Current.UnitGB;
+        public string UnitMB => Current.Keys.UnitMB;
 
-        public string UnitGiB => Current.UnitGiB;
+        public string UnitMiB => Current.Keys.UnitMiB;
 
-        public string SplitSizeShouldBeDefined => Current.SplitSizeShouldBeDefined;
+        public string UnitGB => Current.Keys.UnitGB;
 
-        public string SplitSizeInvalid => Current.SplitSizeInvalid;
+        public string UnitGiB => Current.Keys.UnitGiB;
 
-        public string SplitUnitShouldBeSelected => Current.SplitUnitShouldBeSelected;
+        public string SplitSizeShouldBeDefined => Current.Keys.SplitSizeShouldBeDefined;
 
-        public string BrowseFilesToHashTitle => Current.BrowseFilesToHashTitle;
+        public string SplitSizeInvalid => Current.Keys.SplitSizeInvalid;
 
-        public string CopyErrors => Current.CopyErrors;
+        public string SplitUnitShouldBeSelected => Current.Keys.SplitUnitShouldBeSelected;
 
-        public string BrowseSplitOutputDirTitle => Current.BrowseSplitOutputDirTitle;
+        public string BrowseFilesToHashTitle => Current.Keys.BrowseFilesToHashTitle;
 
-        public string BrowseFileToSplitTitle => Current.BrowseFileToSplitTitle;
+        public string CopyErrors => Current.Keys.CopyErrors;
 
-        public string SplitNumPosBeforeBaseName => Current.SplitNumPosBeforeBaseName;
+        public string BrowseSplitOutputDirTitle => Current.Keys.BrowseSplitOutputDirTitle;
 
-        public string SplitNumPosAfterBaseName => Current.SplitNumPosAfterBaseName;
+        public string BrowseFileToSplitTitle => Current.Keys.BrowseFileToSplitTitle;
 
-        public string SplitNumPosBeforeExt => Current.SplitNumPosBeforeExt;
+        public string SplitNumPosBeforeBaseName => Current.Keys.SplitNumPosBeforeBaseName;
 
-        public string SplitNumPosAfterExt => Current.SplitNumPosAfterExt;
+        public string SplitNumPosAfterBaseName => Current.Keys.SplitNumPosAfterBaseName;
 
-        public string SplitErrorFileSizeLessThanSplitSize => Current.SplitErrorFileSizeLessThanSplitSize;
+        public string SplitNumPosBeforeExt => Current.Keys.SplitNumPosBeforeExt;
 
-        public string SplitNumPosShouldBeSelected => Current.SplitNumPosShouldBeSelected;
+        public string SplitNumPosAfterExt => Current.Keys.SplitNumPosAfterExt;
 
-        public string SplitStartNumberShouldBeDefined => Current.SplitStartNumberShouldBeDefined;
+        public string SplitErrorFileSizeLessThanSplitSize => Current.Keys.SplitErrorFileSizeLessThanSplitSize;
 
-        public string SplitStartNumberInvalid => Current.SplitStartNumberInvalid;
+        public string SplitNumPosShouldBeSelected => Current.Keys.SplitNumPosShouldBeSelected;
 
-        public string SplitInputFileNotFound => Current.SplitInputFileNotFound;
+        public string SplitStartNumberShouldBeDefined => Current.Keys.SplitStartNumberShouldBeDefined;
 
-        public string SplitNamingOptions => Current.SplitNamingOptions;
+        public string SplitStartNumberInvalid => Current.Keys.SplitStartNumberInvalid;
 
-        public string SplitNamingPreview => Current.SplitNamingPreview;
+        public string SplitInputFileNotFound => Current.Keys.SplitInputFileNotFound;
 
-        public string SplitNamingNumPrefix => Current.SplitNamingNumPrefix;
+        public string SplitNamingOptions => Current.Keys.SplitNamingOptions;
 
-        public string SplitNamingStartNum => Current.SplitNamingStartNum;
+        public string SplitNamingPreview => Current.Keys.SplitNamingPreview;
 
-        public string SplitNamingPadWithZeros => Current.SplitNamingPadWithZeros;
+        public string SplitNamingNumPrefix => Current.Keys.SplitNamingNumPrefix;
 
-        public string SplitNamingNumSuffix => Current.SplitNamingNumSuffix;
+        public string SplitNamingStartNum => Current.Keys.SplitNamingStartNum;
 
-        public string SplitNamingNumPos => Current.SplitNamingNumPos;
+        public string SplitNamingPadWithZeros => Current.Keys.SplitNamingPadWithZeros;
 
-        public string BrowseJoinOutputFileTitle => Current.BrowseJoinOutputFileTitle;
+        public string SplitNamingNumSuffix => Current.Keys.SplitNamingNumSuffix;
 
-        public string BrowseJoinInputFilesTitle => Current.BrowseJoinInputFilesTitle;
+        public string SplitNamingNumPos => Current.Keys.SplitNamingNumPos;
 
-        public string TabNameSettings => Current.TabNameSettings;
+        public string BrowseJoinOutputFileTitle => Current.Keys.BrowseJoinOutputFileTitle;
 
-        public string Language => Current.Language;
+        public string BrowseJoinInputFilesTitle => Current.Keys.BrowseJoinInputFilesTitle;
 
-        public string Theme => Current.Theme;
+        public string TabNameSettings => Current.Keys.TabNameSettings;
 
-        public string JoinSettings => Current.JoinSettings;
+        public string Language => Current.Keys.Language;
 
-        public string JoinBufferSize => Current.JoinBufferSize;
+        public string Theme => Current.Keys.Theme;
 
-        public string JoinGuessMissingFiles => Current.JoinGuessMissingFiles;
+        public string JoinSettings => Current.Keys.JoinSettings;
 
-        public string SplitSettings => Current.SplitSettings;
+        public string JoinBufferSize => Current.Keys.JoinBufferSize;
 
-        public string SplitBufferSize => Current.SplitBufferSize;
+        public string JoinGuessMissingFiles => Current.Keys.JoinGuessMissingFiles;
 
-        public string HashSettings => Current.HashSettings;
+        public string SplitSettings => Current.Keys.SplitSettings;
 
-        public string HashBufferSize => Current.HashBufferSize;
+        public string SplitBufferSize => Current.Keys.SplitBufferSize;
 
-    }
+        public string HashSettings => Current.Keys.HashSettings;
 
-    public enum LocalizationMode
-    {
-        Auto,
-        Forced
+        public string HashBufferSize => Current.Keys.HashBufferSize;
+
+        public string ResetSettings => Current.Keys.ResetSettings;
+
     }
 
     public delegate void LocalizationChangedHandler(object sender, LocalizationChangedHandlerArgs args);

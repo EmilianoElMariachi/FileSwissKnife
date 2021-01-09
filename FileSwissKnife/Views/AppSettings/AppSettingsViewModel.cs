@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Input;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Properties;
@@ -13,51 +13,30 @@ namespace FileSwissKnife.Views.AppSettings
 {
     public class AppSettingsViewModel : TabViewModelBase
     {
-        private Language? _selectedLanguage;
-
         public AppSettingsViewModel()
         {
-            var autoLanguage = new AutoLanguage();
-            var languages = new List<Language>
-            {
-                autoLanguage
-            };
-
-            var availableLanguages = Localizer.Instance.AvailableLocalizations.Select(availableLocalization => new AvailableLanguage(availableLocalization)).ToArray();
-            languages.AddRange(availableLanguages);
-
-            AvailableLanguages = languages;
-
-            if (Localizer.Instance.Mode == LocalizationMode.Auto)
-                SelectedLanguage = autoLanguage;
-            else
-                SelectedLanguage = availableLanguages.FirstOrDefault(language => language.Localization == Localizer.Instance.Current);
-
             OpenRepositoryCommand = new RelayCommand(OpenRepository);
+            ResetDefaultSettingsCommand = new RelayCommand(ResetDefaultSettings);
+
+            Localizer.Instance.LocalizationChanged += OnLocalizationChanged;
+        }
+
+        private void OnLocalizationChanged(object sender, LocalizationChangedHandlerArgs args)
+        {
+            NotifyPropertyChanged(nameof(SelectedLanguage));
         }
 
         public override string TabId => "Settings";
 
-        public IEnumerable<Language> AvailableLanguages { get; }
+        public IEnumerable<ILocalization> AvailableLanguages => Localizer.Instance.AvailableLocalizations;
 
-        public Language? SelectedLanguage
+        public ILocalization SelectedLanguage
         {
-            get => _selectedLanguage;
+            get => Localizer.Instance.Current;
             set
             {
-                _selectedLanguage = value;
-                if (value != null)
-                {
-                    switch (value)
-                    {
-                        case AutoLanguage _:
-                            Localizer.Instance.SetLocalizationAuto();
-                            break;
-                        case AvailableLanguage availableLanguage:
-                            Localizer.Instance.SetForcedLocalization(availableLanguage.Localization.CultureName);
-                            break;
-                    }
-                }
+                if (value != null) 
+                    Localizer.Instance.SetLocalization(value.CultureName);
                 NotifyPropertyChanged();
             }
         }
@@ -119,19 +98,36 @@ namespace FileSwissKnife.Views.AppSettings
 
         public ICommand OpenRepositoryCommand { get; }
 
+        public ICommand ResetDefaultSettingsCommand { get; }
 
         private void OpenRepository()
         {
 
             try
             {
-                Process.Start(new ProcessStartInfo("https://github.com/EmilianoElMariachi/FileSwissKnife/releases"){UseShellExecute = true});
+                Process.Start(new ProcessStartInfo("https://github.com/EmilianoElMariachi/FileSwissKnife/releases") { UseShellExecute = true });
             }
             catch
             {
 
             }
+        }
 
+        private void ResetDefaultSettings()
+        {
+            Settings.Default.Reset();
+            RefreshBindings();
+        }
+
+        private void RefreshBindings()
+        {
+            var propertyNames = this.GetType()
+                .GetProperties(BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance)
+                .Select(p => p.Name);
+            foreach (var propertyName in propertyNames)
+            {
+                NotifyPropertyChanged(propertyName);
+            }
         }
     }
 }

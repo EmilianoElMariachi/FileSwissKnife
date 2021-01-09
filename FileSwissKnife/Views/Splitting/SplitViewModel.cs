@@ -267,7 +267,7 @@ namespace FileSwissKnife.Views.Splitting
             {
                 InitialDirectory = Settings.Default.SplitLastDir,
                 IsFolderPicker = true,
-                Title = Localizer.Instance.BrowseSplitOutputDirTitle
+                Title = Localization.Localizer.Instance.BrowseSplitOutputDirTitle
             };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
@@ -282,7 +282,7 @@ namespace FileSwissKnife.Views.Splitting
             var openFileDialog = new CommonOpenFileDialog
             {
                 Multiselect = false,
-                Title = Localizer.Instance.BrowseFileToSplitTitle,
+                Title = Localization.Localizer.Instance.BrowseFileToSplitTitle,
             };
 
             if (openFileDialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)
@@ -325,7 +325,7 @@ namespace FileSwissKnife.Views.Splitting
 
             if (!File.Exists(inputFile))
             {
-                _fileSizeSplitSizeError.Show(string.Format(Localizer.Instance.SplitInputFileNotFound, inputFile));
+                _fileSizeSplitSizeError.Show(string.Format(Localization.Localizer.Instance.SplitInputFileNotFound, inputFile));
                 return;
             }
 
@@ -333,7 +333,7 @@ namespace FileSwissKnife.Views.Splitting
 
             if (fileInfo.Length <= splitSizeBytes)
             {
-                _fileSizeSplitSizeError.Show(string.Format(Localizer.Instance.SplitErrorFileSizeLessThanSplitSize, splitSizeBytes, fileInfo.Length));
+                _fileSizeSplitSizeError.Show(string.Format(Localization.Localizer.Instance.SplitErrorFileSizeLessThanSplitSize, splitSizeBytes, fileInfo.Length));
                 return;
             }
 
@@ -370,12 +370,12 @@ namespace FileSwissKnife.Views.Splitting
                 var startDate = DateTime.Now;
                 await fileSplitter.Split(inputFile, OutputDir, splitSizeBytes, namingOptions, _cancellationTokenSource.Token);
 
-                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
+                ProgressBarText = string.Format(Localization.Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {
                 ProgressBarValue = 0;
-                ProgressBarText = Localizer.Instance.OperationCanceled;
+                ProgressBarText = Localization.Localizer.Instance.OperationCanceled;
             }
             catch (Exception ex)
             {
@@ -396,12 +396,12 @@ namespace FileSwissKnife.Views.Splitting
         {
             public NoSelectedUnitErrorViewModel(ErrorsCollection errorsCollection) : base(errorsCollection)
             {
-                Localizer.Instance.LocalizationChanged += (sender, args) =>
+                Localization.Localizer.Instance.LocalizationChanged += (sender, args) =>
                 {
-                    Message = Localizer.Instance.SplitUnitShouldBeSelected;
+                    Message = Localization.Localizer.Instance.SplitUnitShouldBeSelected;
                 };
 
-                Message = Localizer.Instance.SplitUnitShouldBeSelected;
+                Message = Localization.Localizer.Instance.SplitUnitShouldBeSelected;
             }
         }
 
@@ -409,12 +409,12 @@ namespace FileSwissKnife.Views.Splitting
         {
             public NoSelectedNumPosErrorViewModel(ErrorsCollection errorsCollection) : base(errorsCollection)
             {
-                Localizer.Instance.LocalizationChanged += (sender, args) =>
+                Localization.Localizer.Instance.LocalizationChanged += (sender, args) =>
                 {
-                    Message = Localizer.Instance.SplitNumPosShouldBeSelected;
+                    Message = Localization.Localizer.Instance.SplitNumPosShouldBeSelected;
                 };
 
-                Message = Localizer.Instance.SplitNumPosShouldBeSelected;
+                Message = Localization.Localizer.Instance.SplitNumPosShouldBeSelected;
             }
         }
 

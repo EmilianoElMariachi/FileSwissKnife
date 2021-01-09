@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=System.Runtime"
                     xmlns:customControls="clr-namespace:FileSwissKnife.CustomControls"
                     xmlns:error="clr-namespace:FileSwissKnife.CustomControls.Error"
-                    xmlns:localization="clr-namespace:FileSwissKnife.Localization">
+                    xmlns:loc="clr-namespace:FileSwissKnife.Localization">
 
     <system:Double x:Key="DefaultButtonHeight">26</system:Double>
 
@@ -21,7 +21,7 @@
 
                             <Border.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="{Binding Source={x:Static localization:Localizer.Instance}, Path=CopyErrors}" Command="{TemplateBinding CopyErrorMessageCommand}" />
+                                    <MenuItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=CopyErrors}" Command="{TemplateBinding CopyErrorMessageCommand}" />
                                 </ContextMenu>
                             </Border.ContextMenu>
 

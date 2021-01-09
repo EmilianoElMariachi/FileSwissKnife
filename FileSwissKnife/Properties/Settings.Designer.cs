@@ -156,13 +156,13 @@ namespace FileSwissKnife.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ForcedLanguage {
+        [global::System.Configuration.DefaultSettingValueAttribute("Auto")]
+        public string SelectedLanguage {
             get {
-                return ((string)(this["ForcedLanguage"]));
+                return ((string)(this["SelectedLanguage"]));
             }
             set {
-                this["ForcedLanguage"] = value;
+                this["SelectedLanguage"] = value;
             }
         }
         

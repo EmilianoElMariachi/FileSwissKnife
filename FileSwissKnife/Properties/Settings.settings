@@ -35,8 +35,8 @@
     <Setting Name="JoinLastDir" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ForcedLanguage" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="SelectedLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Auto</Value>
     </Setting>
     <Setting Name="JoinBufferSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4194304</Value>

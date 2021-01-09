@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:localization="clr-namespace:FileSwissKnife.Localization"
+             xmlns:loc="clr-namespace:FileSwissKnife.Localization"
              xmlns:appSettings="clr-namespace:FileSwissKnife.Views.AppSettings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="450" d:DataContext="{d:DesignInstance appSettings:AppSettingsViewModel}">
@@ -69,6 +69,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -76,26 +77,26 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=Language}"/>
-            <ComboBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Path=AvailableLanguages}" DisplayMemberPath="Name" SelectedValue="{Binding Path=SelectedLanguage}" MinWidth="120" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=Language}"/>
+            <ComboBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Path=AvailableLanguages}" DisplayMemberPath="DisplayName" SelectedValue="{Binding Path=SelectedLanguage}" MinWidth="120" HorizontalAlignment="Left"/>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=Theme}" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=Theme}" />
             <ComboBox Grid.Row="3" Grid.Column="2" ItemsSource="{Binding Path=AvailableThemes}" DisplayMemberPath="Name" SelectedValue="{Binding Path=SelectedTheme}" MinWidth="120" HorizontalAlignment="Left"/>
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=JoinSettings}" />
-            <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=JoinBufferSize}" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinSettings}" />
+            <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinBufferSize}" HorizontalAlignment="Right"/>
             <TextBox Grid.Row="5" Grid.Column="2" MinWidth="100" Text="{Binding Path=JoinBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=JoinGuessMissingFiles}" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinGuessMissingFiles}" HorizontalAlignment="Right"/>
             <CheckBox Grid.Row="6" Grid.Column="2" IsChecked="{Binding Path=JoinGuessMissingFiles}" />
 
-            <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=SplitSettings}" />
-            <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=SplitBufferSize}" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitSettings}" />
+            <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitBufferSize}" HorizontalAlignment="Right"/>
             <TextBox Grid.Row="8" Grid.Column="2" MinWidth="100" Text="{Binding Path=SplitBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
 
-            <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=HashSettings}" />
-            <TextBlock Grid.Row="10" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static localization:Localizer.Instance}, Path=HashBufferSize}" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=HashSettings}" />
+            <TextBlock Grid.Row="10" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=HashBufferSize}" HorizontalAlignment="Right"/>
             <TextBox Grid.Row="10" Grid.Column="2" MinWidth="100" Text="{Binding Path=HashBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
-
+            <Button Grid.Row="11" Content="{Binding Source={x:Static loc:Localizer.Instance}, Path=ResetSettings}" Command="{Binding ResetDefaultSettingsCommand}" />
         </Grid>
     </Grid>
 

@@ -1,6 +1,6 @@
 ﻿namespace FileSwissKnife.Localization
 {
-    internal class Localization_EN : ILocalization
+    internal class Localization_EN : ILocalizationKeys
     {
         public string DisplayName => "English";
 
@@ -138,5 +138,6 @@
 
         public string HashBufferSize => "Buffer size";
 
+        public string ResetSettings => "Default";
     }
 }

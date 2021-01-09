@@ -2,6 +2,10 @@
 {
     public interface ILocalizationKeys
     {
+        string DisplayName { get; }
+
+        string CultureName { get; }
+
         string DragMeSomeFilesToJoin { get; }
 
         string DragMeSomeFilesToHash { get; }
@@ -133,6 +137,8 @@
         string HashSettings { get; }
 
         string HashBufferSize { get; }
+
+        string ResetSettings { get; }
 
     }
 }
