@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -14,6 +15,14 @@ namespace FileSwissKnife.Themes
         static ThemeManager()
         {
             _availableThemes = InitializeAvailableThemes().ToArray();
+
+            Settings.Default.PropertyChanged += OnSettingsChanged;
+        }
+
+        private static void OnSettingsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Settings.Default.ActiveTheme))
+                InitializeThemeFromSettings();
         }
 
         public static IEnumerable<Theme> AvailableThemes => _availableThemes;
@@ -22,9 +31,11 @@ namespace FileSwissKnife.Themes
 
         public static void SetTheme(Theme theme)
         {
-            var app = Application.Current;
-
             var currentTheme = CurrentTheme;
+            if(currentTheme == theme)
+                return;
+
+            var app = Application.Current;
             if (currentTheme != null)
                 app.Resources.MergedDictionaries.Remove(currentTheme.ResourceDictionary);
 
@@ -40,9 +51,12 @@ namespace FileSwissKnife.Themes
             foreach (var theme in _availableThemes)
                 Application.Current.Resources.MergedDictionaries.Remove(theme.ResourceDictionary);
 
-            var activeTheme = Settings.Default.ActiveTheme;
+            InitializeThemeFromSettings();
+        }
 
-            var selectedTheme = _availableThemes.FirstOrDefault(theme => theme.Name == activeTheme);
+        private static void InitializeThemeFromSettings()
+        {
+            var selectedTheme = _availableThemes.FirstOrDefault(theme => theme.Name == Settings.Default.ActiveTheme);
             if (selectedTheme != null)
             {
                 SetTheme(selectedTheme);

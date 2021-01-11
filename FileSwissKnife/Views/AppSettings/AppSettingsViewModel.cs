@@ -18,13 +18,6 @@ namespace FileSwissKnife.Views.AppSettings
         {
             OpenRepositoryCommand = new RelayCommand(OpenRepository);
             ResetDefaultSettingsCommand = new RelayCommand(ResetDefaultSettings);
-
-            LocalizationManager.Instance.LocalizationChanged += OnLocalizationChanged;
-        }
-
-        private void OnLocalizationChanged(object sender, LocalizationChangedHandlerArgs<ILocalizationKeys> args)
-        {
-            NotifyPropertyChanged(nameof(SelectedLanguage));
         }
 
         public override string TabId => "Settings";
