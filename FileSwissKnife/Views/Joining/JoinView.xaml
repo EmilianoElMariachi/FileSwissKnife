@@ -23,7 +23,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinInputFiles}" Style="{StaticResource Title}"/>
+            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.JoinInputFiles}" Style="{StaticResource Title}"/>
 
             <Grid Grid.Row="1" >
                 <TextBox x:Name="InputFilesTextBox" 
@@ -34,7 +34,7 @@
                          VerticalScrollBarVisibility="Auto" 
                          AcceptsReturn="True"/>
 
-                <TextBlock Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToJoin}" 
+                <TextBlock Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.DragMeSomeFilesToJoin}" 
                            IsHitTestVisible="False">
                     <TextBlock.Style>
                         <Style BasedOn="{StaticResource WaterMarkText}" TargetType="TextBlock">
@@ -61,7 +61,7 @@
                 <RowDefinition Height="*" />
 
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=JoinOutputFile}" Style="{StaticResource Title}"/>
+            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.JoinOutputFile}" Style="{StaticResource Title}"/>
 
             <Grid Grid.Row="1" >
                 <Grid.ColumnDefinitions>

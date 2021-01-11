@@ -61,7 +61,7 @@ namespace FileSwissKnife.Views.Hashing
             var openFileDialog = new CommonOpenFileDialog
             {
                 Multiselect = true,
-                Title = Localizer.Instance.BrowseFilesToHashTitle,
+                Title = LocalizationManager.Instance.Current.Keys.BrowseFilesToHashTitle,
             };
 
             if (openFileDialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)

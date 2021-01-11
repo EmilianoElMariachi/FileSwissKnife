@@ -126,13 +126,13 @@ namespace FileSwissKnife.Views.Hashing
                 _cancellationTokenSource = new CancellationTokenSource();
                 await fileHasher.ComputeAsync(_fileToHash, _hashes, _cancellationTokenSource.Token);
 
-                ProgressBarText = string.Format(Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
+                ProgressBarText = string.Format(LocalizationManager.Instance.Current.Keys.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {
                 _canceled = true;
                 ProgressBarValue = 0;
-                ProgressBarText = Localizer.Instance.OperationCanceled;
+                ProgressBarText = LocalizationManager.Instance.Current.Keys.OperationCanceled;
             }
             catch (Exception ex)
             {
@@ -160,11 +160,11 @@ namespace FileSwissKnife.Views.Hashing
             string? staticText;
             if (_canceled)
             {
-                staticText = Localizer.Instance.HashCanceled;
+                staticText = LocalizationManager.Instance.Current.Keys.HashCanceled;
             }
             else if (_cancellationTokenSource != null)
             {
-                staticText = _cancellationTokenSource.IsCancellationRequested ? Localizer.Instance.CancellingHash : Localizer.Instance.HashInProgress;
+                staticText = _cancellationTokenSource.IsCancellationRequested ? LocalizationManager.Instance.Current.Keys.CancellingHash : LocalizationManager.Instance.Current.Keys.HashInProgress;
             }
             else
             {
@@ -186,7 +186,7 @@ namespace FileSwissKnife.Views.Hashing
         {
             if (_cancellationTokenSource != null)
             {
-                var messageBoxResult = MessageBox.Show(Application.Current.MainWindow, Localizer.Instance.ConfirmCloseCancelHash, Localizer.Instance.ConfirmCloseCancelHashTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var messageBoxResult = MessageBox.Show(Application.Current.MainWindow, LocalizationManager.Instance.Current.Keys.ConfirmCloseCancelHash, LocalizationManager.Instance.Current.Keys.ConfirmCloseCancelHashTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (messageBoxResult == MessageBoxResult.No)
                     return;
                 _cancellationTokenSource?.Cancel();

@@ -1,6 +1,7 @@
 ﻿using ElMariachi.FS.Tools.Splitting;
 using FileSwissKnife.Localization;
 using FileSwissKnife.Utils.MVVM;
+using FileSwissKnife.Utils.MVVM.Localization;
 
 namespace FileSwissKnife.Views.Splitting
 {
@@ -10,7 +11,7 @@ namespace FileSwissKnife.Views.Splitting
 
         public NumPosViewModel(NumPos numPos)
         {
-            Localizer.Instance.LocalizationChanged += OnLocalizationChanged;
+            LocalizationManager.Instance.LocalizationChanged += OnLocalizationChanged;
             NumPos = numPos;
             Initialize();
         }
@@ -20,16 +21,16 @@ namespace FileSwissKnife.Views.Splitting
             switch (NumPos)
             {
                 case NumPos.BeforeBaseName:
-                    NumPosText = Localizer.Instance.SplitNumPosBeforeBaseName;
+                    NumPosText = LocalizationManager.Instance.Current.Keys.SplitNumPosBeforeBaseName;
                     break;
                 case NumPos.AfterBaseName:
-                    NumPosText = Localizer.Instance.SplitNumPosAfterBaseName;
+                    NumPosText = LocalizationManager.Instance.Current.Keys.SplitNumPosAfterBaseName;
                     break;
                 case NumPos.BeforeExt:
-                    NumPosText = Localizer.Instance.SplitNumPosBeforeExt;
+                    NumPosText = LocalizationManager.Instance.Current.Keys.SplitNumPosBeforeExt;
                     break;
                 case NumPos.AfterExt:
-                    NumPosText = Localizer.Instance.SplitNumPosAfterExt;
+                    NumPosText = LocalizationManager.Instance.Current.Keys.SplitNumPosAfterExt;
                     break;
                 default:
                     NumPosText = "UNKNOWN";
@@ -37,7 +38,7 @@ namespace FileSwissKnife.Views.Splitting
             }
         }
 
-        private void OnLocalizationChanged(object sender, LocalizationChangedHandlerArgs args)
+        private void OnLocalizationChanged(object sender, LocalizationChangedHandlerArgs<ILocalizationKeys> args)
         {
             Initialize();
         }

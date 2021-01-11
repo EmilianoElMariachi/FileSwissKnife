@@ -1,10 +1,16 @@
-﻿namespace FileSwissKnife.Localization
+﻿using FileSwissKnife.Utils.MVVM.Localization;
+
+namespace FileSwissKnife.Localization
 {
     internal class Localization_EN : ILocalizationKeys
     {
+        public bool IsFallback => true;
+
         public string DisplayName => "English";
 
         public string CultureName => "en-US";
+
+        public string LanguageAuto => "Automatic";
 
         public string DragMeSomeFilesToJoin => "Drag me one or more files to join here :)";
 

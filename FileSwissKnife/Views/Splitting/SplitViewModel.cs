@@ -267,7 +267,7 @@ namespace FileSwissKnife.Views.Splitting
             {
                 InitialDirectory = Settings.Default.SplitLastDir,
                 IsFolderPicker = true,
-                Title = Localization.Localizer.Instance.BrowseSplitOutputDirTitle
+                Title = LocalizationManager.Instance.Current.Keys.BrowseSplitOutputDirTitle
             };
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
@@ -282,7 +282,7 @@ namespace FileSwissKnife.Views.Splitting
             var openFileDialog = new CommonOpenFileDialog
             {
                 Multiselect = false,
-                Title = Localization.Localizer.Instance.BrowseFileToSplitTitle,
+                Title = LocalizationManager.Instance.Current.Keys.BrowseFileToSplitTitle,
             };
 
             if (openFileDialog.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.Ok)
@@ -325,7 +325,7 @@ namespace FileSwissKnife.Views.Splitting
 
             if (!File.Exists(inputFile))
             {
-                _fileSizeSplitSizeError.Show(string.Format(Localization.Localizer.Instance.SplitInputFileNotFound, inputFile));
+                _fileSizeSplitSizeError.Show(string.Format(LocalizationManager.Instance.Current.Keys.SplitInputFileNotFound, inputFile));
                 return;
             }
 
@@ -333,7 +333,7 @@ namespace FileSwissKnife.Views.Splitting
 
             if (fileInfo.Length <= splitSizeBytes)
             {
-                _fileSizeSplitSizeError.Show(string.Format(Localization.Localizer.Instance.SplitErrorFileSizeLessThanSplitSize, splitSizeBytes, fileInfo.Length));
+                _fileSizeSplitSizeError.Show(string.Format(LocalizationManager.Instance.Current.Keys.SplitErrorFileSizeLessThanSplitSize, splitSizeBytes, fileInfo.Length));
                 return;
             }
 
@@ -370,12 +370,12 @@ namespace FileSwissKnife.Views.Splitting
                 var startDate = DateTime.Now;
                 await fileSplitter.Split(inputFile, OutputDir, splitSizeBytes, namingOptions, _cancellationTokenSource.Token);
 
-                ProgressBarText = string.Format(Localization.Localizer.Instance.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
+                ProgressBarText = string.Format(LocalizationManager.Instance.Current.Keys.OperationFinishedIn, (DateTime.Now - startDate).ToElapsedTime());
             }
             catch (OperationCanceledException)
             {
                 ProgressBarValue = 0;
-                ProgressBarText = Localization.Localizer.Instance.OperationCanceled;
+                ProgressBarText = LocalizationManager.Instance.Current.Keys.OperationCanceled;
             }
             catch (Exception ex)
             {
@@ -396,12 +396,12 @@ namespace FileSwissKnife.Views.Splitting
         {
             public NoSelectedUnitErrorViewModel(ErrorsCollection errorsCollection) : base(errorsCollection)
             {
-                Localization.Localizer.Instance.LocalizationChanged += (sender, args) =>
+                LocalizationManager.Instance.LocalizationChanged += (sender, args) =>
                 {
-                    Message = Localization.Localizer.Instance.SplitUnitShouldBeSelected;
+                    Message = LocalizationManager.Instance.Current.Keys.SplitUnitShouldBeSelected;
                 };
 
-                Message = Localization.Localizer.Instance.SplitUnitShouldBeSelected;
+                Message = LocalizationManager.Instance.Current.Keys.SplitUnitShouldBeSelected;
             }
         }
 
@@ -409,12 +409,12 @@ namespace FileSwissKnife.Views.Splitting
         {
             public NoSelectedNumPosErrorViewModel(ErrorsCollection errorsCollection) : base(errorsCollection)
             {
-                Localization.Localizer.Instance.LocalizationChanged += (sender, args) =>
+                LocalizationManager.Instance.LocalizationChanged += (sender, args) =>
                 {
-                    Message = Localization.Localizer.Instance.SplitNumPosShouldBeSelected;
+                    Message = LocalizationManager.Instance.Current.Keys.SplitNumPosShouldBeSelected;
                 };
 
-                Message = Localization.Localizer.Instance.SplitNumPosShouldBeSelected;
+                Message = LocalizationManager.Instance.Current.Keys.SplitNumPosShouldBeSelected;
             }
         }
 

@@ -29,7 +29,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitInputFile}" Style="{StaticResource Title}"/>
+            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitInputFile}" Style="{StaticResource Title}"/>
 
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.ColumnDefinitions>
@@ -53,7 +53,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitOutputDir}" Style="{StaticResource Title}" Grid.ColumnSpan="2" Margin="0,0,0,22" Grid.RowSpan="2"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitOutputDir}" Style="{StaticResource Title}" Grid.ColumnSpan="2" Margin="0,0,0,22" Grid.RowSpan="2"/>
 
                 <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
@@ -65,7 +65,7 @@
                     <Button Grid.Column="1" Style="{StaticResource BrowseButton}" Command="{Binding BrowseOutputDirCommand}" />
                 </Grid>
 
-                <TextBlock Grid.Column="2" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitSize}" Style="{StaticResource Title}" Height="16" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitSize}" Style="{StaticResource Title}" Height="16" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="2" MinWidth="50" Margin="3,0,2,0" 
                          Text="{Binding Path=SplitSizeStr, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource SingleLineTextBox}"/>
@@ -91,7 +91,7 @@
 
         </Grid>
 
-        <Expander x:Name="Expander" Grid.Row="1" Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingOptions}" Background="Transparent" >
+        <Expander x:Name="Expander" Grid.Row="1" Header="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitNamingOptions}" Background="Transparent" >
 
 
             <Grid VerticalAlignment="Top" Margin="3" HorizontalAlignment="Center">
@@ -123,19 +123,19 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingNumPrefix}" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitNamingNumPrefix}" />
                     <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Path=NumPrefix, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingStartNum}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitNamingStartNum}" />
                     <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=NumStart, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingPadWithZeros}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitNamingPadWithZeros}" />
                     <CheckBox Grid.Row="2" Grid.Column="2" IsChecked="{Binding Path=PadWithZeros}" VerticalAlignment="Center"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingNumSuffix}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitNamingNumSuffix}" />
                     <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Path=NumSuffix, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SingleLineTextBox}"/>
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingNumPos}" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitNamingNumPos}" HorizontalAlignment="Right" />
                     <ComboBox Grid.Row="4" Grid.Column="2" MinWidth="118" ItemsSource="{Binding Path=NumPositions, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedNumPos}" DisplayMemberPath="NumPosText" />
 
                 </Grid>
@@ -147,7 +147,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=SplitNamingPreview}" Style="{StaticResource WaterMarkText}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitNamingPreview}" Style="{StaticResource WaterMarkText}" />
                         <TextBlock Text="{Binding Path=NamePreview, FallbackValue=MyMovie.mp4.part001}" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
@@ -155,7 +155,7 @@
 
         </Expander>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFileToSplit}">
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.DragMeSomeFileToSplit}">
             <TextBlock.Style>
                 <Style BasedOn="{StaticResource WaterMarkText}" TargetType="TextBlock">
                     <Style.Triggers>

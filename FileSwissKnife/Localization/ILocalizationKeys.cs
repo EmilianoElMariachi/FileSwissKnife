@@ -1,11 +1,9 @@
-﻿namespace FileSwissKnife.Localization
+﻿using FileSwissKnife.Utils.MVVM.Localization;
+
+namespace FileSwissKnife.Localization
 {
-    public interface ILocalizationKeys
+    public interface ILocalizationKeys : ILocalizationKeysBase
     {
-        string DisplayName { get; }
-
-        string CultureName { get; }
-
         string DragMeSomeFilesToJoin { get; }
 
         string DragMeSomeFilesToHash { get; }

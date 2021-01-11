@@ -2,9 +2,13 @@
 {
     public class Localization_FR : ILocalizationKeys
     {
+        public bool IsFallback => false;
+
         public string DisplayName => "Français";
 
         public string CultureName => "fr-FR";
+
+        public string LanguageAuto => "Auto";
 
         public string DragMeSomeFilesToJoin => "Glisse moi un ou plusieurs fichiers à joindre par ici :)";
 

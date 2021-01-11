@@ -18,13 +18,13 @@
     <Grid Margin="5">
         <TabControl SelectedValuePath="DataContext" IsSynchronizedWithCurrentItem="True">
 
-            <TabItem DataContext="{Binding Path=JoinViewModel}" Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameJoin}">
+            <TabItem DataContext="{Binding Path=JoinViewModel}" Header="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.TabNameJoin}">
                 <joining:JoinView />
             </TabItem>
-            <TabItem DataContext="{Binding Path=SplitViewModel}" Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameSplit}">
+            <TabItem DataContext="{Binding Path=SplitViewModel}" Header="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.TabNameSplit}">
                 <splitting:SplitView />
             </TabItem>
-            <TabItem DataContext="{Binding Path=HashViewModel}" Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=TabNameHash}">
+            <TabItem DataContext="{Binding Path=HashViewModel}" Header="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.TabNameHash}">
                 <hashing:HashView />
             </TabItem>
             <TabItem DataContext="{Binding Path=AppSettingsViewModel}">

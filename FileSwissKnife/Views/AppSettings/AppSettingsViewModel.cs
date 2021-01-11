@@ -8,6 +8,7 @@ using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
 using FileSwissKnife.Utils;
 using FileSwissKnife.Utils.MVVM;
+using FileSwissKnife.Utils.MVVM.Localization;
 
 namespace FileSwissKnife.Views.AppSettings
 {
@@ -18,25 +19,25 @@ namespace FileSwissKnife.Views.AppSettings
             OpenRepositoryCommand = new RelayCommand(OpenRepository);
             ResetDefaultSettingsCommand = new RelayCommand(ResetDefaultSettings);
 
-            Localizer.Instance.LocalizationChanged += OnLocalizationChanged;
+            LocalizationManager.Instance.LocalizationChanged += OnLocalizationChanged;
         }
 
-        private void OnLocalizationChanged(object sender, LocalizationChangedHandlerArgs args)
+        private void OnLocalizationChanged(object sender, LocalizationChangedHandlerArgs<ILocalizationKeys> args)
         {
             NotifyPropertyChanged(nameof(SelectedLanguage));
         }
 
         public override string TabId => "Settings";
 
-        public IEnumerable<ILocalization> AvailableLanguages => Localizer.Instance.AvailableLocalizations;
+        public IEnumerable<ILocalization<ILocalizationKeys>> AvailableLanguages => LocalizationManager.Instance.AvailableLocalizations;
 
-        public ILocalization SelectedLanguage
+        public ILocalization<ILocalizationKeys> SelectedLanguage
         {
-            get => Localizer.Instance.Current;
+            get => LocalizationManager.Instance.Current;
             set
             {
-                if (value != null) 
-                    Localizer.Instance.SetLocalization(value.CultureName);
+                if (value != null)
+                    LocalizationManager.Instance.Current = value;
                 NotifyPropertyChanged();
             }
         }

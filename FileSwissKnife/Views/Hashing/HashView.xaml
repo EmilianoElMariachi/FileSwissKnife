@@ -23,11 +23,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=HashInputFiles}" Style="{StaticResource Title}"/>
+            <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.HashInputFiles}" Style="{StaticResource Title}"/>
 
             <Border Grid.Row="1" Style="{StaticResource FrameBorderStyle}" >
                 <Grid>
-                    <TextBlock Text="{Binding Source={x:Static loc:Localizer.Instance}, Path=DragMeSomeFilesToHash}">
+                    <TextBlock Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.DragMeSomeFilesToHash}">
                         <TextBlock.Style>
                             <Style BasedOn="{StaticResource WaterMarkText}" TargetType="TextBlock">
                                 <Setter Property="Visibility" Value="Hidden" />

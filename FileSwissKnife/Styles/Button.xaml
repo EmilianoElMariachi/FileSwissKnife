@@ -21,7 +21,7 @@
 
                             <Border.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="{Binding Source={x:Static loc:Localizer.Instance}, Path=CopyErrors}" Command="{TemplateBinding CopyErrorMessageCommand}" />
+                                    <MenuItem Header="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.CopyErrors}" Command="{TemplateBinding CopyErrorMessageCommand}" />
                                 </ContextMenu>
                             </Border.ContextMenu>
 
