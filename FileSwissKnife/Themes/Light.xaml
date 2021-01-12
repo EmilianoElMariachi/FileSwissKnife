@@ -47,8 +47,11 @@
 
     <!-- Button -->
     <SolidColorBrush x:Key="Button.Static.Border" Color="#686868" />
-    <SolidColorBrush x:Key="Button.Static.Background" Color="#E0E0E0" />
-    <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#AEAEAE" />
+    <SolidColorBrush x:Key="Button.Static.Background" Color="{StaticResource ControlBackgroundColor}" />
+    <LinearGradientBrush x:Key="Button.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="{StaticResource ControlBackgroundColor}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource ControlMouseOverBackgroundColor}" Offset="1.0"/>
+    </LinearGradientBrush>
 
     <SolidColorBrush x:Key="PlayStopButton.Static.Border" Color="#686868" />
     <SolidColorBrush x:Key="PlayStopButton.Static.Background" Color="#686868" />
