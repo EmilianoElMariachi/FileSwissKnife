@@ -46,13 +46,31 @@
     <SolidColorBrush x:Key="TextBox.Static.Foreground" Color="{StaticResource DefaultTextColor}" />
 
     <!-- Button -->
-    <SolidColorBrush x:Key="Button.Static.Background" Color="#686868" />
+    <SolidColorBrush x:Key="Button.Static.Border" Color="#686868" />
+    <SolidColorBrush x:Key="Button.Static.Background" Color="#E0E0E0" />
     <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#AEAEAE" />
+
+    <SolidColorBrush x:Key="PlayStopButton.Static.Border" Color="#686868" />
+    <SolidColorBrush x:Key="PlayStopButton.Static.Background" Color="#686868" />
+    <SolidColorBrush x:Key="PlayStopButton.MouseOver.Background" Color="#8D8D99" />
     <SolidColorBrush x:Key="PlayStopButton.Play.Icon" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="PlayStopButton.Stop.Icon" Color="#DC7D7D" />
     <SolidColorBrush x:Key="PlayStopButton.Cancelling.Icon" Color="Yellow" />
+
+    <SolidColorBrush x:Key="BrowseButton.Static.Border" Color="Black" />
+    <SolidColorBrush x:Key="BrowseButton.Static.Background" Color="#686868" />
+    <SolidColorBrush x:Key="BrowseButton.MouseOver.Background" Color="#8D8D99" />
     <SolidColorBrush x:Key="BrowseButton.Static.Icon" Color="{StaticResource AccentColor}" />
+
+    <SolidColorBrush x:Key="CloseButton.Static.Border" Color="Black" />
+    <SolidColorBrush x:Key="CloseButton.Static.Background" Color="#686868" />
+    <SolidColorBrush x:Key="CloseButton.MouseOver.Background" Color="#8D8D99" />
     <SolidColorBrush x:Key="CloseButton.Static.Icon" Color="#7AC0FE" />
+
+    <SolidColorBrush x:Key="ErrorButton.Static.Border" Color="Black" />
+    <SolidColorBrush x:Key="ErrorButton.Static.Background" Color="#686868" />
+    <SolidColorBrush x:Key="ErrorButton.MouseOver.Background" Color="#8D8D99" />
+    <SolidColorBrush x:Key="ErrorButton.Static.Icon" Color="Red" />
 
     <!-- Separator -->
     <SolidColorBrush x:Key="Separator.Static.Background" Color="#1575AD" />

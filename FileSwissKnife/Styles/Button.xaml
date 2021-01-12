@@ -7,100 +7,151 @@
 
     <system:Double x:Key="DefaultButtonHeight">26</system:Double>
 
-    <Style TargetType="Button">
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" StrokeDashArray="1 2" SnapsToDevicePixels="true" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+    <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+    <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+    <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+    <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+    <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="{DynamicResource Button.Static.Background}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Button.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource Button.MouseOver.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="error:ErrorButton" BasedOn="{StaticResource {x:Type Button}}">
-        <Style.Setters>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="error:ErrorButton">
-                        <Border ToolTipService.ShowDuration="12000"
+        <Setter Property="BorderBrush" Value="{DynamicResource ErrorButton.Static.Border}" />
+        <Setter Property="Background" Value="{DynamicResource ErrorButton.Static.Background}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="error:ErrorButton">
+                    <Border ToolTipService.ShowDuration="12000"
                                 Height="{StaticResource DefaultButtonHeight}">
 
-                            <Border.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.CopyErrors}" Command="{TemplateBinding CopyErrorMessageCommand}" />
-                                </ContextMenu>
-                            </Border.ContextMenu>
+                        <Border.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.CopyErrors}" Command="{TemplateBinding CopyErrorMessageCommand}" />
+                            </ContextMenu>
+                        </Border.ContextMenu>
 
-                            <Viewbox>
-                                <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
-                                    <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{TemplateBinding Background}" />
-                                    <Path Fill="Red" Data="M 40,12 60,12 55,60 45,60"></Path>
-                                    <Rectangle Width="12" Height="12" Fill="Red" VerticalAlignment="Bottom" Margin="0,0,0,15"/>
-                                </Grid>
-                            </Viewbox>
+                        <Viewbox>
+                            <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
+                                <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{TemplateBinding Background}" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{TemplateBinding BorderBrush}" />
+                                <Path Fill="{DynamicResource ErrorButton.Static.Icon}" Data="M 40,12 60,12 55,60 45,60"></Path>
+                                <Rectangle Width="12" Height="12" Fill="{DynamicResource ErrorButton.Static.Icon}" VerticalAlignment="Bottom" Margin="0,0,0,15"/>
+                            </Grid>
+                        </Viewbox>
 
-                            <Border.ToolTip>
-                                <ToolTip >
-                                    <ItemsControl ItemsSource="{TemplateBinding Errors}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate DataType="error:ErrorViewModel">
-                                                <StackPanel HorizontalAlignment="Left">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="‣" />
-                                                        <TextBlock Text="{Binding Path=Message}"/>
-                                                    </StackPanel>
+                        <Border.ToolTip>
+                            <ToolTip >
+                                <ItemsControl ItemsSource="{TemplateBinding Errors}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="error:ErrorViewModel">
+                                            <StackPanel HorizontalAlignment="Left">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="‣" />
+                                                    <TextBlock Text="{Binding Path=Message}"/>
                                                 </StackPanel>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </ToolTip>
-                            </Border.ToolTip>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource Button.MouseOver.Background}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style.Setters>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ToolTip>
+                        </Border.ToolTip>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource ErrorButton.MouseOver.Background}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="customControls:PlayStopButton" BasedOn="{StaticResource {x:Type Button}}">
-        <Style.Setters>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="customControls:PlayStopButton">
-                        <Border Height="{StaticResource DefaultButtonHeight}">
-                            <Viewbox>
-                                <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
-                                    <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{TemplateBinding Background}"/>
-                                    <Path x:Name="PlayIcon" Fill="{DynamicResource PlayStopButton.Play.Icon}" Data="M 32,20 85,50 32,80" />
-                                    <Rectangle x:Name="StopIcon" Fill="{DynamicResource PlayStopButton.Stop.Icon}" Width="50" Height="50" />
-                                </Grid>
-                            </Viewbox>
-                        </Border>
+        <Setter Property="BorderBrush" Value="{DynamicResource PlayStopButton.Static.Border}" />
+        <Setter Property="Background" Value="{DynamicResource PlayStopButton.Static.Background}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="customControls:PlayStopButton">
+                    <Border Height="{StaticResource DefaultButtonHeight}">
+                        <Viewbox>
+                            <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
+                                <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{TemplateBinding Background}" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{TemplateBinding BorderBrush}"/>
+                                <Path x:Name="PlayIcon" Fill="{DynamicResource PlayStopButton.Play.Icon}" Data="M 32,20 85,50 32,80" />
+                                <Rectangle x:Name="StopIcon" Fill="{DynamicResource PlayStopButton.Stop.Icon}" Width="50" Height="50" />
+                            </Grid>
+                        </Viewbox>
+                    </Border>
 
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource Button.MouseOver.Background}" />
-                            </Trigger>
-                            <Trigger Property="PlayStopButtonState" Value="Play">
-                                <Setter TargetName="PlayIcon" Property="Visibility" Value="Visible" />
-                                <Setter TargetName="StopIcon" Property="Visibility" Value="Hidden" />
-                            </Trigger>
-                            <Trigger Property="PlayStopButtonState" Value="Stop">
-                                <Setter TargetName="PlayIcon" Property="Visibility" Value="Hidden" />
-                                <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
-                            </Trigger>
-                            <Trigger Property="PlayStopButtonState" Value="Cancelling">
-                                <Setter TargetName="PlayIcon" Property="Visibility" Value="Hidden" />
-                                <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
-                                <Setter TargetName="StopIcon" Property="Fill" Value="{DynamicResource PlayStopButton.Cancelling.Icon}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style.Setters>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource PlayStopButton.MouseOver.Background}" />
+                        </Trigger>
+                        <Trigger Property="PlayStopButtonState" Value="Play">
+                            <Setter TargetName="PlayIcon" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="StopIcon" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="PlayStopButtonState" Value="Stop">
+                            <Setter TargetName="PlayIcon" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="PlayStopButtonState" Value="Cancelling">
+                            <Setter TargetName="PlayIcon" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="StopIcon" Property="Fill" Value="{DynamicResource PlayStopButton.Cancelling.Icon}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="CloseButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="BorderBrush" Value="{DynamicResource CloseButton.Static.Border}" />
+        <Setter Property="Background" Value="{DynamicResource CloseButton.Static.Background}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -112,7 +163,7 @@
                     <Border Height="{StaticResource DefaultButtonHeight}">
                         <Viewbox>
                             <Grid Width="100" Height="100" Background="Transparent">
-                                <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{TemplateBinding Background}"/>
+                                <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{TemplateBinding Background}" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{TemplateBinding BorderBrush}"/>
                                 <Rectangle Width="{StaticResource LineWidth}" Height="{StaticResource LineHeight}" Fill="{DynamicResource CloseButton.Static.Icon}" RadiusX="{StaticResource LineRadius}" RadiusY="{StaticResource LineRadius}" >
                                     <Rectangle.LayoutTransform>
                                         <RotateTransform Angle="-45"/>
@@ -128,7 +179,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource Button.MouseOver.Background}" />
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource CloseButton.MouseOver.Background}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -137,6 +188,8 @@
     </Style>
 
     <Style x:Key="BrowseButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="BorderBrush" Value="{DynamicResource BrowseButton.Static.Border}" />
+        <Setter Property="Background" Value="{DynamicResource BrowseButton.Static.Background}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -146,8 +199,8 @@
                     </ControlTemplate.Resources>
                     <Border Height="22" Margin="0">
                         <Viewbox>
-                            <Border x:Name="Border" Width="100" Height="76" CornerRadius="5" BorderThickness="1" BorderBrush="Black"
-                                    Background="{DynamicResource Button.Static.Background}">
+                            <Border x:Name="Border" Width="100" Height="76" CornerRadius="5" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"
+                                    Background="{TemplateBinding Background}">
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Ellipse Fill="{DynamicResource BrowseButton.Static.Icon}" Width="{StaticResource EllipseSize}" Height="{StaticResource EllipseSize}" Margin="{StaticResource EllipseMargin}" />
@@ -160,7 +213,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource Button.MouseOver.Background}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrowseButton.MouseOver.Background}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
