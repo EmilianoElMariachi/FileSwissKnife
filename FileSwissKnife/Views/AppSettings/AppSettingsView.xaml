@@ -10,7 +10,8 @@
 
     <UserControl.Resources>
         <Style x:Key="SubTitle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-            <Setter Property="Margin" Value="20,0,0,0"></Setter>
+            <Setter Property="Margin" Value="20,0,0,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
         <Style x:Key="Branding" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -51,7 +52,7 @@
         </Style>
     </UserControl.Resources>
     <Grid Margin="10">
-        <TextBlock Text="{Binding Branding, FallbackValue=By ElMariachi}" Style="{StaticResource Branding}">
+        <TextBlock Text="{Binding Branding, FallbackValue=By ElMariachi}" Style="{StaticResource Branding}" Padding="3">
             <TextBlock.InputBindings>
                 <MouseBinding Command="{Binding Path=OpenRepositoryCommand}" MouseAction="LeftClick" />
             </TextBlock.InputBindings>
@@ -87,7 +88,7 @@
             <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.JoinBufferSize}" HorizontalAlignment="Right"/>
             <TextBox Grid.Row="5" Grid.Column="2" MinWidth="100" Text="{Binding Path=JoinBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
             <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.JoinGuessMissingFiles}" HorizontalAlignment="Right"/>
-            <CheckBox Grid.Row="6" Grid.Column="2" IsChecked="{Binding Path=JoinGuessMissingFiles}" />
+            <CheckBox Grid.Row="6" Grid.Column="2" IsChecked="{Binding Path=JoinGuessMissingFiles}"  VerticalAlignment="Center" Margin="0,2,0,0"/>
 
             <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitSettings}" />
             <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.SplitBufferSize}" HorizontalAlignment="Right"/>
@@ -96,7 +97,8 @@
             <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource Title}" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.HashSettings}" />
             <TextBlock Grid.Row="10" Grid.Column="0" Style="{StaticResource SubTitle}" Text="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.HashBufferSize}" HorizontalAlignment="Right"/>
             <TextBox Grid.Row="10" Grid.Column="2" MinWidth="100" Text="{Binding Path=HashBufferSize}" TextAlignment="Center" HorizontalAlignment="Left"/>
-            <Button Grid.Row="11" Content="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.ResetSettings}" Command="{Binding ResetDefaultSettingsCommand}" VerticalAlignment="Bottom" />
+            <Button Grid.Row="11" Grid.ColumnSpan="3" Grid.Column="0"
+                    Content="{Binding Source={x:Static loc:LocalizationManager.Instance}, Path=Current.Keys.ResetSettings}" Command="{Binding ResetDefaultSettingsCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" MinWidth="40" Padding="5,0" />
         </Grid>
     </Grid>
 

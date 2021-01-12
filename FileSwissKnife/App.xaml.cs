@@ -2,7 +2,6 @@
 using FileSwissKnife.Properties;
 using FileSwissKnife.Themes;
 
-// TODO: ajouter un bouton pour réinitialiser les settings
 namespace FileSwissKnife
 {
     /// <summary>

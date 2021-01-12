@@ -31,10 +31,11 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="1"/>
+        <Setter Property="Height" Value="{StaticResource DefaultButtonHeight}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true" Height="{TemplateBinding Height}">
                         <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -67,7 +68,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="error:ErrorButton">
                     <Border ToolTipService.ShowDuration="12000"
-                                Height="{StaticResource DefaultButtonHeight}">
+                                Height="{TemplateBinding Height}">
 
                         <Border.ContextMenu>
                             <ContextMenu>
@@ -116,7 +117,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="customControls:PlayStopButton">
-                    <Border Height="{StaticResource DefaultButtonHeight}">
+                    <Border Height="{TemplateBinding Height}">
                         <Viewbox>
                             <Grid x:Name="Grid" Width="100" Height="100" Background="Transparent">
                                 <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{TemplateBinding Background}" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{TemplateBinding BorderBrush}"/>
@@ -160,7 +161,7 @@
                         <system:Double x:Key="LineWidth">10</system:Double>
                         <system:Double x:Key="LineHeight">70</system:Double>
                     </ControlTemplate.Resources>
-                    <Border Height="{StaticResource DefaultButtonHeight}">
+                    <Border Height="{TemplateBinding Height}">
                         <Viewbox>
                             <Grid Width="100" Height="100" Background="Transparent">
                                 <Ellipse x:Name="Ellipse" Width="100" Height="100" Fill="{TemplateBinding Background}" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{TemplateBinding BorderBrush}"/>
@@ -190,6 +191,7 @@
     <Style x:Key="BrowseButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="BorderBrush" Value="{DynamicResource BrowseButton.Static.Border}" />
         <Setter Property="Background" Value="{DynamicResource BrowseButton.Static.Background}" />
+        <Setter Property="Height" Value="22" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -197,7 +199,7 @@
                         <Thickness x:Key="EllipseMargin">1,0</Thickness>
                         <system:Double x:Key="EllipseSize">14</system:Double>
                     </ControlTemplate.Resources>
-                    <Border Height="22" Margin="0">
+                    <Border Height="{TemplateBinding Height}" Margin="0">
                         <Viewbox>
                             <Border x:Name="Border" Width="100" Height="76" CornerRadius="5" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"
                                     Background="{TemplateBinding Background}">
