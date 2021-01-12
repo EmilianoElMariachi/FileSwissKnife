@@ -142,6 +142,6 @@
 
         public string HashBufferSize => "Taille du buffer";
 
-        public string ResetSettings => "Défaut";
+        public string ResetSettings => "Réinitialiser";
     }
 }

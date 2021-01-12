@@ -144,6 +144,6 @@ namespace FileSwissKnife.Localization
 
         public string HashBufferSize => "Buffer size";
 
-        public string ResetSettings => "Default";
+        public string ResetSettings => "Reset";
     }
 }
