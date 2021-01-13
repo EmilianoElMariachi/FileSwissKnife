@@ -3,6 +3,8 @@
 ## Description
 FileSwissKnife is a lightweight utility that will help you to perform some special file operations.
 
+[Download page](https://github.com/EmilianoElMariachi/FileSwissKnife/releases)
+
 *Feel free to use or redistribute this software.*
 
 ## Actual features
