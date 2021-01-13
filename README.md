@@ -1,16 +1,19 @@
 # FileSwissKnife
 
 ## Description
-FileSwissKnife is a lightweight utility that will help you to perform some special file operations.
+FileSwissKnife is a lightweight Windows utility that will help you to perform some special file operations.
+
+Actual features:
+- Join files *(MyFile.zip.001, MyFile.zip.002, ... to MyFile.zip)*
+- Split files *(MyFile.zip to MyFile.zip.001, MyFile.zip.002, ...)*
+- Hash files *(supported hashes: SHA1, MD5, SHA256, SHA384, SHA512)*
 
 [Download page](https://github.com/EmilianoElMariachi/FileSwissKnife/releases)
 
+This software requires [.NET Desktop Runtime 5](https://dotnet.microsoft.com/download/dotnet/5.0) to be installed.
+
 *Feel free to use or redistribute this software.*
 
-## Actual features
-- Join files
-- Split files
-- Hash files
 
 ## Screenshots
 
